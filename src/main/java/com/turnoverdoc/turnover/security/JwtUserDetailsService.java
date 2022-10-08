@@ -4,24 +4,22 @@ import com.turnoverdoc.turnover.model.User;
 import com.turnoverdoc.turnover.security.jwt.JwtUser;
 import com.turnoverdoc.turnover.security.jwt.JwtUserFactory;
 import com.turnoverdoc.turnover.services.UserService;
+import com.turnoverdoc.turnover.services.impl.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-@Service
+@Component
 @Slf4j
 public class JwtUserDetailsService implements UserDetailsService {
-    private UserService userService;
+    private UserServiceImpl userService;
     private final Logger LOGGER = log;
 
-    @Autowired
-    public JwtUserDetailsService(UserService userService) {
-        this.userService = userService;
-    }
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
