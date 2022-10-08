@@ -19,4 +19,4 @@ CREATE TABLE main.request(
 	photo_url TEXT NOT NULL CHECK(photo_url !=''),
 	pdf_url TEXT NOT NULL CHECK(pdf_url !=''),
 	status INTEGER DEFAULT 0
-);\
+);
