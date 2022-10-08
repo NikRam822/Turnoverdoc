@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <appender name = "Console" class = "ch.qos.logback.core.ConsoleAppender">
+        <layout class = "ch.qos.logback.classic.PatternLayout">%-30(%d %p) %-30.30([%t] %C): %msg%n%throwable</layout>
+    </appender>
+    <appender name = "File" class = "ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/turnover-logbcak.log</file>
+        <encoder class ="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>%d %p [%t] %C: %msg%n%throwable</Pattern>
+        </encoder>
+        <rollingPolicy class = "ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/archived/turnover-%d{yyyy-MM-dd}.%i-logback.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggerPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggerPolicy>
+        </rollingPolicy>
+    </appender>
+    <root level="INFO">
+        <appender-ref ref="File"/>
+        <appender-ref ref="Console"/>
+    </root>
+    <logger name="com.turnoverdoc.turnover" level="DEBUG" additivity="false">
+        <appender-ref ref="File"/>
+        <appender-ref ref="Console"/>
+    </logger>
+</configuration>
