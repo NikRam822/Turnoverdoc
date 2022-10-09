@@ -14,21 +14,15 @@ import java.io.IOException;
 public class AuthController {
 
     @GetMapping("/auth")
-    public ResponseEntity greeting(@RequestHeader("login") String login, @RequestHeader("password") String password) {
+    public ResponseEntity auth(@RequestHeader("login") String login, @RequestHeader("password") String password,HttpServletResponse response) {
         // code that uses the language variable
-        return new ResponseEntity("your login: "+ login +"\nyour password: "+ password, HttpStatus.OK);
-    }
-
-    //записать куки
-    @GetMapping(value = "/set-cookie")
-    public ResponseEntity<?> setCookie(HttpServletResponse response) throws IOException {
-        Cookie cookie = new Cookie("data", "Come_to_the_dark_side");//создаем объект Cookie,
+        Cookie cookie = new Cookie("token", login+"-"+password);//создаем объект Cookie,
         //в конструкторе указываем значения для name и value
         cookie.setPath("/");//устанавливаем путь
         cookie.setMaxAge(86400);//здесь устанавливается время жизни куки
         response.addCookie(cookie);//добавляем Cookie в запрос
         response.setContentType("text/plain");//устанавливаем контекст
-        return ResponseEntity.ok().body(HttpStatus.OK);//получилось как бы два раза статус ответа установили, выбирайте какой вариант лучше
+        return ResponseEntity.ok().body(HttpStatus.OK);//получилось как бы два раза статус ответа установили, выбирайте какой вар
     }
 
 }
