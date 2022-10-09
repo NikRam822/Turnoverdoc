@@ -1,0 +1,13 @@
+package com.turnoverdoc.turnover.services;
+
+import com.turnoverdoc.turnover.model.User;
+
+import java.util.List;
+
+public interface UserService {
+    User register(User user);
+    List<User> getAll();
+    User findByLogin(String login);
+    User findById(Long id);
+    void delete(Long id);
+}
