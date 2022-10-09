@@ -10,4 +10,12 @@ src/main/resources/logs/turnoverdoc.txt
 ```
 можно взять необходимый путь в IDEA с помощью пункта меню `Copy Path/Reference`
 
+# SWAGGER
+Для отправки запррсов на сервер можно использовать swagger.
+
+После запуска сервера перейдите на страницу:
+```
+http://localhost:8080/swagger-ui.html
+````
+
 
