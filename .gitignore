@@ -33,4 +33,4 @@ build/
 .vscode/
 
 **/src/main/resources/logs/**
-application.properties
+**/src/main/resources/application.properties
