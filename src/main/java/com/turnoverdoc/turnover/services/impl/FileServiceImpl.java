@@ -27,7 +27,7 @@ public class FileServiceImpl implements FileService {
     private final Logger LOGGER = log;
 
     @Value("${upload.path}")
-    private String uploadPath="src/main/resources/Orders";
+    private String uploadPath;
 
 
     public boolean uploadFile(MultipartFile file) {
