@@ -33,6 +33,4 @@ build/
 .vscode/
 
 **/src/main/resources/logs/**
-!**/src/main/resources/application.properties
-
-spring-openid/src/main/resources/application.properties
+**/application.properties
