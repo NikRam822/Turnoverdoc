@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -32,11 +33,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     public void setRoleRepository(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
-    }
-
-    @Autowired
-    public void setbCryptPasswordEncoder(BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
@@ -69,9 +65,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByLogin(String login) {
-        User result = userRepository.findByLogin(login);
-        LOGGER.info("Found user - {} by login - {}", result, login);
+    public User findByUsername(String username) {
+        User result = userRepository.findByUsername(username);
+        LOGGER.info("Found user - {} by username - {}", result, username);
         return result;
     }
 

@@ -14,13 +14,13 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenProvider jwtTokenProvider;
 
     private static final String ADMIN_ENDPOINTS = "/api/v1/admin/**";
     private static final String LOGIN_ENDPOINTS = "/api/v1/auth/login";
 
     @Autowired
-    public void setJwtTokenProvider(JwtTokenProvider jwtTokenProvider) {
+    public SecurityConfig(JwtTokenProvider jwtTokenProvider) {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
