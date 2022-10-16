@@ -24,24 +24,28 @@ import java.util.Base64;
 @Service
 @Slf4j
 public class FileServiceImpl implements FileService {
+    private final Logger LOGGER = log;
 
     @Value("${upload.path}")
     private String uploadPath="src/main/resources/Orders";
 
 
-    public String uploadFile(MultipartFile file) {
+    public boolean uploadFile(MultipartFile file) {
         String name = file.getOriginalFilename();
         if (!file.isEmpty()) {
             try {
                 Path copyLocation = Paths
                         .get(uploadPath+ File.separator + StringUtils.cleanPath(file.getOriginalFilename()));
                 Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
-                return "You have successfully downloaded " + name;
+                LOGGER.info("You have successfully downloaded " + name);
+                return true;
             } catch (Exception e) {
-                return "You were unable to download " + name + " => " + e.getMessage();
+                LOGGER.error("You were unable to download " + name + " => " + e.getMessage());
+                return false;
             }
         } else {
-            return "You were unable to download " + name + " because the file is empty.";
+            LOGGER.error("You were unable to download " + name + " because the file is empty.");
+            return false ;
         }
 
     }
