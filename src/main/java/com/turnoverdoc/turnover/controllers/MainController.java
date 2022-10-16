@@ -1,4 +1,4 @@
-package com.turnoverdoc.turnover.rest;
+package com.turnoverdoc.turnover.controllers;
 
 import com.turnoverdoc.turnover.dto.UserDto;
 import com.turnoverdoc.turnover.model.User;

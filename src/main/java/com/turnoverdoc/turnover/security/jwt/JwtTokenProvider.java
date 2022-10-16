@@ -16,10 +16,7 @@ import io.jsonwebtoken.*;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class JwtTokenProvider {
@@ -84,7 +81,7 @@ public class JwtTokenProvider {
     }
 
     public String resolveToken(HttpServletRequest req) {
-        return req.getHeader("Authorization");
+        return Arrays.stream(req.getCookies()).filter(cookie -> cookie.getName().equals("token")).findFirst().get().getValue();
     }
 
     private List<String> getRoleNames(List<Role> roles) {
