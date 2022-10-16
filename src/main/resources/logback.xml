@@ -5,13 +5,13 @@
         <file>src/main/resources/logs/turnoverdoc.txt</file>
 
         <encoder>
-            <pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n</pattern>
+            <pattern>%d %-5level [%thread] %-50logger{40} [%file:%line] %msg%n</pattern>
         </encoder>
     </appender>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern> %d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <pattern>%d [%thread] %highlight(%-5level %cyan(%-50logger{40})) --- %msg%n</pattern>
         </encoder>
     </appender>
 
