@@ -12,20 +12,25 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 @Component
 @Slf4j
 public class JwtUserDetailsService implements UserDetailsService {
-    private UserServiceImpl userService;
+    private final UserService userService;
+
+    @Autowired
+    public JwtUserDetailsService(UserService userService) {
+        this.userService = userService;
+    }
+
     private final Logger LOGGER = log;
 
 
     @Override
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        User user = userService.findByLogin(login);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userService.findByUsername(username);
         if (user == null) {
-            throw new UsernameNotFoundException("User with login:" + login + " not found");
+            throw new UsernameNotFoundException("User with username:" + username + " not found");
         }
 
         JwtUser jwtUser = JwtUserFactory.create(user);

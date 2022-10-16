@@ -7,14 +7,14 @@ import java.util.Collection;
 
 public class JwtUser implements UserDetails {
     private final Long id;
-    private final String login;
+    private final String username;
     private final String password;
     private final boolean enabled;
     private final Collection<? extends GrantedAuthority> authorities;
 
-    public JwtUser(Long id, String login, String password, Collection<? extends GrantedAuthority> authorities, boolean enabled) {
+    public JwtUser(Long id, String username, String password, Collection<? extends GrantedAuthority> authorities, boolean enabled) {
         this.id = id;
-        this.login = login;
+        this.username = username;
         this.password = password;
         this.authorities = authorities;
         this.enabled = enabled;
@@ -32,7 +32,7 @@ public class JwtUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return login;
+        return username;
     }
 
     @Override
