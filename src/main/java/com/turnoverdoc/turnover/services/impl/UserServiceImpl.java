@@ -1,7 +1,7 @@
 package com.turnoverdoc.turnover.services.impl;
 
 import com.turnoverdoc.turnover.model.Role;
-import com.turnoverdoc.turnover.model.Status;
+import com.turnoverdoc.turnover.model.UserStatus;
 import com.turnoverdoc.turnover.model.User;
 import com.turnoverdoc.turnover.repositories.RoleRepository;
 import com.turnoverdoc.turnover.repositories.UserRepository;
@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(userRoles);
-        user.setStatus(Status.ACTIVE);
+        user.setUserStatus(UserStatus.ACTIVE);
 
         User registeredUser = null;
 

@@ -1,5 +1,5 @@
 package com.turnoverdoc.turnover.model;
 
-public enum Status {
+public enum UserStatus {
     ACTIVE, NOT_ACTIVE, DELETED
 }
