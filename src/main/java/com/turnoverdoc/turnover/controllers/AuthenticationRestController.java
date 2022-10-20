@@ -1,6 +1,7 @@
 package com.turnoverdoc.turnover.controllers;
 
-import com.turnoverdoc.turnover.dto.AuthenticationRequestDto;
+import com.turnoverdoc.turnover.dto.authentication_request_dto.LoginRequestDto;
+import com.turnoverdoc.turnover.dto.authentication_request_dto.RegistrationRequest;
 import com.turnoverdoc.turnover.model.User;
 import com.turnoverdoc.turnover.security.jwt.JwtTokenProvider;
 import com.turnoverdoc.turnover.services.UserService;
@@ -42,7 +43,7 @@ public class AuthenticationRestController {
     }
 
     @PostMapping("login")
-    public ResponseEntity login(@RequestBody AuthenticationRequestDto.LoginRequestDto requestDto, HttpServletResponse responseHttp) {
+    public ResponseEntity login(@RequestBody LoginRequestDto requestDto, HttpServletResponse responseHttp) {
         try {
             String username = requestDto.getUsername();
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));
@@ -71,7 +72,7 @@ public class AuthenticationRestController {
     }
 
     @PostMapping("registration")
-    public ResponseEntity<String> register(@RequestBody AuthenticationRequestDto.RegistrationRequest requestDto) {
+    public ResponseEntity<String> register(@RequestBody RegistrationRequest requestDto) {
         User user = userService.findByUsername(requestDto.getUsername());
 
         if (user != null) {
