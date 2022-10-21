@@ -35,7 +35,7 @@ public class Order {
     private String contractPath;
 
     @Column(name = "status")
-    private String status;
+    private OrderStatus status;
 
     @OneToOne(mappedBy = "order")
     private Contact contact;
