@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -23,7 +24,6 @@ public class OrderServiceImpl implements OrderService {
 
     private final Logger LOGGER = log;
 
-
     @Autowired
     public OrderServiceImpl(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
@@ -31,11 +31,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order addOrder(Order order, User user) {
-        order.setContractPath("test/cont");
-        order.setP45Path("test/p45");
-        order.setP60Path("test/p60");
-        order.setP80Path("test/p80");
-        order.setPassportPath("test/pass");
+        order.setContractPath(order.getContractPath());
+        order.setP45Path(order.getP45Path());
+        order.setP60Path(order.getP60Path());
+        order.setP80Path(order.getP80Path());
+        order.setPassportPath(order.getPassportPath());
         order.setStatus(OrderStatus.RECEIVED);
         order.setUser(user);
         Order addedOrder = null;
@@ -51,7 +51,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> getAll() {
-        return null;
+        List<Order> result = orderRepository.findAll();
+        return result;
     }
 
     @Override
@@ -63,4 +64,8 @@ public class OrderServiceImpl implements OrderService {
     public void delete(Long id) {
 
     }
+
+
+
+
 }

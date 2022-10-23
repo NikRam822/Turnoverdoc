@@ -1,8 +1,8 @@
 package com.turnoverdoc.turnover.controllers;
 
+import com.turnoverdoc.turnover.dto.ContactDto;
 import com.turnoverdoc.turnover.model.Order;
 import com.turnoverdoc.turnover.model.User;
-import com.turnoverdoc.turnover.security.jwt.JwtTokenProvider;
 import com.turnoverdoc.turnover.services.FileService;
 import com.turnoverdoc.turnover.services.OrderService;
 import com.turnoverdoc.turnover.services.UserService;
@@ -13,9 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.util.WebUtils;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 
@@ -46,24 +44,35 @@ public class OrderController {
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public @ResponseBody
     ResponseEntity<String> handleFileUpload(HttpServletRequest request,
-                                            @RequestParam("contract") MultipartFile contract,
+                                            @ModelAttribute ContactDto requestDto,
+                                            @RequestParam(value = "contract", required = false) MultipartFile contract,
                                             @RequestParam("passport") MultipartFile passport,
-                                            @RequestParam("p45") MultipartFile p45,
-                                            @RequestParam("p60") MultipartFile p60,
+                                            @RequestParam(value = "p45", required = false) MultipartFile p45,
+                                            @RequestParam(value = "p60", required = false) MultipartFile p60,
                                             @RequestParam("p80") MultipartFile p80,
                                             Principal principal) {
-        MultipartFile[] files = new MultipartFile[]{contract, passport, p45, p60, p80};
-        for (MultipartFile file : files) {
-            if (!fileService.uploadFile(file)) {
-                return new ResponseEntity<>("Failed to upload files", HttpStatus.INTERNAL_SERVER_ERROR);
-            }
 
-        }
+        Order order = new Order();
         User user = null;
         if (principal != null) {
             user = userService.findByUsername(principal.getName());
+            Long currenIdUser = orderService.getAll().get(orderService.getAll().size() - 1).getId() + 1;
+            fileService.setDirName(String.valueOf(user.getId() + "_" + currenIdUser));
         }
-        orderService.addOrder(new Order(), user);
+        MultipartFile[] files = new MultipartFile[]{contract, passport, p45, p60, p80};
+        for (MultipartFile file : files) {
+
+            if (file != null) {
+                String currentFilePath = fileService.uploadFile(file);
+                if (currentFilePath == null) {
+                    return new ResponseEntity<>("Failed to upload files", HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+                order.setPathFile(order, file.getName(), currentFilePath);
+            }
+
+        }
+        Order newOder = orderService.addOrder(order, user);
+
         return new ResponseEntity<>("Files successfully uploaded", HttpStatus.OK);
     }
 }

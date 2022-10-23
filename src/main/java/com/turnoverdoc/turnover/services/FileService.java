@@ -4,5 +4,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface FileService {
 
-    boolean uploadFile(MultipartFile file);
+    String uploadFile(MultipartFile file);
+
+    void setDirName(String fileName);
+
+
 }

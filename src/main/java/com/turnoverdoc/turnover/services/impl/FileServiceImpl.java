@@ -4,49 +4,75 @@ import com.turnoverdoc.turnover.services.FileService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.PostConstruct;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.Base64;
 
 @Service
 @Slf4j
 public class FileServiceImpl implements FileService {
+
     private final Logger LOGGER = log;
+
+    String dirName;
 
     @Value("${upload.path}")
     private String uploadPath;
 
+    @Override
+    public void setDirName(String fileName) {
+        this.dirName = fileName;
+    }
 
-    public boolean uploadFile(MultipartFile file) {
-        String name = file.getOriginalFilename();
+
+    public String uploadFile(MultipartFile file) {
+        String newDirPath = createFolder();
+        String name = file.getName();
         if (!file.isEmpty()) {
             try {
                 Path copyLocation = Paths
-                        .get(uploadPath+ File.separator + StringUtils.cleanPath(file.getOriginalFilename()));
+                        .get(newDirPath + File.separator + name + getFileExtension(file.getOriginalFilename()));
                 Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
                 LOGGER.info("You have successfully downloaded " + name);
-                return true;
+                return String.valueOf(copyLocation);
             } catch (Exception e) {
                 LOGGER.error("You were unable to download " + name + " => " + e.getMessage());
-                return false;
+                return null;
             }
         } else {
             LOGGER.error("You were unable to download " + name + " because the file is empty.");
-            return false ;
+            return null;
         }
 
     }
+
+    private String createFolder() {
+
+        Path path = Paths.get(this.uploadPath + "\\"+dirName);
+
+        if (!Files.exists(path)) {
+            try {
+                Files.createDirectory(path);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            System.out.println("New Directory created !   " + uploadPath + "\\"+dirName);
+        } else {
+
+            System.out.println("Directory already exists");
+        }
+        return uploadPath + "\\"+dirName;
+    }
+
+    private String getFileExtension(String fileName) {
+        int index = fileName.indexOf('.');
+        return index == -1 ? null : fileName.substring(index);
+    }
 }
+
