@@ -31,4 +31,11 @@ public class Contact {
     @OneToOne
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Order order;
+
+    public Contact(String phone, String email, String messanger, Order addedOrder) {
+        this.phone = phone;
+        this.email = email;
+        this.messanger = messanger;
+        this.order = addedOrder;
+    }
 }

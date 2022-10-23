@@ -64,7 +64,7 @@ public class FileServiceImpl implements FileService {
             }
             LOGGER.info("New Directory created: " + path);
         } else {
-            LOGGER.error("Directory already exists");
+            LOGGER.warn("Directory already exists");
 
         }
         return String.valueOf(path);

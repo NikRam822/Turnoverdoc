@@ -1,8 +1,10 @@
 package com.turnoverdoc.turnover.controllers;
 
 import com.turnoverdoc.turnover.dto.ContactDto;
+import com.turnoverdoc.turnover.model.Contact;
 import com.turnoverdoc.turnover.model.Order;
 import com.turnoverdoc.turnover.model.User;
+import com.turnoverdoc.turnover.services.ContactService;
 import com.turnoverdoc.turnover.services.FileService;
 import com.turnoverdoc.turnover.services.OrderService;
 import com.turnoverdoc.turnover.services.UserService;
@@ -25,6 +27,12 @@ public class OrderController {
     FileService fileService;
     private OrderService orderService;
     private UserService userService;
+    private ContactService contactService;
+
+    @Autowired
+    public void setContactService(ContactService contactService) {
+        this.contactService = contactService;
+    }
 
     @Autowired
     public void setOrderService(OrderService orderService) {
@@ -71,7 +79,8 @@ public class OrderController {
             }
 
         }
-        orderService.addOrder(order, user);
+        Order addedOrder = orderService.addOrder(order, user);
+        contactService.addContact(new Contact(requestDto.getPhone(), requestDto.getEmail(), requestDto.getMessanger(),addedOrder));
 
         return new ResponseEntity<>("Files successfully uploaded", HttpStatus.OK);
     }
