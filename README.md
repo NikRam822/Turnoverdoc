@@ -7,7 +7,6 @@ To configure the location of the log file, change in logback.xml:
 ```
 <file>src/main/resources/logs/turnoverdoc.txt</file>
 ```
-можно взять необходимый путь в IDEA с помощью пункта меню `Copy Path/Reference`
 
 # SWAGGER
 You can use a swagger to send requests to the server.
