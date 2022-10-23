@@ -71,7 +71,7 @@ public class OrderController {
             }
 
         }
-        Order newOder = orderService.addOrder(order, user);
+        orderService.addOrder(order, user);
 
         return new ResponseEntity<>("Files successfully uploaded", HttpStatus.OK);
     }
