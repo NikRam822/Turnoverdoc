@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -22,12 +23,25 @@ public class User {
 
     @Column(name = "username")
     private String username;
+
     @Column(name = "password")
     private String password;
 
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "second_name")
+    private String secondName;
+
+    @Column(name = "middle_name")
+    private String middleName;
+
+    @OneToMany(mappedBy = "user")
+    private Collection<Order> order;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private Status status;
+    private UserStatus userStatus;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",

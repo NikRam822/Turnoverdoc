@@ -1,10 +1,10 @@
 package com.turnoverdoc.turnover.controllers;
 
-import com.turnoverdoc.turnover.dto.AuthenticationRequestDto;
+import com.turnoverdoc.turnover.dto.authentication_request_dto.LoginRequestDto;
+import com.turnoverdoc.turnover.dto.authentication_request_dto.RegistrationRequest;
 import com.turnoverdoc.turnover.model.User;
 import com.turnoverdoc.turnover.security.jwt.JwtTokenProvider;
 import com.turnoverdoc.turnover.services.UserService;
-import com.turnoverdoc.turnover.services.impl.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +43,7 @@ public class AuthenticationRestController {
     }
 
     @PostMapping("login")
-    public ResponseEntity login(@RequestBody AuthenticationRequestDto requestDto, HttpServletResponse responseHttp) {
+    public ResponseEntity login(@RequestBody LoginRequestDto requestDto, HttpServletResponse responseHttp) {
         try {
             String username = requestDto.getUsername();
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));
@@ -72,7 +72,7 @@ public class AuthenticationRestController {
     }
 
     @PostMapping("registration")
-    public ResponseEntity<String> register(@RequestBody AuthenticationRequestDto requestDto) {
+    public ResponseEntity<String> register(@RequestBody RegistrationRequest requestDto) {
         User user = userService.findByUsername(requestDto.getUsername());
 
         if (user != null) {
@@ -82,6 +82,9 @@ public class AuthenticationRestController {
         user = new User();
         user.setUsername(requestDto.getUsername());
         user.setPassword(requestDto.getPassword());
+        user.setFirstName(requestDto.getFirstName());
+        user.setSecondName(requestDto.getSecondName());
+        user.setMiddleName(requestDto.getMiddleName());
         userService.register(user);
         LOGGER.info("Successful registration user with username {}", user.getUsername());
         return new ResponseEntity<>("Successful registration", HttpStatus.CREATED);
