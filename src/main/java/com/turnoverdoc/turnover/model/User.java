@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -42,7 +41,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private Status status;
+    private UserStatus userStatus;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
