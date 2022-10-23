@@ -54,7 +54,7 @@ public class FileServiceImpl implements FileService {
 
     private String createFolder() {
 
-        Path path = Paths.get(this.uploadPath + "\\"+dirName);
+        Path path = Paths.get(this.uploadPath + "\\" + dirName);
 
         if (!Files.exists(path)) {
             try {
@@ -62,12 +62,12 @@ public class FileServiceImpl implements FileService {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            System.out.println("New Directory created !   " + uploadPath + "\\"+dirName);
+            LOGGER.info("New Directory created: " + path);
         } else {
+            LOGGER.error("Directory already exists");
 
-            System.out.println("Directory already exists");
         }
-        return uploadPath + "\\"+dirName;
+        return String.valueOf(path);
     }
 
     private String getFileExtension(String fileName) {
