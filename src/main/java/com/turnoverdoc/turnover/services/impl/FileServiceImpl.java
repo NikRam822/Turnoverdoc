@@ -60,7 +60,7 @@ public class FileServiceImpl implements FileService {
             try {
                 Files.createDirectory(path);
             } catch (IOException e) {
-                e.printStackTrace();
+                LOGGER.error(e.getMessage());
             }
             LOGGER.info("New Directory created: " + path);
         } else {
