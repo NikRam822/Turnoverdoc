@@ -73,6 +73,7 @@ public class FileServiceImpl implements FileService {
     private String getFileExtension(String fileName) {
         int index = fileName.indexOf('.');
         return index == -1 ? null : fileName.substring(index);
+
     }
 }
 
