@@ -26,8 +26,8 @@ public class FileServiceImpl implements FileService {
     private String uploadPath;
 
     @Override
-    public void setDirName(String fileName) {
-        this.dirName = fileName;
+    public void setDirName(String dirName) {
+        this.dirName = dirName;
     }
 
 

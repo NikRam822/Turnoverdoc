@@ -64,8 +64,8 @@ public class OrderController {
         User user = null;
         if (principal != null) {
             user = userService.findByUsername(principal.getName());
-            Long currenIdUser = orderService.getAll().get(orderService.getAll().size() - 1).getId() + 1;
-            fileService.setDirName(String.valueOf(user.getId() + "_" + currenIdUser));
+            Long currenIdOrder = orderService.getAll().get(orderService.getAll().size() - 1).getId() + 1;
+            fileService.setDirName(String.valueOf(user.getId() + "_" + currenIdOrder));
         }
         MultipartFile[] files = new MultipartFile[]{contract, passport, p45, p60, p80};
         for (MultipartFile file : files) {
