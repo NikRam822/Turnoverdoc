@@ -14,22 +14,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.HashMap;
-import java.util.Map;
+
 
 @Service
 @Slf4j
 public class FileServiceImpl implements FileService {
-
-    static Map<String, FilePathManager> filesPathManager = new HashMap<>();
-
-
-    static {
-
-        for (com.turnoverdoc.turnover.services.impl.file_service.Files file : com.turnoverdoc.turnover.services.impl.file_service.Files.values()) {
-            filesPathManager.put(file.fileName, file.implementation);
-        }
-    }
 
     private final Logger LOGGER = log;
 
@@ -108,9 +97,10 @@ public class FileServiceImpl implements FileService {
     private void setPathFile(Order order, String fileName, String filePath) {
 
         try {
-            FilePathManager filePathManager = filesPathManager.get(fileName);
 
-            filePathManager.setFilePath(order, filePath);
+            FilePathManager filePathManager1 = DocumentFiles.valueOf(fileName).implementation;
+
+            filePathManager1.setFilePath(order, filePath);
         } catch (Exception exception) {
             LOGGER.warn("File " + fileName + " incorrect set in db. Error: " + exception);
 

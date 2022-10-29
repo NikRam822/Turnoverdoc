@@ -47,11 +47,11 @@ public class OrderController {
     public @ResponseBody
     ResponseEntity<String> handleFileUpload(HttpServletRequest request,
                                             @ModelAttribute ContactDto requestDto,
-                                            @RequestParam(value = "contract", required = false) MultipartFile contract,
-                                            @RequestParam("passport") MultipartFile passport,
-                                            @RequestParam(value = "p45", required = false) MultipartFile p45,
-                                            @RequestParam(value = "p60", required = false) MultipartFile p60,
-                                            @RequestParam(value = "p80", required = false) MultipartFile p80,
+                                            @RequestParam(value = "CONTRACT", required = false) MultipartFile contract,
+                                            @RequestParam("PASSPORT") MultipartFile passport,
+                                            @RequestParam(value = "P_45", required = false) MultipartFile p45,
+                                            @RequestParam(value = "P_60", required = false) MultipartFile p60,
+                                            @RequestParam(value = "P_80", required = false) MultipartFile p80,
                                             Principal principal) {
 
         User user = null;
