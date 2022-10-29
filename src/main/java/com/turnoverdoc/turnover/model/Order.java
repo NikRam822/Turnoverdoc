@@ -54,7 +54,7 @@ public class Order {
         this.contractPath = contractPath;
     }
 
-    public void setPathFile(Order order, String fileName, String filePath) {
+  /*  public void setPathFile(Order order, String fileName, String filePath) {
         switch (fileName) {
             case "p45":
                 order.setP45Path(filePath);
@@ -73,5 +73,5 @@ public class Order {
                 break;
         }
 
-    }
+    }*/
 }

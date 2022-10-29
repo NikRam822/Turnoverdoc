@@ -24,7 +24,6 @@ import java.security.Principal;
 @RequestMapping("/api/order")
 public class OrderController {
     private final Logger LOGGER = log;
-    FileService fileService;
     private OrderService orderService;
     private UserService userService;
     private ContactService contactService;
@@ -44,11 +43,6 @@ public class OrderController {
         this.userService = userService;
     }
 
-    @Autowired
-    public void setDependency(FileService fileService) {
-        this.fileService = fileService;
-    }
-
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public @ResponseBody
     ResponseEntity<String> handleFileUpload(HttpServletRequest request,
@@ -57,31 +51,26 @@ public class OrderController {
                                             @RequestParam("passport") MultipartFile passport,
                                             @RequestParam(value = "p45", required = false) MultipartFile p45,
                                             @RequestParam(value = "p60", required = false) MultipartFile p60,
-                                            @RequestParam("p80") MultipartFile p80,
+                                            @RequestParam(value = "p80", required = false) MultipartFile p80,
                                             Principal principal) {
 
-        Order order = new Order();
         User user = null;
         if (principal != null) {
             user = userService.findByUsername(principal.getName());
-            Long currenIdOrder = orderService.getAll().get(orderService.getAll().size() - 1).getId() + 1;
-            fileService.setDirName(String.valueOf(user.getId() + "_" + currenIdOrder));
         }
+        Order addedOrder = orderService.addOrder(new Order(), user);
+
         MultipartFile[] files = new MultipartFile[]{contract, passport, p45, p60, p80};
-        for (MultipartFile file : files) {
 
-            if (file != null) {
-                String currentFilePath = fileService.uploadFile(file);
-                if (currentFilePath == null) {
-                    return new ResponseEntity<>("Failed to upload files", HttpStatus.INTERNAL_SERVER_ERROR);
-                }
-                order.setPathFile(order, file.getName(), currentFilePath);
-            }
+        boolean filesUploadedSuccess = orderService.saveOrderFiles(files, user, addedOrder);
 
+        if (!filesUploadedSuccess) {
+            return new ResponseEntity<>("Failed to upload files", HttpStatus.INTERNAL_SERVER_ERROR);
+        } else {
+            contactService.addContact(new Contact(requestDto.getPhone(), requestDto.getEmail(), requestDto.getMessanger(), addedOrder));
+            return new ResponseEntity<>("Files successfully uploaded", HttpStatus.OK);
         }
-        Order addedOrder = orderService.addOrder(order, user);
-        contactService.addContact(new Contact(requestDto.getPhone(), requestDto.getEmail(), requestDto.getMessanger(),addedOrder));
 
-        return new ResponseEntity<>("Files successfully uploaded", HttpStatus.OK);
+
     }
 }

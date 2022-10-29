@@ -1,12 +1,13 @@
 package com.turnoverdoc.turnover.services;
 
+import com.turnoverdoc.turnover.model.Order;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface FileService {
 
-    String uploadFile(MultipartFile file);
 
-    void setDirName(String fileName);
+    void setDirPath(String fileName);
 
+    boolean saveFiles(MultipartFile[] files, Order order);
 
 }

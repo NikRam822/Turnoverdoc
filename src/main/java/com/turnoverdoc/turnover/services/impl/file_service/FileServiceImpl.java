@@ -1,5 +1,6 @@
-package com.turnoverdoc.turnover.services.impl;
+package com.turnoverdoc.turnover.services.impl.file_service;
 
+import com.turnoverdoc.turnover.model.Order;
 import com.turnoverdoc.turnover.services.FileService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -13,10 +14,22 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @Slf4j
 public class FileServiceImpl implements FileService {
+
+    static Map<String, FilePathManager> filesPathManager = new HashMap<>();
+
+
+    static {
+
+        for (com.turnoverdoc.turnover.services.impl.file_service.Files file : com.turnoverdoc.turnover.services.impl.file_service.Files.values()) {
+            filesPathManager.put(file.fileName, file.implementation);
+        }
+    }
 
     private final Logger LOGGER = log;
 
@@ -26,12 +39,28 @@ public class FileServiceImpl implements FileService {
     private String uploadPath;
 
     @Override
-    public void setDirName(String dirName) {
+    public void setDirPath(String dirName) {
         this.dirName = dirName;
     }
 
+    @Override
+    public boolean saveFiles(MultipartFile[] files, Order order) {
 
-    public String uploadFile(MultipartFile file) {
+        for (MultipartFile file : files) {
+
+            if (file != null) {
+                String currentFilePath = uploadFile(file);
+                if (currentFilePath == null) {
+                    LOGGER.warn("File " + file.getName() + " is not saved. Current file path is null.");
+                    return false;
+                }
+                setPathFile(order, file.getName(), currentFilePath);
+            }
+        }
+        return true;
+    }
+
+    private String uploadFile(MultipartFile file) {
         String newDirPath = createFolder();
         String name = file.getName();
         if (!file.isEmpty()) {
@@ -75,5 +104,20 @@ public class FileServiceImpl implements FileService {
         return index == -1 ? null : fileName.substring(index);
 
     }
+
+    private void setPathFile(Order order, String fileName, String filePath) {
+
+        try {
+            FilePathManager filePathManager = filesPathManager.get(fileName);
+
+            filePathManager.setFilePath(order, filePath);
+        } catch (Exception exception) {
+            LOGGER.warn("File " + fileName + " incorrect set in db. Error: " + exception);
+
+        }
+
+    }
+
+
 }
 
