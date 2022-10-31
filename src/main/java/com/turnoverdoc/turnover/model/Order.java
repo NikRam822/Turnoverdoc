@@ -53,25 +53,4 @@ public class Order {
         this.p80Path = p80Path;
         this.contractPath = contractPath;
     }
-
-  /*  public void setPathFile(Order order, String fileName, String filePath) {
-        switch (fileName) {
-            case "p45":
-                order.setP45Path(filePath);
-                break;
-            case "p60":
-                order.setP60Path(filePath);
-                break;
-            case "p80":
-                order.setP80Path(filePath);
-                break;
-            case "passport":
-                order.setPassportPath(filePath);
-                break;
-            case "contract":
-                order.setContractPath(filePath);
-                break;
-        }
-
-    }*/
 }

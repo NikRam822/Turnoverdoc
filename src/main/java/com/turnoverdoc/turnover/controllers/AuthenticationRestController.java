@@ -83,7 +83,7 @@ public class AuthenticationRestController {
         user.setUsername(requestDto.getUsername());
         user.setPassword(requestDto.getPassword());
         user.setFirstName(requestDto.getFirstName());
-        user.setSecondName(requestDto.getSecondName());
+        user.setSecondName(requestDto.getLastName());
         user.setMiddleName(requestDto.getMiddleName());
         userService.register(user);
         LOGGER.info("Successful registration user with username {}", user.getUsername());
