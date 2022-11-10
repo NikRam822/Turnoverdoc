@@ -26,16 +26,16 @@ public class Contact {
     private String email;
 
     @Column(name = "messanger")
-    private String messanger;
+    private String messenger;
 
     @OneToOne
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Order order;
 
-    public Contact(String phone, String email, String messanger, Order addedOrder) {
+    public Contact(String phone, String email, String messenger, Order addedOrder) {
         this.phone = phone;
         this.email = email;
-        this.messanger = messanger;
+        this.messenger = messenger;
         this.order = addedOrder;
     }
 }

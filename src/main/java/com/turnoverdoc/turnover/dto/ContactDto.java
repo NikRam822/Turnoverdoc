@@ -1,5 +1,6 @@
 package com.turnoverdoc.turnover.dto;
 
+import com.turnoverdoc.turnover.model.Contact;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -7,5 +8,14 @@ import org.springframework.web.multipart.MultipartFile;
 public class ContactDto {
     private String phone;
     private String email;
-    private String messanger;
+    private String messenger;
+
+    public static ContactDto toContactDto(Contact contact) {
+        ContactDto contactDto = new ContactDto();
+        contactDto.setEmail(contact.getEmail());
+        contactDto.setMessenger(contact.getMessenger());
+        contactDto.setPhone(contact.getPhone());
+
+        return contactDto;
+    }
 }

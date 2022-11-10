@@ -19,4 +19,6 @@ public interface OrderService {
 
     void delete(Long id);
 
+    List<Order> getAllForUser(Long id);
+
 }

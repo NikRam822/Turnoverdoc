@@ -1,11 +1,11 @@
 package com.turnoverdoc.turnover.controllers;
 
 import com.turnoverdoc.turnover.dto.ContactDto;
+import com.turnoverdoc.turnover.dto.OrderDto;
 import com.turnoverdoc.turnover.model.Contact;
 import com.turnoverdoc.turnover.model.Order;
 import com.turnoverdoc.turnover.model.User;
 import com.turnoverdoc.turnover.services.ContactService;
-import com.turnoverdoc.turnover.services.FileService;
 import com.turnoverdoc.turnover.services.OrderService;
 import com.turnoverdoc.turnover.services.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -44,9 +46,7 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public @ResponseBody
-    ResponseEntity<String> handleFileUpload(HttpServletRequest request,
-                                            @ModelAttribute ContactDto requestDto,
+    public ResponseEntity<String> handleFileUpload(@ModelAttribute ContactDto requestDto,
                                             @RequestParam(value = "CONTRACT", required = false) MultipartFile contract,
                                             @RequestParam("PASSPORT") MultipartFile passport,
                                             @RequestParam(value = "P_45", required = false) MultipartFile p45,
@@ -67,10 +67,20 @@ public class OrderController {
         if (!filesUploadedSuccess) {
             return new ResponseEntity<>("Failed to upload files", HttpStatus.INTERNAL_SERVER_ERROR);
         } else {
-            contactService.addContact(new Contact(requestDto.getPhone(), requestDto.getEmail(), requestDto.getMessanger(), addedOrder));
+            contactService.addContact(new Contact(requestDto.getPhone(), requestDto.getEmail(), requestDto.getMessenger(), addedOrder));
             return new ResponseEntity<>("Files successfully uploaded", HttpStatus.OK);
         }
+    }
 
+    @GetMapping("/get/all")
+    public ResponseEntity<List<OrderDto>> getAllOrdersForUser(Principal principal) {
+        User user = userService.findByUsername(principal.getName());
+        List<Order> orders = new ArrayList<>();
 
+        if (user != null) {
+            orders = orderService.getAllForUser(user.getId());
+        }
+
+        return new ResponseEntity<>(OrderDto.toOrderDtoList(orders), HttpStatus.OK);
     }
 }
