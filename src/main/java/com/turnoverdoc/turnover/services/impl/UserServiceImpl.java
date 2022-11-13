@@ -1,5 +1,6 @@
 package com.turnoverdoc.turnover.services.impl;
 
+import com.turnoverdoc.turnover.dto.PasswordDto;
 import com.turnoverdoc.turnover.model.Role;
 import com.turnoverdoc.turnover.model.UserStatus;
 import com.turnoverdoc.turnover.model.User;
@@ -9,6 +10,7 @@ import com.turnoverdoc.turnover.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -53,6 +55,16 @@ public class UserServiceImpl implements UserService {
         }
 
         return registeredUser;
+    }
+
+    public boolean changePassword(PasswordDto passwordDto, User user) {
+        if (BCrypt.checkpw(passwordDto.getOldPassword(), user.getPassword())) {
+            user.setPassword(passwordEncoder.encode(passwordDto.getNewPassword()));
+            userRepository.save(user);
+            return true;
+        }
+
+        return false;
     }
 
     @Override

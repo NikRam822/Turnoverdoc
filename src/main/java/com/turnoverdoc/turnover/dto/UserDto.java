@@ -14,7 +14,7 @@ public class UserDto {
     private List<RoleDto> roles;
     private String firstName;
     private String secondName;
-    private String middleName;
+    private String lastName;
 
     public static UserDto toUserDto(User user) {
         UserDto userDto = new UserDto();
@@ -24,7 +24,7 @@ public class UserDto {
         userDto.setRoles(RoleDto.toRoleDto(user.getRoles()));
         userDto.setFirstName(user.getFirstName());
         userDto.setSecondName(user.getSecondName());
-        userDto.setMiddleName(user.getMiddleName());
+        userDto.setLastName(user.getLastName());
         return userDto;
     }
 }

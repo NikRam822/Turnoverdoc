@@ -11,11 +11,14 @@ public class ContactDto {
     private String messenger;
 
     public static ContactDto toContactDto(Contact contact) {
-        ContactDto contactDto = new ContactDto();
-        contactDto.setEmail(contact.getEmail());
-        contactDto.setMessenger(contact.getMessenger());
-        contactDto.setPhone(contact.getPhone());
+        if (contact != null) {
+            ContactDto contactDto = new ContactDto();
+            contactDto.setEmail(contact.getEmail());
+            contactDto.setMessenger(contact.getMessenger());
+            contactDto.setPhone(contact.getPhone());
 
-        return contactDto;
+            return contactDto;
+        }
+       return null;
     }
 }

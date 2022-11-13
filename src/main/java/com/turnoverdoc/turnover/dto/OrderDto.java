@@ -28,7 +28,7 @@ public class OrderDto {
         orderDto.setP80Path(order.getP80Path());
         orderDto.setContractPath(order.getContractPath());
         orderDto.setStatus(order.getStatus());
-//        orderDto.setContact(ContactDto.toContactDto(order.getContact()));
+        orderDto.setContact(ContactDto.toContactDto(order.getContact()));
 
         return orderDto;
     }
