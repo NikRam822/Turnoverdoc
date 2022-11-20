@@ -38,7 +38,8 @@ public class Order {
     @Column(name = "status")
     private OrderStatus status;
 
-    @OneToOne(mappedBy = "order")
+    @OneToOne
+    @JoinColumn(name = "contact_id", referencedColumnName = "id")
     private Contact contact;
 
     @ManyToOne

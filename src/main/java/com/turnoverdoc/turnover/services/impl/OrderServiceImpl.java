@@ -1,8 +1,10 @@
 package com.turnoverdoc.turnover.services.impl;
 
+import com.turnoverdoc.turnover.model.Contact;
 import com.turnoverdoc.turnover.model.Order;
 import com.turnoverdoc.turnover.model.OrderStatus;
 import com.turnoverdoc.turnover.model.User;
+import com.turnoverdoc.turnover.repositories.ContactRepository;
 import com.turnoverdoc.turnover.repositories.OrderRepository;
 import com.turnoverdoc.turnover.services.FileService;
 import com.turnoverdoc.turnover.services.OrderService;
@@ -22,7 +24,14 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
 
+    private ContactRepository contactRepository;
+
     private final Logger LOGGER = log;
+
+    @Autowired
+    public void setContactRepository(ContactRepository contactRepository) {
+        this.contactRepository = contactRepository;
+    }
 
     @Autowired
     public OrderServiceImpl(OrderRepository orderRepository) {
@@ -108,5 +117,12 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
-
+    @Override
+    public Order createOrder(User user, Contact contact) {
+        Order order = new Order();
+        order.setUser(user);
+        order.setContact(contact);
+        order.setStatus(OrderStatus.RECEIVED);
+        return orderRepository.save(order);
+    }
 }

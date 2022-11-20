@@ -28,8 +28,7 @@ public class Contact {
     @Column(name = "messanger")
     private String messenger;
 
-    @OneToOne
-    @JoinColumn(name = "order_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "contact")
     private Order order;
 
     public Contact(String phone, String email, String messenger, Order addedOrder) {

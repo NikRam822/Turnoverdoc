@@ -46,8 +46,7 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public ResponseEntity<String> handleFileUpload(@ModelAttribute ContactDto requestDto,
-                                            @RequestParam(value = "CONTRACT", required = false) MultipartFile contract,
+    public ResponseEntity<String> handleFileUpload(@RequestParam(value = "CONTRACT", required = false) MultipartFile contract,
                                             @RequestParam("PASSPORT") MultipartFile passport,
                                             @RequestParam(value = "P_45", required = false) MultipartFile p45,
                                             @RequestParam(value = "P_60", required = false) MultipartFile p60,
@@ -66,10 +65,22 @@ public class OrderController {
 
         if (!filesUploadedSuccess) {
             return new ResponseEntity<>("Failed to upload files", HttpStatus.INTERNAL_SERVER_ERROR);
-        } else {
-            contactService.addContact(new Contact(requestDto.getPhone(), requestDto.getEmail(), requestDto.getMessenger(), addedOrder));
-            return new ResponseEntity<>("Files successfully uploaded", HttpStatus.OK);
         }
+        return new ResponseEntity<>("Files successfully uploaded", HttpStatus.OK);
+    }
+
+    @PostMapping("/createOrder")
+    public ResponseEntity<String> createOrderAndContacts(@ModelAttribute ContactDto contactDto, Principal principal) { // TODO: create name for every step(screen)
+        // first step, where user send his contacts
+        User user = userService.findByUsername(principal.getName());
+        if (user != null) {
+            Contact contact = contactService.addContact(contactDto);
+            orderService.createOrder(user, contact);
+
+            return new ResponseEntity<>("Contacts have been successfully send", HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/get/all")

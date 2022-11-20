@@ -21,4 +21,15 @@ public class ContactDto {
         }
        return null;
     }
+
+    public static Contact toContact(ContactDto contactDto) {
+        if (contactDto != null) {
+            Contact contact = new Contact();
+            contact.setEmail(contactDto.getEmail());
+            contact.setMessenger(contactDto.getMessenger());
+            contact.setPhone(contactDto.getPhone());
+            return contact;
+        }
+        return null;
+    }
 }

@@ -1,5 +1,6 @@
 package com.turnoverdoc.turnover.services.impl;
 
+import com.turnoverdoc.turnover.dto.ContactDto;
 import com.turnoverdoc.turnover.model.Contact;
 import com.turnoverdoc.turnover.repositories.ContactRepository;
 import com.turnoverdoc.turnover.services.ContactService;
@@ -21,11 +22,11 @@ public class ContactServiceImpl implements ContactService {
 
 
     @Override
-    public Contact addContact(Contact contact) {
-        contact.setEmail(contact.getEmail());
-        contact.setPhone(contact.getPhone());
-        contact.setMessenger(contact.getMessenger());
-        contact.setOrder(contact.getOrder());
+    public Contact addContact(ContactDto contactDto) {
+        Contact contact = new Contact();
+        contact.setEmail(contactDto.getEmail());
+        contact.setPhone(contactDto.getPhone());
+        contact.setMessenger(contactDto.getMessenger());
 
         Contact addedContact = null;
 

@@ -1,5 +1,6 @@
 package com.turnoverdoc.turnover.services;
 
+import com.turnoverdoc.turnover.model.Contact;
 import com.turnoverdoc.turnover.model.Order;
 import com.turnoverdoc.turnover.model.User;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,5 +21,7 @@ public interface OrderService {
     void delete(Long id);
 
     List<Order> getAllForUser(Long id);
+
+    Order createOrder(User user, Contact contact);
 
 }
