@@ -15,7 +15,9 @@ import org.springframework.stereotype.Component;
 import io.jsonwebtoken.*;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 @Component
@@ -95,5 +97,12 @@ public class JwtTokenProvider {
         });
 
         return result;
+    }
+    public void setCookieJwt(String token, HttpServletResponse responseHttp){
+        Cookie cookie = new Cookie("token", token);
+        cookie.setPath("/");
+        cookie.setMaxAge(86400);
+        responseHttp.addCookie(cookie);
+        responseHttp.setContentType("text/plain");
     }
 }
