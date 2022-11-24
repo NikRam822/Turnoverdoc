@@ -24,7 +24,7 @@ public class UserDto {
         userDto.setRoles(RoleDto.toRoleDto(user.getRoles()));
         userDto.setFirstName(user.getFirstName());
         userDto.setSecondName(user.getSecondName());
-        userDto.setLastName(user.getLastName());
+        userDto.setLastName(user.getMiddleName());
         return userDto;
     }
 }

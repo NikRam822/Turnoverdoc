@@ -33,8 +33,8 @@ public class User {
     @Column(name = "second_name")
     private String secondName;
 
-    @Column(name = "last_name")
-    private String lastName;
+    @Column(name = "middle_name")
+    private String middleName;
 
     @OneToMany(mappedBy = "user")
     private Collection<Order> order;
