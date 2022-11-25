@@ -2,7 +2,6 @@ package com.turnoverdoc.turnover.controllers.admin;
 
 import com.turnoverdoc.turnover.dto.authentication_request_dto.LoginRequestDto;
 import com.turnoverdoc.turnover.dto.authentication_request_dto.RegistrationRequest;
-import com.turnoverdoc.turnover.model.Role;
 import com.turnoverdoc.turnover.model.User;
 import com.turnoverdoc.turnover.security.jwt.JwtTokenProvider;
 import com.turnoverdoc.turnover.services.AdminService;
@@ -88,7 +87,7 @@ public class Authorization {
         user.setPassword(requestDto.getPassword());
         user.setFirstName(requestDto.getFirstName());
         user.setSecondName(requestDto.getSecondName());
-        user.setMiddleName(requestDto.getMiddleName());
+        user.setSurname(requestDto.getSurname());
         adminService.registration(user);
         LOGGER.info("Successful registration user with username {}", user.getUsername());
         return new ResponseEntity<>("Successful registration", HttpStatus.CREATED);
