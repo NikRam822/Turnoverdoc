@@ -8,11 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -22,7 +19,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String LOGIN_ENDPOINTS = "/api/v1/auth/login";
     private static final String ADMIN_LOGIN_ENDPOINTS = "/api/v1/auth/admin/login";
     private static final String REGISTRATION_ENDPOINTS = "/api/v1/auth/registration";
-    private static final String REGISTRATION_ADMIN_ENDPOINTS = "/api/v1/admin-registration";
+    private static final String AUTH_ADMIN_ENDPOINTS = "/api/v1/super-admin/auth/**";
 
     @Autowired
     public SecurityConfig(JwtTokenProvider jwtTokenProvider) {
@@ -47,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(REGISTRATION_ENDPOINTS).permitAll()
                 .antMatchers(ADMIN_ENDPOINTS).hasAnyRole("ADMIN","SUPER_ADMIN")
                 .antMatchers(ADMIN_LOGIN_ENDPOINTS).permitAll()
-                .antMatchers(REGISTRATION_ADMIN_ENDPOINTS).hasRole("SUPER_ADMIN")
+                .antMatchers(AUTH_ADMIN_ENDPOINTS).hasRole("SUPER_ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .apply(new JwtConfigurer(jwtTokenProvider));
