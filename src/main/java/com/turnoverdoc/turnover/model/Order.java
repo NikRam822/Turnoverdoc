@@ -4,12 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Filter;
-import org.hibernate.annotations.FilterDef;
-import org.hibernate.annotations.Filters;
-import org.hibernate.annotations.ParamDef;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "orders")
@@ -54,6 +53,7 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "userId", referencedColumnName = "id")
+    @NotFound(action = NotFoundAction.IGNORE)
     private User user;
 
 

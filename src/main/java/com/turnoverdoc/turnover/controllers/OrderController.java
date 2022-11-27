@@ -2,7 +2,8 @@ package com.turnoverdoc.turnover.controllers;
 
 import com.turnoverdoc.turnover.dto.ContactDto;
 import com.turnoverdoc.turnover.dto.FilterOrderDto;
-import com.turnoverdoc.turnover.dto.OrderDto;
+import com.turnoverdoc.turnover.dto.order.FullOrderDto;
+import com.turnoverdoc.turnover.dto.order.OrderDto;
 import com.turnoverdoc.turnover.model.Contact;
 import com.turnoverdoc.turnover.model.Order;
 import com.turnoverdoc.turnover.model.User;
@@ -97,8 +98,9 @@ public class OrderController {
     }
 
     @PostMapping("/get-filtered-orders")
-    public ResponseEntity<List<OrderDto>> getFilteredOrders(@ModelAttribute FilterOrderDto filterDto){
+    public ResponseEntity<List<FullOrderDto>> getFilteredOrders(@ModelAttribute FilterOrderDto filterDto, Principal principal){
+        User user = userService.findByUsername(principal.getName());
         List<Order> orders = orderService.getFilteredOrders(filterDto);
-        return new ResponseEntity<>(OrderDto.toOrderDtoList(orders), HttpStatus.OK);
+        return new ResponseEntity<>(FullOrderDto.toFullOrderDtoList(orders, user), HttpStatus.OK);
     }
 }

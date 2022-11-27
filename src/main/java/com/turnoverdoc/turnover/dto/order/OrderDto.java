@@ -1,6 +1,6 @@
-package com.turnoverdoc.turnover.dto;
+package com.turnoverdoc.turnover.dto.order;
 
-import com.turnoverdoc.turnover.model.Contact;
+import com.turnoverdoc.turnover.dto.ContactDto;
 import com.turnoverdoc.turnover.model.Order;
 import com.turnoverdoc.turnover.model.OrderStatus;
 import lombok.Data;
