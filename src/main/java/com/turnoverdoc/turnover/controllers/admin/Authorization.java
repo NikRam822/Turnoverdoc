@@ -74,7 +74,7 @@ public class Authorization {
         }
     }
 
-    @PostMapping("/api/v1/admin-registration")
+    @PostMapping("/api/v1/super-admin/auth/registration")
     public ResponseEntity registration(@RequestBody RegistrationRequest requestDto, HttpServletResponse responseHttp) {
         User user = userService.findByUsername(requestDto.getUsername());
 
