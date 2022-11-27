@@ -4,6 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.Filters;
+import org.hibernate.annotations.ParamDef;
 
 import javax.persistence.*;
 
@@ -13,6 +17,12 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@FilterDef(name="orderFilter", parameters={
+        @ParamDef(name="status", type="string")
+})
+@Filters( {
+        @Filter(name="orderFilter", condition=":status = status")
+} )
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

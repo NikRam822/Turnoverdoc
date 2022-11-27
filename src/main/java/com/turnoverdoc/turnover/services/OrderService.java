@@ -1,5 +1,6 @@
 package com.turnoverdoc.turnover.services;
 
+import com.turnoverdoc.turnover.dto.FilterOrderDto;
 import com.turnoverdoc.turnover.model.Contact;
 import com.turnoverdoc.turnover.model.Order;
 import com.turnoverdoc.turnover.model.User;
@@ -24,4 +25,5 @@ public interface OrderService {
 
     Order createOrder(User user, Contact contact);
 
+    List<Order> getFilteredOrders(FilterOrderDto filterOrderDto);
 }

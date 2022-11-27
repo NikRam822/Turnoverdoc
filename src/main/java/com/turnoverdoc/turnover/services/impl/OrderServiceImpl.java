@@ -1,5 +1,6 @@
 package com.turnoverdoc.turnover.services.impl;
 
+import com.turnoverdoc.turnover.dto.FilterOrderDto;
 import com.turnoverdoc.turnover.model.Contact;
 import com.turnoverdoc.turnover.model.Order;
 import com.turnoverdoc.turnover.model.OrderStatus;
@@ -9,6 +10,9 @@ import com.turnoverdoc.turnover.repositories.OrderRepository;
 import com.turnoverdoc.turnover.services.FileService;
 import com.turnoverdoc.turnover.services.OrderService;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Filter;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,8 +24,9 @@ import java.util.Optional;
 @Service
 @Slf4j
 public class OrderServiceImpl implements OrderService {
-    private FileService fileService;
+    private SessionFactory sessionFactory;
 
+    private FileService fileService;
     private final OrderRepository orderRepository;
 
     private ContactRepository contactRepository;
@@ -31,6 +36,11 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     public void setContactRepository(ContactRepository contactRepository) {
         this.contactRepository = contactRepository;
+    }
+
+    @Autowired
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Autowired
@@ -124,5 +134,17 @@ public class OrderServiceImpl implements OrderService {
         order.setContact(contact);
         order.setStatus(OrderStatus.RECEIVED);
         return orderRepository.save(order);
+    }
+
+    @Override
+    public List<Order> getFilteredOrders(FilterOrderDto filterOrderDto) {
+        Session session = sessionFactory.openSession();
+        Filter filter = session.enableFilter("orderFilter");
+        filter.setParameter("status", filterOrderDto.getStatusOfOrder());
+        session.beginTransaction();
+        List<Order> orders = session.createQuery("from Order").list();
+        session.getTransaction().commit();
+        session.close();
+        return orders;
     }
 }

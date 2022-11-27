@@ -1,6 +1,7 @@
 package com.turnoverdoc.turnover.controllers;
 
 import com.turnoverdoc.turnover.dto.ContactDto;
+import com.turnoverdoc.turnover.dto.FilterOrderDto;
 import com.turnoverdoc.turnover.dto.OrderDto;
 import com.turnoverdoc.turnover.model.Contact;
 import com.turnoverdoc.turnover.model.Order;
@@ -16,7 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +29,7 @@ public class OrderController {
     private OrderService orderService;
     private UserService userService;
     private ContactService contactService;
+
 
     @Autowired
     public void setContactService(ContactService contactService) {
@@ -92,6 +93,12 @@ public class OrderController {
             orders = orderService.getAllForUser(user.getId());
         }
 
+        return new ResponseEntity<>(OrderDto.toOrderDtoList(orders), HttpStatus.OK);
+    }
+
+    @PostMapping("/get-filtered-orders")
+    public ResponseEntity<List<OrderDto>> getFilteredOrders(@ModelAttribute FilterOrderDto filterDto){
+        List<Order> orders = orderService.getFilteredOrders(filterDto);
         return new ResponseEntity<>(OrderDto.toOrderDtoList(orders), HttpStatus.OK);
     }
 }
