@@ -5,4 +5,5 @@ import com.turnoverdoc.turnover.model.Contact;
 
 public interface ContactService {
     Contact addContact(ContactDto contact);
+    boolean isValid(ContactDto contactDto);
 }

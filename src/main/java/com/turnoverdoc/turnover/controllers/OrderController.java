@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,39 +48,47 @@ public class OrderController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public ResponseEntity<String> handleFileUpload(@RequestParam(value = "CONTRACT", required = false) MultipartFile contract,
+    @RequestMapping(value = "/uploadDocs/{orderId}", method = RequestMethod.POST)
+    public ResponseEntity<String> handleFileUpload(@RequestParam("CONTRACT") MultipartFile contract,
                                             @RequestParam("PASSPORT") MultipartFile passport,
                                             @RequestParam(value = "P_45", required = false) MultipartFile p45,
                                             @RequestParam(value = "P_60", required = false) MultipartFile p60,
                                             @RequestParam(value = "P_80", required = false) MultipartFile p80,
-                                            Principal principal) {
+                                            Principal principal, @PathVariable String orderId) {
 
         User user = null;
         if (principal != null) {
             user = userService.findByUsername(principal.getName());
+
+            MultipartFile[] files = new MultipartFile[]{contract, passport, p45, p60, p80};
+
+            Order order = orderService.findById(Long.parseLong(orderId));
+            if (order.getUser().getId().equals(user.getId())) {
+                boolean filesUploadedSuccess = orderService.saveOrderFiles(files, user, order);
+
+                if (!filesUploadedSuccess) {
+                    return new ResponseEntity<>("Failed to upload files", HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+
+                return new ResponseEntity<>("Files successfully uploaded", HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Invalid user for current order", HttpStatus.NOT_FOUND);
         }
-        Order addedOrder = orderService.addOrder(new Order(), user);
-
-        MultipartFile[] files = new MultipartFile[]{contract, passport, p45, p60, p80};
-
-        boolean filesUploadedSuccess = orderService.saveOrderFiles(files, user, addedOrder);
-
-        if (!filesUploadedSuccess) {
-            return new ResponseEntity<>("Failed to upload files", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        return new ResponseEntity<>("Files successfully uploaded", HttpStatus.OK);
+        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/createOrder")
-    public ResponseEntity<String> createOrderAndContacts(@ModelAttribute ContactDto contactDto, Principal principal) { // TODO: create name for every step(screen)
+    public ResponseEntity<String> createOrderAndContacts(@ModelAttribute ContactDto contactDto, Principal principal) {
         // first step, where user send his contacts
         User user = userService.findByUsername(principal.getName());
         if (user != null) {
-            Contact contact = contactService.addContact(contactDto);
-            orderService.createOrder(user, contact);
+            if (contactService.isValid(contactDto)) {
+                Contact contact = contactService.addContact(contactDto);
+                orderService.createOrder(user, contact);
 
-            return new ResponseEntity<>("Contacts have been successfully send", HttpStatus.OK);
+                return new ResponseEntity<>("Contacts have been successfully send", HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Invalid contacts", HttpStatus.BAD_REQUEST);
         }
 
         return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);

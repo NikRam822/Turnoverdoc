@@ -41,5 +41,10 @@ public class ContactServiceImpl implements ContactService {
         return addedContact;
     }
 
+    @Override
+    public boolean isValid(ContactDto contactDto) {
+        //TODO: Create contacts validation
+        return true;
+    }
 
 }
