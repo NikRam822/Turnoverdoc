@@ -74,31 +74,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void updateOrder(Order order) {
-        Optional<Order> orderFromDb = orderRepository.findById(order.getId());
-        Order currentOrder = orderFromDb.get();
-
-        currentOrder.setContractPath(order.getContractPath());
-        currentOrder.setP45Path(order.getP45Path());
-        currentOrder.setP60Path(order.getP60Path());
-        currentOrder.setP80Path(order.getP80Path());
-
-        try {
-            Order savedOrder = orderRepository.save(currentOrder);
-            LOGGER.info("Update order: {}", savedOrder);
-        } catch (IllegalArgumentException e) {
-            LOGGER.error("Failed to save order: order is null");
-            throw new IllegalArgumentException(e);
-        }
-
-    }
-
-    @Override
     public boolean saveOrderFiles(MultipartFile[] files, User user, Order order) {
         fileService.setDirPath(String.valueOf(user.getId() + "_" + order.getId()));
 
         if (fileService.saveFiles(files, order)) {
-            updateOrder(order);
+            update(order);
             return true;
         } else {
             return false;
@@ -119,7 +99,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order findById(Long id) {
-        return null;
+        return orderRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -146,5 +126,10 @@ public class OrderServiceImpl implements OrderService {
         session.getTransaction().commit();
         session.close();
         return orders;
+    }
+
+    @Override
+    public Order update(Order order) {
+        return orderRepository.save(order);
     }
 }

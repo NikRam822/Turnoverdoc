@@ -13,8 +13,6 @@ public interface OrderService {
 
     List<Order> getAll();
 
-    void updateOrder(Order order);
-
     boolean saveOrderFiles(MultipartFile[] files, User user,Order order);
 
     Order findById(Long id);
@@ -26,4 +24,6 @@ public interface OrderService {
     Order createOrder(User user, Contact contact);
 
     List<Order> getFilteredOrders(FilterOrderDto filterOrderDto);
+
+    Order update(Order order);
 }
