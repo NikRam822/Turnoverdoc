@@ -80,9 +80,8 @@ public class OrderServiceImpl implements OrderService {
         if (fileService.saveFiles(files, order)) {
             update(order);
             return true;
-        } else {
-            return false;
         }
+        return false;
 
     }
 

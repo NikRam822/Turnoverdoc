@@ -18,7 +18,7 @@ import javax.servlet.MultipartConfigElement;
 @Configuration
 @EnableSwagger2
 @SpringBootApplication
-public class 	TurnoverApplication {
+public class TurnoverApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(TurnoverApplication.class, args);

@@ -28,6 +28,8 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.turnoverdoc.turnover.error.ErrorsContainer.*;
+
 @Slf4j
 @RestController
 @RequestMapping("/api/order")
@@ -72,26 +74,19 @@ public class OrderController {
 
             MultipartFile[] files = new MultipartFile[]{contract, passport, p45, p60, p80};
 
-            try {
-                Order order = orderService.findById(Long.parseLong(orderId));
-                if (order != null) {
-                    if (order.getUser().getId().equals(user.getId())) {
-                        boolean filesUploadedSuccess = orderService.saveOrderFiles(files, user, order);
+            Order order = orderService.findById(Long.parseLong(orderId));
+            if (order != null) {
+                if (order.getUser().getId().equals(user.getId())) {
+                    boolean filesUploadedSuccess = orderService.saveOrderFiles(files, user, order);
 
-                        if (!filesUploadedSuccess) {
-                            return new ResponseEntity<>("Failed to upload files", HttpStatus.INTERNAL_SERVER_ERROR);
-                        }
-
-                        return new ResponseEntity<>("Files successfully uploaded", HttpStatus.OK);
+                    if (!filesUploadedSuccess) {
+                        throw TURN1;
                     }
-                    return new ResponseEntity<>("Invalid user for current order", HttpStatus.NOT_FOUND);
+                    return new ResponseEntity<>("Files successfully uploaded", HttpStatus.OK);
                 }
-                return new ResponseEntity<>("Invalid orderId", HttpStatus.NOT_FOUND);
-            } catch (NumberFormatException e) {
-                throw e;
-                // TODO: Create exceptions for user
+                throw TURN2;
             }
-
+            throw TURN2;
         }
         return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
