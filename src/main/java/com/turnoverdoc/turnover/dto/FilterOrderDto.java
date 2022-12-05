@@ -7,4 +7,5 @@ import lombok.Data;
 @Data
 public class FilterOrderDto {
     private OrderStatus statusOfOrder;
+    private String username;
 }

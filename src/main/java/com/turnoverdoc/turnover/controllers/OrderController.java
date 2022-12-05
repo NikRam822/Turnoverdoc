@@ -98,9 +98,8 @@ public class OrderController {
     }
 
     @PostMapping("/get-filtered-orders")
-    public ResponseEntity<List<FullOrderDto>> getFilteredOrders(@ModelAttribute FilterOrderDto filterDto, Principal principal){
-        User user = userService.findByUsername(principal.getName());
+    public ResponseEntity<List<FullOrderDto>> getFilteredOrders(@ModelAttribute FilterOrderDto filterDto){
         List<Order> orders = orderService.getFilteredOrders(filterDto);
-        return new ResponseEntity<>(FullOrderDto.toFullOrderDtoList(orders, user), HttpStatus.OK);
+        return new ResponseEntity<>(FullOrderDto.toFullOrderDtoList(orders), HttpStatus.OK);
     }
 }

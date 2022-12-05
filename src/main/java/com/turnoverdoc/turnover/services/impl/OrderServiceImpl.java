@@ -13,8 +13,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Filter;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.annotations.Where;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -133,7 +135,15 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> getFilteredOrders(FilterOrderDto filterOrderDto) {
-        List<Order> orders = orderRepository.findAllByStatus(filterOrderDto.getStatusOfOrder());
+        Order example = new Order();
+        example.setStatus(filterOrderDto.getStatusOfOrder());
+        if (filterOrderDto.getUsername() != null) {
+            User userExample = new User();
+            userExample.setUsername(filterOrderDto.getUsername());
+            example.setUser(userExample);
+        }
+
+        List<Order> orders = orderRepository.findAll(Example.of(example));
         return orders;
     }
 }
