@@ -24,7 +24,6 @@ import java.util.Optional;
 @Service
 @Slf4j
 public class OrderServiceImpl implements OrderService {
-    private SessionFactory sessionFactory;
 
     private FileService fileService;
     private final OrderRepository orderRepository;
@@ -38,10 +37,6 @@ public class OrderServiceImpl implements OrderService {
         this.contactRepository = contactRepository;
     }
 
-    @Autowired
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
 
     @Autowired
     public OrderServiceImpl(OrderRepository orderRepository) {
@@ -138,13 +133,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> getFilteredOrders(FilterOrderDto filterOrderDto) {
-        Session session = sessionFactory.openSession();
-        Filter filter = session.enableFilter("orderFilter");
-        filter.setParameter("status", filterOrderDto.getStatusOfOrder());
-        session.beginTransaction();
-        List<Order> orders = session.createQuery("from Order").list();
-        session.getTransaction().commit();
-        session.close();
+        List<Order> orders = orderRepository.findAllByStatus(filterOrderDto.getStatusOfOrder());
         return orders;
     }
 }

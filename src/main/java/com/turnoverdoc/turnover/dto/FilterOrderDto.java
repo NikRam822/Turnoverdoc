@@ -1,9 +1,10 @@
 package com.turnoverdoc.turnover.dto;
 
 
+import com.turnoverdoc.turnover.model.OrderStatus;
 import lombok.Data;
 
 @Data
 public class FilterOrderDto {
-    private String statusOfOrder;
+    private OrderStatus statusOfOrder;
 }
