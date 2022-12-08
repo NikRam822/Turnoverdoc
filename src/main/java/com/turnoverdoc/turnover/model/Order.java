@@ -16,12 +16,6 @@ import javax.persistence.Table;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@FilterDef(name="orderFilter", parameters={
-        @ParamDef(name="status", type="string")
-})
-@Filters( {
-        @Filter(name="orderFilter", condition=":status = status")
-} )
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -13,8 +13,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Filter;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.annotations.Where;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,7 +26,6 @@ import java.util.Optional;
 @Service
 @Slf4j
 public class OrderServiceImpl implements OrderService {
-    private SessionFactory sessionFactory;
 
     private FileService fileService;
     private final OrderRepository orderRepository;
@@ -38,10 +39,6 @@ public class OrderServiceImpl implements OrderService {
         this.contactRepository = contactRepository;
     }
 
-    @Autowired
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
 
     @Autowired
     public OrderServiceImpl(OrderRepository orderRepository) {
@@ -117,13 +114,15 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> getFilteredOrders(FilterOrderDto filterOrderDto) {
-        Session session = sessionFactory.openSession();
-        Filter filter = session.enableFilter("orderFilter");
-        filter.setParameter("status", filterOrderDto.getStatusOfOrder());
-        session.beginTransaction();
-        List<Order> orders = session.createQuery("from Order").list();
-        session.getTransaction().commit();
-        session.close();
+        Order example = new Order();
+        example.setStatus(filterOrderDto.getStatusOfOrder());
+        if (filterOrderDto.getUsername() != null) {
+            User userExample = new User();
+            userExample.setUsername(filterOrderDto.getUsername());
+            example.setUser(userExample);
+        }
+
+        List<Order> orders = orderRepository.findAll(Example.of(example));
         return orders;
     }
 

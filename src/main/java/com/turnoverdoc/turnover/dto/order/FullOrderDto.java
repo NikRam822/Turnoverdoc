@@ -21,10 +21,12 @@ public class FullOrderDto {
     private OrderStatus status;
     private ContactDto contact;
 
-    public static FullOrderDto toFullOrderDto(Order order, User user) {
+    public static FullOrderDto toFullOrderDto(Order order) {
         FullOrderDto fullOrderDto = new FullOrderDto();
-        fullOrderDto.setUserID(user.getId());
-        fullOrderDto.setUsername(user.getUsername());
+        if(order.getUser()!=null) {
+            fullOrderDto.setUserID(order.getUser().getId());
+            fullOrderDto.setUsername(order.getUser().getUsername());
+        }
         fullOrderDto.setId(order.getId());
         fullOrderDto.setPassportPath(order.getPassportPath());
         fullOrderDto.setP45Path(order.getP45Path());
@@ -36,11 +38,11 @@ public class FullOrderDto {
 
         return fullOrderDto;
     }
-    public static List<FullOrderDto> toFullOrderDtoList(List<Order> orders, User user) {
+    public static List<FullOrderDto> toFullOrderDtoList(List<Order> orders) {
         List<FullOrderDto> orderDtos = new ArrayList<>();
 
         for (Order order : orders) {
-            orderDtos.add(toFullOrderDto(order, user));
+            orderDtos.add(toFullOrderDto(order));
         }
 
         return orderDtos;
