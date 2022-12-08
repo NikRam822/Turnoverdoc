@@ -130,4 +130,10 @@ public class OrderServiceImpl implements OrderService {
     public Order update(Order order) {
         return orderRepository.save(order);
     }
+
+    @Override
+    public Order changeStatus(Order order, OrderStatus status) {
+        order.setStatus(status);
+        return update(order);
+    }
 }

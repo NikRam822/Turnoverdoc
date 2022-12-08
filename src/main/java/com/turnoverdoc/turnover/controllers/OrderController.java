@@ -6,6 +6,7 @@ import com.turnoverdoc.turnover.dto.ContactDto;
 import com.turnoverdoc.turnover.dto.FilterOrderDto;
 import com.turnoverdoc.turnover.dto.order.FullOrderDto;
 import com.turnoverdoc.turnover.dto.order.OrderDto;
+import com.turnoverdoc.turnover.error.ErrorDto;
 import com.turnoverdoc.turnover.model.Contact;
 import com.turnoverdoc.turnover.model.Order;
 import com.turnoverdoc.turnover.model.OrderStatus;
@@ -66,90 +67,68 @@ public class OrderController {
                                             @RequestParam(value = "P_45", required = false) MultipartFile p45,
                                             @RequestParam(value = "P_60", required = false) MultipartFile p60,
                                             @RequestParam(value = "P_80", required = false) MultipartFile p80,
-                                            Principal principal, @PathVariable String orderId) {
+                                            Principal principal, @PathVariable String orderId) throws ErrorDto {
 
         User user = null;
         if (principal != null) {
             user = userService.findByUsername(principal.getName());
-
-            MultipartFile[] files = new MultipartFile[]{contract, passport, p45, p60, p80};
-
             Order order = orderService.findById(Long.parseLong(orderId));
-            if (order != null) {
-                if (order.getUser().getId().equals(user.getId())) {
-                    boolean filesUploadedSuccess = orderService.saveOrderFiles(files, user, order);
 
-                    if (!filesUploadedSuccess) {
-                        throw TURN1;
-                    }
-                    return new ResponseEntity<>("Files successfully uploaded", HttpStatus.OK);
+            if (order != null && order.getUser().getId().equals(user.getId()) && order.getStatus().equals(OrderStatus.REQUEST_FOR_DOCS)) {
+                MultipartFile[] files = new MultipartFile[]{contract, passport, p45, p60, p80};
+                boolean filesUploadedSuccess = orderService.saveOrderFiles(files, user, order);
+
+                if (!filesUploadedSuccess) {
+                    throw TURN1;
                 }
-                throw TURN2;
-            }
-            throw TURN2;
-        }
-        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
-    }
-
-    @Secured("ROLE_ADMIN")
-    @PostMapping("/changeStatus")
-    public ResponseEntity<String> changeStatus(@RequestBody ChangeStatusDto changeStatusDto) {
-        Order order = null;
-        try {
-            order = orderService.findById(Long.parseLong(changeStatusDto.getOrderId()));
-        } catch (NumberFormatException e) {
-            throw e;
-            // TODO: Create exceptions for admin
-        }
-
-        if (order != null) {
-            try {
-                OrderStatus status = OrderStatus.valueOf(changeStatusDto.getStatus());
-                order.setStatus(status);
-                orderService.update(order);
-                return new ResponseEntity<>("Order successful saved", HttpStatus.OK);
-            } catch (IllegalArgumentException e) {
-                throw e;
-                // TODO: Create exceptions for admin
+                return new ResponseEntity<>("Files successfully uploaded", HttpStatus.OK);
             }
         }
-        return new ResponseEntity<>("Invalid input data", HttpStatus.BAD_REQUEST);
+        throw TURN2;
     }
 
     @PostMapping("/sendBankDetails")
-    public ResponseEntity<String> sendBankDetails(@RequestBody BankDetailsDto bankDetailsDto, Principal principal) {
-        Order order = null;
-
-        try {
-            order = orderService.findById(Long.parseLong(bankDetailsDto.getOrderId()));
-        } catch (NumberFormatException e) {
-            throw e;
-            // TODO: Create exceptions for user
-        }
+    public ResponseEntity<String> sendBankDetails(@RequestBody BankDetailsDto bankDetailsDto, Principal principal) throws ErrorDto {
+        Order order = orderService.findById(Long.parseLong(bankDetailsDto.getOrderId()));
 
         User user = null;
         if (principal != null) {
             user = userService.findByUsername(principal.getName());
+
+            if (order != null && order.getId().equals(user.getId()) && order.getStatus().equals(OrderStatus.CHECK_BANKED)) {
+                if (bankDetailsService.isValid(bankDetailsDto)) {
+                    bankDetailsService.send(bankDetailsDto, order);
+                    return new ResponseEntity<>("Operation successfully implemented", HttpStatus.OK);
+                }
+                throw TURN1;
+            }
         }
+        throw TURN2;
+    }
+
+    @PostMapping("/confirmDocs/{orderId}")
+    public ResponseEntity<String> confirmDocsReceive(Principal principal, @PathVariable String orderId) throws ErrorDto {
+        User user = userService.findByUsername(principal.getName());
 
         if (user != null) {
-            if (order != null) {
-                if (order.getId().equals(user.getId())) {
-                    if (bankDetailsService.isValid(bankDetailsDto)) {
-                        bankDetailsService.send(bankDetailsDto, order);
-                        return new ResponseEntity<>("Operation successfully implemented", HttpStatus.OK);
-                    }
-                    return new ResponseEntity<>("Invalid input data", HttpStatus.BAD_REQUEST);
+            Order order = orderService.findById(Long.parseLong(orderId));
+            if (order != null && order.getUser().getId().equals(user.getId())) {
+                if (order.getContractPath() != null &&
+                        order.getP45Path() != null &&
+                        order.getP60Path() != null &&
+                        order.getP80Path() != null &&
+                        order.getPassportPath() != null) {
+                    orderService.changeStatus(order, OrderStatus.ALL_DOCS_RECEIVED);
+                    return new ResponseEntity<>("Docs successfully confirmed", HttpStatus.OK);
                 }
-                return new ResponseEntity<>("Invalid orderId", HttpStatus.NOT_FOUND);
+                throw TURN1;
             }
-            return new ResponseEntity<>("Order not found", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        throw TURN2;
     }
 
     @PostMapping("/createOrder")
-    public ResponseEntity<String> createOrderAndContacts(@ModelAttribute ContactDto contactDto, Principal principal) {
+    public ResponseEntity<String> createOrderAndContacts(@ModelAttribute ContactDto contactDto, Principal principal) throws ErrorDto {
         // first step, where user send his contacts
         User user = userService.findByUsername(principal.getName());
         if (user != null) {
@@ -159,22 +138,23 @@ public class OrderController {
 
                 return new ResponseEntity<>("Order with contacts successfully created with order id - " + order.getId(), HttpStatus.OK);
             }
-            return new ResponseEntity<>("Invalid contacts", HttpStatus.BAD_REQUEST);
+            throw TURN1;
         }
 
-        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        throw TURN2;
     }
 
     @GetMapping("/get/all")
-    public ResponseEntity<List<OrderDto>> getAllOrdersForUser(Principal principal) {
+    public ResponseEntity<List<OrderDto>> getAllOrdersForUser(Principal principal) throws ErrorDto {
         User user = userService.findByUsername(principal.getName());
         List<Order> orders = new ArrayList<>();
 
         if (user != null) {
             orders = orderService.getAllForUser(user.getId());
+            return new ResponseEntity<>(OrderDto.toOrderDtoList(orders), HttpStatus.OK);
         }
 
-        return new ResponseEntity<>(OrderDto.toOrderDtoList(orders), HttpStatus.OK);
+        throw TURN2;
     }
 
     @PostMapping("/get-filtered-orders")

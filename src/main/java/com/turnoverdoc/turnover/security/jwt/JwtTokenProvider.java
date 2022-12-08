@@ -98,6 +98,7 @@ public class JwtTokenProvider {
 
         return result;
     }
+
     public void setCookieJwt(String token, HttpServletResponse responseHttp){
         Cookie cookie = new Cookie("token", token);
         cookie.setPath("/");

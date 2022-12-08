@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ErrorDto extends RuntimeException {
+public class ErrorDto extends Exception {
     private String name;
     private String description;
 }

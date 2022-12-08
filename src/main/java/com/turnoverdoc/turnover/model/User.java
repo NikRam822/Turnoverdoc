@@ -18,7 +18,6 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "users")
 @SQLDelete(sql="UPDATE users SET status = 'DELETED' where id=?")
-@Where(clause="status != 'DELETED'")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
