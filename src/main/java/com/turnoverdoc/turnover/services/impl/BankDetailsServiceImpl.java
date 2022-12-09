@@ -19,11 +19,6 @@ public class BankDetailsServiceImpl implements BankDetailsService {
     }
 
     @Override
-    public boolean isValid(BankDetailsDto bankDetailsDto) {
-        return true;
-    }
-
-    @Override
     public boolean send(BankDetailsDto bankDetailsDto, Order order) {
         order.setStatus(OrderStatus.BANK_DETAILS_RECEIVED);
         orderService.update(order);

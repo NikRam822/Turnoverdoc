@@ -96,11 +96,8 @@ public class OrderController {
             user = userService.findByUsername(principal.getName());
 
             if (order != null && order.getId().equals(user.getId()) && order.getStatus().equals(OrderStatus.CHECK_BANKED)) {
-                if (bankDetailsService.isValid(bankDetailsDto)) {
-                    bankDetailsService.send(bankDetailsDto, order);
-                    return new ResponseEntity<>("Operation successfully implemented", HttpStatus.OK);
-                }
-                throw TURN1;
+                bankDetailsService.send(bankDetailsDto, order);
+                return new ResponseEntity<>("Operation successfully implemented", HttpStatus.OK);
             }
         }
         throw TURN2;
@@ -132,13 +129,10 @@ public class OrderController {
         // first step, where user send his contacts
         User user = userService.findByUsername(principal.getName());
         if (user != null) {
-            if (contactService.isValid(contactDto)) {
-                Contact contact = contactService.addContact(contactDto);
-                Order order = orderService.createOrder(user, contact);
+            Contact contact = contactService.addContact(contactDto);
+            Order order = orderService.createOrder(user, contact);
 
-                return new ResponseEntity<>("Order with contacts successfully created with order id - " + order.getId(), HttpStatus.OK);
-            }
-            throw TURN1;
+            return new ResponseEntity<>("Order with contacts successfully created with order id - " + order.getId(), HttpStatus.OK);
         }
 
         throw TURN2;
