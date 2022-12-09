@@ -95,7 +95,7 @@ public class OrderController {
         if (principal != null) {
             user = userService.findByUsername(principal.getName());
 
-            if (order != null && order.getId().equals(user.getId()) && order.getStatus().equals(OrderStatus.CHECK_BANKED)) {
+            if (order != null && order.getUser().getId().equals(user.getId()) && order.getStatus().equals(OrderStatus.CHECK_BANKED)) {
                 bankDetailsService.send(bankDetailsDto, order);
                 return new ResponseEntity<>("Operation successfully implemented", HttpStatus.OK);
             }
