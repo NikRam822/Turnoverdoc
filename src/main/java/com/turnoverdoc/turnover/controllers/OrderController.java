@@ -1,7 +1,6 @@
 package com.turnoverdoc.turnover.controllers;
 
 import com.turnoverdoc.turnover.dto.BankDetailsDto;
-import com.turnoverdoc.turnover.dto.ChangeStatusDto;
 import com.turnoverdoc.turnover.dto.ContactDto;
 import com.turnoverdoc.turnover.dto.FilterOrderDto;
 import com.turnoverdoc.turnover.dto.order.FullOrderDto;
@@ -20,11 +19,9 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +32,6 @@ import static com.turnoverdoc.turnover.error.ErrorsContainer.*;
 @RestController
 @RequestMapping("/api/order")
 public class OrderController {
-    private final Logger LOGGER = log;
     private OrderService orderService;
     private UserService userService;
     private ContactService contactService;
@@ -95,7 +91,7 @@ public class OrderController {
         if (principal != null) {
             user = userService.findByUsername(principal.getName());
 
-            if (order != null && order.getUser().getId().equals(user.getId()) && order.getStatus().equals(OrderStatus.CHECK_BANKED)) {
+            if (order != null && order.getUser().getId().equals(user.getId()) && order.getStatus().equals(OrderStatus.CHEQUE_BANKED)) {
                 bankDetailsService.send(bankDetailsDto, order);
                 return new ResponseEntity<>("Operation successfully implemented", HttpStatus.OK);
             }

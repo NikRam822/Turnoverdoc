@@ -10,10 +10,6 @@ import com.turnoverdoc.turnover.repositories.OrderRepository;
 import com.turnoverdoc.turnover.services.FileService;
 import com.turnoverdoc.turnover.services.OrderService;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Filter;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.annotations.Where;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -21,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Slf4j
@@ -57,7 +52,7 @@ public class OrderServiceImpl implements OrderService {
         order.setP60Path(order.getP60Path());
         order.setP80Path(order.getP80Path());
         order.setPassportPath(order.getPassportPath());
-        order.setStatus(OrderStatus.RECEIVED);
+        order.setStatus(OrderStatus.CONTACT_RECEIVED);
         order.setUser(user);
         Order addedOrder = null;
         try {
@@ -108,7 +103,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order();
         order.setUser(user);
         order.setContact(contact);
-        order.setStatus(OrderStatus.RECEIVED);
+        order.setStatus(OrderStatus.CONTACT_RECEIVED);
         return orderRepository.save(order);
     }
 
