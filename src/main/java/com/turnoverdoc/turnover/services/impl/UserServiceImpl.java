@@ -1,6 +1,7 @@
 package com.turnoverdoc.turnover.services.impl;
 
 import com.turnoverdoc.turnover.dto.PasswordDto;
+import com.turnoverdoc.turnover.error.ErrorDto;
 import com.turnoverdoc.turnover.model.Role;
 import com.turnoverdoc.turnover.model.UserStatus;
 import com.turnoverdoc.turnover.model.User;
@@ -17,6 +18,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.turnoverdoc.turnover.error.ErrorsContainer.TURN3;
 
 @Service
 @Slf4j
@@ -57,14 +60,13 @@ public class UserServiceImpl implements UserService {
         return registeredUser;
     }
 
-    public boolean changePassword(PasswordDto passwordDto, User user) {
+    public void changePassword(PasswordDto passwordDto, User user) throws ErrorDto {
         if (BCrypt.checkpw(passwordDto.getOldPassword(), user.getPassword())) {
             user.setPassword(passwordEncoder.encode(passwordDto.getNewPassword()));
             userRepository.save(user);
-            return true;
+        } else {
+            throw TURN3;
         }
-
-        return false;
     }
 
     @Override

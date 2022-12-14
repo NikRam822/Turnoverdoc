@@ -114,7 +114,6 @@ public class OrderController {
                     orderService.changeStatus(order, OrderStatus.ALL_DOCS_RECEIVED);
                     return new ResponseEntity<>("Docs successfully confirmed", HttpStatus.OK);
                 }
-                throw TURN1;
             }
         }
         throw TURN2;

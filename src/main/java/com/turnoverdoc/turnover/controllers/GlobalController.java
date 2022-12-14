@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
 public class GlobalController {
     @ExceptionHandler(ErrorDto.class)
     public ResponseEntity<String> handleError(ErrorDto ex) {
-        return new ResponseEntity<>("There was an error: " + ex.getName() + " " + ex.getDescription() + " " + ex.getMessage(), HttpStatus.CONFLICT);
+        return new ResponseEntity<>("There was an error: " + ex.getDescription(), HttpStatus.CONFLICT);
     }
 
 }

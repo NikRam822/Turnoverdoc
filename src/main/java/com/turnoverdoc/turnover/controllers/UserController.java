@@ -2,6 +2,7 @@ package com.turnoverdoc.turnover.controllers;
 
 import com.turnoverdoc.turnover.dto.PasswordDto;
 import com.turnoverdoc.turnover.dto.UserDto;
+import com.turnoverdoc.turnover.error.ErrorDto;
 import com.turnoverdoc.turnover.model.User;
 import com.turnoverdoc.turnover.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.turnoverdoc.turnover.error.ErrorsContainer.TURN2;
+
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
@@ -26,18 +29,19 @@ public class UserController {
     }
 
     @PostMapping("/changePassword")
-    public ResponseEntity<String> changePassword(@RequestBody PasswordDto passwordDto, Principal principal) {
+    public ResponseEntity<String> changePassword(@RequestBody PasswordDto passwordDto, Principal principal) throws ErrorDto {
         User user = userService.findByUsername(principal.getName());
 
         if (user != null) {
-            boolean success = userService.changePassword(passwordDto, user);
-
-            if (success) {
+            try {
+                userService.changePassword(passwordDto, user);
                 return new ResponseEntity<>("Your password has benn successfully updated", HttpStatus.OK);
+            } catch (ErrorDto e) {
+                throw e;
             }
-            return new ResponseEntity<>("Your old password and new password are not equals", HttpStatus.CONFLICT);
+
         }
 
-        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        throw TURN2;
     }
 }
