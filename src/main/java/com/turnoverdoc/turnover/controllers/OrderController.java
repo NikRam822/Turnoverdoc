@@ -145,10 +145,4 @@ public class OrderController {
 
         throw TURN2;
     }
-
-    @PostMapping("/get-filtered-orders")
-    public ResponseEntity<List<FullOrderDto>> getFilteredOrders(@ModelAttribute FilterOrderDto filterDto){
-        List<Order> orders = orderService.getFilteredOrders(filterDto);
-        return new ResponseEntity<>(FullOrderDto.toFullOrderDtoList(orders), HttpStatus.OK);
-    }
 }

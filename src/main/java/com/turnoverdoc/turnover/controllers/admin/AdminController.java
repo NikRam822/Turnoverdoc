@@ -1,6 +1,8 @@
 package com.turnoverdoc.turnover.controllers.admin;
 
 import com.turnoverdoc.turnover.dto.ChangeStatusDto;
+import com.turnoverdoc.turnover.dto.FilterOrderDto;
+import com.turnoverdoc.turnover.dto.order.FullOrderDto;
 import com.turnoverdoc.turnover.error.ErrorDto;
 import com.turnoverdoc.turnover.model.Order;
 import com.turnoverdoc.turnover.services.ExportService;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 import static com.turnoverdoc.turnover.error.ErrorsContainer.TURN2;
 
@@ -50,5 +53,11 @@ public class AdminController {
             return new ResponseEntity<>("Order successful saved", HttpStatus.OK);
         }
         throw TURN2;
+    }
+
+    @PostMapping("order/get-filtered-orders")
+    public ResponseEntity<List<FullOrderDto>> getFilteredOrders(@ModelAttribute FilterOrderDto filterDto){
+        List<Order> orders = orderService.getFilteredOrders(filterDto);
+        return new ResponseEntity<>(FullOrderDto.toFullOrderDtoList(orders), HttpStatus.OK);
     }
 }
