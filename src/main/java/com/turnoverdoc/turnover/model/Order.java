@@ -5,10 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity
 @Table(name = "orders")
@@ -49,6 +52,10 @@ public class Order {
     @JoinColumn(name = "userId", referencedColumnName = "id")
     @NotFound(action = NotFoundAction.IGNORE)
     private User user;
+
+    @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm:ss")
+    @Column(name = "date")
+    private Timestamp timestampDate;
 
 
     public Order(String passportPath, String p45Path, String p60Path, String p80Path, String contractPath) {

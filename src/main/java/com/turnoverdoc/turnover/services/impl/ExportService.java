@@ -30,9 +30,9 @@ public class ExportService implements com.turnoverdoc.turnover.services.ExportSe
     public void writeOrderToCsv(Writer writer) {
         List<Order> orders = orderService.getAll();
         try (CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT)) {
-            csvPrinter.printRecord("ID", "STATUS", "USER_ID", "USERNAME", "PASSPORT", "P45", "P60", "P80", "CONTRACT");
+            csvPrinter.printRecord("ID", "STATUS", "USER_ID", "USERNAME", "PASSPORT", "P45", "P60", "P80", "CONTRACT", "DATE");
             for (Order order : orders) {
-                if(order.getUser()!=null) {
+                if (order.getUser() != null) {
                     csvPrinter.printRecord(order.getId(),
                             order.getStatus(),
                             order.getUser().getId(),
@@ -41,11 +41,13 @@ public class ExportService implements com.turnoverdoc.turnover.services.ExportSe
                             order.getP45Path(),
                             order.getP60Path(),
                             order.getP80Path(),
-                            order.getContractPath());
+                            order.getContractPath(),
+                            (order.getTimestampDate()!=null) ? order.getTimestampDate():""
+                            );
                 }
             }
         } catch (IOException e) {
-            log.error("Error While writing CSV ", e);
+            LOGGER.error("Error While writing CSV ", e);
         }
     }
 }

@@ -16,6 +16,8 @@ import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -104,6 +106,7 @@ public class OrderServiceImpl implements OrderService {
         order.setUser(user);
         order.setContact(contact);
         order.setStatus(OrderStatus.CONTACT_RECEIVED);
+        order.setTimestampDate(new Timestamp(new Date().getTime()));
         return orderRepository.save(order);
     }
 
