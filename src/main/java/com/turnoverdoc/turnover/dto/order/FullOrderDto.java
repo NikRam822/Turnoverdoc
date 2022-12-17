@@ -6,6 +6,7 @@ import com.turnoverdoc.turnover.model.OrderStatus;
 import com.turnoverdoc.turnover.model.User;
 import lombok.Data;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 @Data
@@ -20,6 +21,7 @@ public class FullOrderDto {
     private String contractPath;
     private OrderStatus status;
     private ContactDto contact;
+    private Timestamp date;
 
     public static FullOrderDto toFullOrderDto(Order order) {
         FullOrderDto fullOrderDto = new FullOrderDto();
@@ -35,6 +37,7 @@ public class FullOrderDto {
         fullOrderDto.setContractPath(order.getContractPath());
         fullOrderDto.setStatus(order.getStatus());
         fullOrderDto.setContact(ContactDto.toContactDto(order.getContact()));
+        fullOrderDto.setDate(order.getTimestampDate());
 
         return fullOrderDto;
     }
