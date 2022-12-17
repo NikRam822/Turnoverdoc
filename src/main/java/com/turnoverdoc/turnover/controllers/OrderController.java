@@ -148,7 +148,7 @@ public class OrderController {
         throw TURN2;
     }
 
-
+//TODO:When there is a frontend - rewrite to Post!!! (For ease of testing, I made a get)
     @GetMapping("/download/{orderId}/{documentFile}")
     public ResponseEntity<org.springframework.core.io.Resource> downloadFile(@PathVariable String orderId,  @PathVariable DocumentFiles documentFile) throws Exception {
         File file = null;
