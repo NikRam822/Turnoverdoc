@@ -2,8 +2,6 @@ package com.turnoverdoc.turnover.controllers;
 
 import com.turnoverdoc.turnover.dto.BankDetailsDto;
 import com.turnoverdoc.turnover.dto.ContactDto;
-import com.turnoverdoc.turnover.dto.FilterOrderDto;
-import com.turnoverdoc.turnover.dto.order.FullOrderDto;
 import com.turnoverdoc.turnover.dto.order.OrderDto;
 import com.turnoverdoc.turnover.error.ErrorDto;
 import com.turnoverdoc.turnover.model.Contact;
@@ -14,14 +12,18 @@ import com.turnoverdoc.turnover.services.BankDetailsService;
 import com.turnoverdoc.turnover.services.ContactService;
 import com.turnoverdoc.turnover.services.OrderService;
 import com.turnoverdoc.turnover.services.UserService;
+import com.turnoverdoc.turnover.services.impl.file_service.DocumentFiles;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,11 +61,11 @@ public class OrderController {
 
     @RequestMapping(value = "/uploadDocs/{orderId}", method = RequestMethod.POST)
     public ResponseEntity<String> handleFileUpload(@RequestParam("CONTRACT") MultipartFile contract,
-                                            @RequestParam("PASSPORT") MultipartFile passport,
-                                            @RequestParam(value = "P_45", required = false) MultipartFile p45,
-                                            @RequestParam(value = "P_60", required = false) MultipartFile p60,
-                                            @RequestParam(value = "P_80", required = false) MultipartFile p80,
-                                            Principal principal, @PathVariable String orderId) throws ErrorDto {
+                                                   @RequestParam("PASSPORT") MultipartFile passport,
+                                                   @RequestParam(value = "P_45", required = false) MultipartFile p45,
+                                                   @RequestParam(value = "P_60", required = false) MultipartFile p60,
+                                                   @RequestParam(value = "P_80", required = false) MultipartFile p80,
+                                                   Principal principal, @PathVariable String orderId) throws ErrorDto {
 
         User user = null;
         if (principal != null) {
@@ -145,4 +147,25 @@ public class OrderController {
 
         throw TURN2;
     }
+
+
+    @GetMapping("/download/{orderId}/{documentFile}")
+    public ResponseEntity<org.springframework.core.io.Resource> downloadFile(@PathVariable String orderId,  @PathVariable DocumentFiles documentFile) throws Exception {
+        File file = null;
+        Order order = orderService.findById(Long.valueOf(orderId));
+        if (order != null) {
+            file = orderService.getFileDocByOrder(order, documentFile.name());
+        }
+
+        if (file == null) {
+            return new ResponseEntity("File " + documentFile.name() + " is not exist for Order with Id: " + orderId, HttpStatus.BAD_REQUEST);
+        }
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(file.toURL().openConnection().getContentType()))
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=" + documentFile.name() + "." + com.google.common.io.Files.getFileExtension(file.getPath()))
+                .body(new ByteArrayResource(Files.readAllBytes(file.toPath())));
+    }
+
 }

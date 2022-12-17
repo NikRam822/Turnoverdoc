@@ -16,6 +16,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -69,9 +70,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public boolean saveOrderFiles(MultipartFile[] files, User user, Order order) {
-        fileService.setDirPath(String.valueOf(user.getId() + "_" + order.getId()));
 
-        if (fileService.saveFiles(files, order)) {
+        if (fileService.saveFiles(files, order, String.valueOf(user.getId() + "_" + order.getId()))) {
             update(order);
             return true;
         }
@@ -133,5 +133,10 @@ public class OrderServiceImpl implements OrderService {
     public Order changeStatus(Order order, OrderStatus status) {
         order.setStatus(status);
         return update(order);
+    }
+
+    @Override
+    public File getFileDocByOrder(Order order, String fileName) {
+        return fileService.getFileDoc(order.getUser().getId() + "_" + order.getId(),fileName);
     }
 }

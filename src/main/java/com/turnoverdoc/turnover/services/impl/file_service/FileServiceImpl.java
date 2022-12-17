@@ -22,23 +22,18 @@ public class FileServiceImpl implements FileService {
 
     private final Logger LOGGER = log;
 
-    String dirName;
 
     @Value("${upload.path}")
     private String uploadPath;
 
-    @Override
-    public void setDirPath(String dirName) {
-        this.dirName = dirName;
-    }
 
     @Override
-    public boolean saveFiles(MultipartFile[] files, Order order) {
+    public boolean saveFiles(MultipartFile[] files, Order order, String dirName) {
 
         for (MultipartFile file : files) {
 
             if (file != null) {
-                String currentFilePath = uploadFile(file);
+                String currentFilePath = uploadFile(file, dirName);
                 if (currentFilePath == null) {
                     LOGGER.warn("File " + file.getName() + " is not saved. Current file path is null.");
                     return false;
@@ -49,8 +44,8 @@ public class FileServiceImpl implements FileService {
         return true;
     }
 
-    private String uploadFile(MultipartFile file) {
-        String newDirPath = createFolder();
+    private String uploadFile(MultipartFile file, String dirName) {
+        String newDirPath = createFolder(dirName);
         String name = file.getName();
         if (!file.isEmpty()) {
             try {
@@ -70,7 +65,7 @@ public class FileServiceImpl implements FileService {
 
     }
 
-    private String createFolder() {
+    private String createFolder(String dirName) {
 
         Path path = Paths.get(this.uploadPath + "\\" + dirName);
 
@@ -106,6 +101,19 @@ public class FileServiceImpl implements FileService {
 
         }
 
+    }
+
+
+    public File getFileDoc(String dirPath, String fileName) {
+        String pathToDir = uploadPath + "\\" + dirPath;
+        File[] folderEntries = new File(pathToDir).listFiles();
+        for (File entry : folderEntries) {
+            if (entry.toPath().toString().contains(pathToDir + "\\" + fileName)) {
+                return entry;
+            }
+        }
+        LOGGER.error("File is not exists: " + pathToDir + "\\" + fileName);
+        return null;
     }
 
 

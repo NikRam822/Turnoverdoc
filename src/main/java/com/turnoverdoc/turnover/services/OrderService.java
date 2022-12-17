@@ -7,6 +7,7 @@ import com.turnoverdoc.turnover.model.OrderStatus;
 import com.turnoverdoc.turnover.model.User;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 
 public interface OrderService {
@@ -29,4 +30,6 @@ public interface OrderService {
     Order update(Order order);
 
     Order changeStatus(Order order, OrderStatus status);
+
+    File getFileDocByOrder(Order order, String fileName);
 }
