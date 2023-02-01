@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class BankDetailsDto {
-    private String cardNumber;
+    private String bic;
+    private String iban;
     private String orderId;
 }

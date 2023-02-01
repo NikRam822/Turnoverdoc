@@ -33,8 +33,8 @@ public class TurnoverApplication {
 	@Bean
 	MultipartConfigElement multipartConfigElement() {
 		MultipartConfigFactory factory = new MultipartConfigFactory();
-		factory.setMaxFileSize(DataSize.parse("1MB"));
-		factory.setMaxRequestSize(DataSize.parse("1MB"));
+		factory.setMaxFileSize(DataSize.parse("15MB"));
+		factory.setMaxRequestSize(DataSize.parse("150MB"));
 		return factory.createMultipartConfig();
 	}
 }

@@ -31,10 +31,14 @@ public class Contact {
     @OneToOne(mappedBy = "contact")
     private Order order;
 
-    public Contact(String phone, String email, String messenger, Order addedOrder) {
+    @Column(name = "messenger_type")
+    private MessengerType messengerType;
+
+    public Contact(String phone, String email, String messenger, Order addedOrder, MessengerType messengerType) {
         this.phone = phone;
         this.email = email;
         this.messenger = messenger;
         this.order = addedOrder;
+        this.messengerType = messengerType;
     }
 }
