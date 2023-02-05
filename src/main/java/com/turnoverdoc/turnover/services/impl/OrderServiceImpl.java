@@ -26,8 +26,9 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
 
     private FileService fileService;
-    private final OrderRepository orderRepository;
+    private MailSenderService mailSenderService;
 
+    private final OrderRepository orderRepository;
     private ContactRepository contactRepository;
 
     private final Logger LOGGER = log;
@@ -37,6 +38,10 @@ public class OrderServiceImpl implements OrderService {
         this.contactRepository = contactRepository;
     }
 
+    @Autowired
+    public void setMailSenderService(MailSenderService mailSenderService) {
+        this.mailSenderService = mailSenderService;
+    }
 
     @Autowired
     public OrderServiceImpl(OrderRepository orderRepository) {
@@ -107,7 +112,11 @@ public class OrderServiceImpl implements OrderService {
         order.setContact(contact);
         order.setStatus(OrderStatus.CONTACT_RECEIVED);
         order.setTimestampDate(new Timestamp(new Date().getTime()));
-        return orderRepository.save(order);
+        Order savedOrder = orderRepository.save(order);
+
+        mailSenderService.sendChangeStatusEmail(order.getContact().getEmail(), OrderStatus.CONTACT_RECEIVED.getMailDescription());
+
+        return savedOrder;
     }
 
     @Override
@@ -132,7 +141,9 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order changeStatus(Order order, OrderStatus status) {
         order.setStatus(status);
-        return update(order);
+        Order updatedOrder = update(order);
+        mailSenderService.sendChangeStatusEmail(order.getContact().getEmail(), status.getMailDescription());
+        return updatedOrder;
     }
 
     @Override

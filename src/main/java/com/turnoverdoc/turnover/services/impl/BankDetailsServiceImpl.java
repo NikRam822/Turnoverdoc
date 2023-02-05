@@ -16,10 +16,16 @@ import static com.turnoverdoc.turnover.error.ErrorsContainer.TURN4;
 @Service
 public class BankDetailsServiceImpl implements BankDetailsService {
     private OrderService orderService;
+    private MailSenderService mailSenderService;
 
     @Autowired
     public void setOrderService(OrderService orderService) {
         this.orderService = orderService;
+    }
+
+    @Autowired
+    public void setMailSenderService(MailSenderService mailSenderService) {
+        this.mailSenderService = mailSenderService;
     }
 
     @Override
@@ -27,6 +33,7 @@ public class BankDetailsServiceImpl implements BankDetailsService {
         if (isValid(bankDetailsDto)) {
             order.setStatus(OrderStatus.BANK_DETAILS_RECEIVED);
             orderService.update(order);
+            mailSenderService.sendChangeStatusEmail(order.getContact().getEmail(), OrderStatus.BANK_DETAILS_RECEIVED.getMailDescription());
             return true;
         }
         return false;
