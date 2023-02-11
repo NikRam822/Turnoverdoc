@@ -22,9 +22,6 @@ public class Contact {
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "email")
-    private String email;
-
     @Column(name = "messanger")
     private String messenger;
 
@@ -34,9 +31,8 @@ public class Contact {
     @Column(name = "messenger_type")
     private MessengerType messengerType;
 
-    public Contact(String phone, String email, String messenger, Order addedOrder, MessengerType messengerType) {
+    public Contact(String phone, String messenger, Order addedOrder, MessengerType messengerType) {
         this.phone = phone;
-        this.email = email;
         this.messenger = messenger;
         this.order = addedOrder;
         this.messengerType = messengerType;

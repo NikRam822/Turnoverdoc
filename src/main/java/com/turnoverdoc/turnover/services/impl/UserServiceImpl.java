@@ -1,10 +1,10 @@
 package com.turnoverdoc.turnover.services.impl;
 
 import com.turnoverdoc.turnover.dto.PasswordDto;
+import com.turnoverdoc.turnover.dto.authentication_request_dto.RegistrationRequest;
 import com.turnoverdoc.turnover.error.ErrorDto;
-import com.turnoverdoc.turnover.model.Role;
-import com.turnoverdoc.turnover.model.UserStatus;
-import com.turnoverdoc.turnover.model.User;
+import com.turnoverdoc.turnover.model.*;
+import com.turnoverdoc.turnover.repositories.PasswordTokenRepository;
 import com.turnoverdoc.turnover.repositories.RoleRepository;
 import com.turnoverdoc.turnover.repositories.UserRepository;
 import com.turnoverdoc.turnover.services.UserService;
@@ -26,22 +26,32 @@ import static com.turnoverdoc.turnover.error.ErrorsContainer.TURN3;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private PasswordTokenRepository passwordTokenRepository;
     private PasswordEncoder passwordEncoder;
 
     private final Logger LOGGER = log;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordTokenRepository passwordTokenRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.passwordTokenRepository = passwordTokenRepository;
         this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
     @Override
-    public User register(User user) {
+    public User register(RegistrationRequest registrationRequest) {
         Role roleUser = roleRepository.findByName("ROLE_USER");
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(roleUser);
+
+        User user = new User();
+        user.setUsername(registrationRequest.getUsername());
+        user.setPassword(registrationRequest.getPassword());
+        user.setFirstName(registrationRequest.getFirstName());
+        user.setSecondName(registrationRequest.getSecondName());
+        user.setSurname(registrationRequest.getSurname());
+        user.setEmail(registrationRequest.getEmail());
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(userRoles);
@@ -67,6 +77,17 @@ public class UserServiceImpl implements UserService {
         } else {
             throw TURN3;
         }
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public void resetPassword(String newPassword, User user) {
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
     }
 
     @Override

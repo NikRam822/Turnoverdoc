@@ -74,14 +74,9 @@ public class AuthenticationRestController {
             LOGGER.warn("User with username {} is already exist", user.getUsername());
             return new ResponseEntity<>("User with this username is already exist", HttpStatus.CONFLICT);
         }
-        user = new User();
-        user.setUsername(requestDto.getUsername());
-        user.setPassword(requestDto.getPassword());
-        user.setFirstName(requestDto.getFirstName());
-        user.setSecondName(requestDto.getSecondName());
-        user.setSurname(requestDto.getSurname());
-        userService.register(user);
-        LOGGER.info("Successful registration user with username {}", user.getUsername());
+
+        User createdUser = userService.register(requestDto);
+        LOGGER.info("Successful registration user with username {}", createdUser.getUsername());
         return new ResponseEntity<>("Successful registration", HttpStatus.CREATED);
     }
 

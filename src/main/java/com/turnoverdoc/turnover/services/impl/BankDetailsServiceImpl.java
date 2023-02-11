@@ -33,7 +33,7 @@ public class BankDetailsServiceImpl implements BankDetailsService {
         if (isValid(bankDetailsDto)) {
             order.setStatus(OrderStatus.BANK_DETAILS_RECEIVED);
             orderService.update(order);
-            mailSenderService.sendChangeStatusEmail(order.getContact().getEmail(), OrderStatus.BANK_DETAILS_RECEIVED.getMailDescription());
+            mailSenderService.sendChangeStatusEmail(order.getUser().getEmail(), OrderStatus.BANK_DETAILS_RECEIVED.getMailDescription());
             return true;
         }
         return false;

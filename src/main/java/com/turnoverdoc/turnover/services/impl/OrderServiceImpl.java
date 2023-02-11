@@ -114,7 +114,7 @@ public class OrderServiceImpl implements OrderService {
         order.setTimestampDate(new Timestamp(new Date().getTime()));
         Order savedOrder = orderRepository.save(order);
 
-        mailSenderService.sendChangeStatusEmail(order.getContact().getEmail(), OrderStatus.CONTACT_RECEIVED.getMailDescription());
+        mailSenderService.sendChangeStatusEmail(order.getUser().getEmail(), OrderStatus.CONTACT_RECEIVED.getMailDescription());
 
         return savedOrder;
     }
@@ -142,7 +142,7 @@ public class OrderServiceImpl implements OrderService {
     public Order changeStatus(Order order, OrderStatus status) {
         order.setStatus(status);
         Order updatedOrder = update(order);
-        mailSenderService.sendChangeStatusEmail(order.getContact().getEmail(), status.getMailDescription());
+        mailSenderService.sendChangeStatusEmail(order.getUser().getEmail(), status.getMailDescription());
         return updatedOrder;
     }
 

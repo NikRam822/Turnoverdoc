@@ -15,11 +15,12 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtTokenProvider jwtTokenProvider;
 
-    private static final String ADMIN_ENDPOINTS = "/api/v1/admin/**";
-    private static final String LOGIN_ENDPOINTS = "/api/v1/auth/login/**";
-    private static final String ADMIN_LOGIN_ENDPOINTS = "/api/v1/auth/admin/login";
-    private static final String REGISTRATION_ENDPOINTS = "/api/v1/auth/registration";
-    private static final String AUTH_ADMIN_ENDPOINTS = "/api/v1/super-admin/auth/**";
+    private static final String ADMIN_BASEURL = "/api/v1/admin/**";
+    private static final String LOGIN_BASEURL = "/api/v1/auth/login/**";
+    private static final String ADMIN_LOGIN_BASEURL = "/api/v1/auth/admin/login";
+    private static final String REGISTRATION_BASEURL = "/api/v1/auth/registration";
+    private static final String AUTH_ADMIN_BASEURL = "/api/v1/super-admin/auth/**";
+    private static final String RESET_PASSWORD_BASEURL = "/api/v1/resetPassword/**";
 
     @Autowired
     public SecurityConfig(JwtTokenProvider jwtTokenProvider) {
@@ -40,17 +41,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(LOGIN_ENDPOINTS).permitAll()
-                .antMatchers(REGISTRATION_ENDPOINTS).permitAll()
-                .antMatchers(ADMIN_ENDPOINTS).hasAnyRole("ADMIN","SUPER_ADMIN")
-                .antMatchers(ADMIN_LOGIN_ENDPOINTS).permitAll()
-                .antMatchers(AUTH_ADMIN_ENDPOINTS).hasRole("SUPER_ADMIN")
+                .antMatchers(LOGIN_BASEURL).permitAll()
+                .antMatchers(REGISTRATION_BASEURL).permitAll()
+                .antMatchers(RESET_PASSWORD_BASEURL).permitAll()
+                .antMatchers(ADMIN_BASEURL).hasAnyRole("ADMIN","SUPER_ADMIN")
+                .antMatchers(ADMIN_LOGIN_BASEURL).permitAll()
+                .antMatchers(AUTH_ADMIN_BASEURL).hasRole("SUPER_ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .apply(new JwtConfigurer(jwtTokenProvider))
                 .and()
                 .logout()
-                .logoutUrl(LOGIN_ENDPOINTS+"/logout")
+                .logoutUrl(LOGIN_BASEURL +"/logout")
                 .invalidateHttpSession(true)
                 .deleteCookies("token");
     }

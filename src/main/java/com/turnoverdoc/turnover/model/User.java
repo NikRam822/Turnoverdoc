@@ -39,6 +39,8 @@ public class User {
     @Column(name = "surname")
     private String surname;
 
+    private String email;
+
     @OneToMany(mappedBy = "user")
     private Collection<Order> order;
 
