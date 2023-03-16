@@ -11,7 +11,6 @@ import java.io.File;
 import java.util.List;
 
 public interface OrderService {
-    Order addOrder(Order order, User user);
 
     List<Order> getAll();
 

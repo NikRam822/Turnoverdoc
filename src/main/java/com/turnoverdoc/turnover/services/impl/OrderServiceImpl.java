@@ -54,26 +54,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order addOrder(Order order, User user) {
-        order.setContractPath(order.getContractPath());
-        order.setP45Path(order.getP45Path());
-        order.setP60Path(order.getP60Path());
-        order.setP80Path(order.getP80Path());
-        order.setPassportPath(order.getPassportPath());
-        order.setStatus(OrderStatus.CONTACT_RECEIVED);
-        order.setUser(user);
-        Order addedOrder = null;
-        try {
-            addedOrder = orderRepository.save(order);
-            LOGGER.info("Added new order: {}", addedOrder);
-        } catch (IllegalArgumentException e) {
-            LOGGER.error("Failed to save new order: order is null");
-            throw new IllegalArgumentException(e);
-        }
-        return addedOrder;
-    }
-
-    @Override
     public boolean saveOrderFiles(MultipartFile[] files, User user, Order order) {
 
         if (fileService.saveFiles(files, order, String.valueOf(user.getId() + "_" + order.getId()))) {
@@ -110,13 +90,10 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order();
         order.setUser(user);
         order.setContact(contact);
-        order.setStatus(OrderStatus.CONTACT_RECEIVED);
         order.setTimestampDate(new Timestamp(new Date().getTime()));
         Order savedOrder = orderRepository.save(order);
 
-        mailSenderService.sendChangeStatusEmail(order.getUser().getEmail(), OrderStatus.CONTACT_RECEIVED.getMailDescription());
-
-        return savedOrder;
+        return changeStatus(savedOrder, OrderStatus.CONTACT_RECEIVED);
     }
 
     @Override

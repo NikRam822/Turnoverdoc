@@ -31,9 +31,7 @@ public class BankDetailsServiceImpl implements BankDetailsService {
     @Override
     public boolean send(BankDetailsDto bankDetailsDto, Order order) throws ErrorDto {
         if (isValid(bankDetailsDto)) {
-            order.setStatus(OrderStatus.BANK_DETAILS_RECEIVED);
-            orderService.update(order);
-            mailSenderService.sendChangeStatusEmail(order.getUser().getEmail(), OrderStatus.BANK_DETAILS_RECEIVED.getMailDescription());
+            orderService.changeStatus(order, OrderStatus.BANK_DETAILS_RECEIVED);
             return true;
         }
         return false;

@@ -41,6 +41,8 @@ public class User {
 
     private String email;
 
+    private String telegramUsername;
+
     @OneToMany(mappedBy = "user")
     private Collection<Order> order;
 
