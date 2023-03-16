@@ -31,10 +31,13 @@ public class Contact {
     @Column(name = "messenger_type")
     private MessengerType messengerType;
 
-    public Contact(String phone, String messenger, Order addedOrder, MessengerType messengerType) {
+    private boolean messengerNotify;
+
+    public Contact(String phone, String messenger, Order addedOrder, MessengerType messengerType, boolean messengerNotify) {
         this.phone = phone;
         this.messenger = messenger;
         this.order = addedOrder;
         this.messengerType = messengerType;
+        this.messengerNotify = messengerNotify;
     }
 }
