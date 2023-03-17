@@ -2,6 +2,7 @@ package com.turnoverdoc.turnover.controllers;
 
 import com.turnoverdoc.turnover.dto.BankDetailsDto;
 import com.turnoverdoc.turnover.dto.ContactDto;
+import com.turnoverdoc.turnover.dto.order.ConfirmDocsDto;
 import com.turnoverdoc.turnover.dto.order.OrderDto;
 import com.turnoverdoc.turnover.error.ErrorDto;
 import com.turnoverdoc.turnover.model.Contact;
@@ -72,7 +73,8 @@ public class OrderController {
             user = userService.findByUsername(principal.getName());
             Order order = orderService.findById(Long.parseLong(orderId));
 
-            if (order != null && order.getUser().getId().equals(user.getId()) && order.getStatus().equals(OrderStatus.REQUEST_FOR_DOCS)) {
+            if (order != null && order.getUser().getId().equals(user.getId())
+                    && order.getStatus().equals(OrderStatus.REQUEST_FOR_DOCS)) {
                 MultipartFile[] files = new MultipartFile[]{contract, passport, p45, p60, p80};
                 boolean filesUploadedSuccess = orderService.saveOrderFiles(files, user, order);
 
@@ -102,17 +104,18 @@ public class OrderController {
     }
 
     @PostMapping("/confirmDocs/{orderId}")
-    public ResponseEntity<String> confirmDocsReceive(Principal principal, @PathVariable String orderId) throws ErrorDto {
+    public ResponseEntity<String> confirmDocsReceive(Principal principal, @RequestBody ConfirmDocsDto confirmDocsDto) throws ErrorDto {
         User user = userService.findByUsername(principal.getName());
 
         if (user != null) {
-            Order order = orderService.findById(Long.parseLong(orderId));
+            Order order = orderService.findById(Long.parseLong(confirmDocsDto.getOrderId()));
             if (order != null && order.getUser().getId().equals(user.getId())) {
                 if (order.getContractPath() != null &&
                         order.getP45Path() != null &&
                         order.getP60Path() != null &&
                         order.getP80Path() != null &&
                         order.getPassportPath() != null) {
+                    order.getContact().setMessengerNotify(confirmDocsDto.isMessengerNotify());
                     orderService.changeStatus(order, OrderStatus.ALL_DOCS_RECEIVED);
                     return new ResponseEntity<>("Docs successfully confirmed", HttpStatus.OK);
                 }

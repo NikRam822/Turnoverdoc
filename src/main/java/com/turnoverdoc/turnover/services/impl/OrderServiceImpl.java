@@ -1,6 +1,7 @@
 package com.turnoverdoc.turnover.services.impl;
 
 import com.turnoverdoc.turnover.dto.FilterOrderDto;
+import com.turnoverdoc.turnover.messenger.MessengerService;
 import com.turnoverdoc.turnover.model.Contact;
 import com.turnoverdoc.turnover.model.Order;
 import com.turnoverdoc.turnover.model.OrderStatus;
@@ -27,20 +28,20 @@ public class OrderServiceImpl implements OrderService {
 
     private FileService fileService;
     private MailSenderService mailSenderService;
+    private MessengerService messengerService;
 
     private final OrderRepository orderRepository;
-    private ContactRepository contactRepository;
 
     private final Logger LOGGER = log;
 
     @Autowired
-    public void setContactRepository(ContactRepository contactRepository) {
-        this.contactRepository = contactRepository;
+    public void setMailSenderService(MailSenderService mailSenderService) {
+        this.mailSenderService = mailSenderService;
     }
 
     @Autowired
-    public void setMailSenderService(MailSenderService mailSenderService) {
-        this.mailSenderService = mailSenderService;
+    public void setMessengerService(MessengerService messengerService) {
+        this.messengerService = messengerService;
     }
 
     @Autowired
@@ -120,6 +121,7 @@ public class OrderServiceImpl implements OrderService {
         order.setStatus(status);
         Order updatedOrder = update(order);
         mailSenderService.sendChangeStatusEmail(order.getUser().getEmail(), status.getMailDescription());
+        messengerService.messengerNotify(order.getContact(), status);
         return updatedOrder;
     }
 

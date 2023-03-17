@@ -17,11 +17,13 @@ public class MessengerServiceImpl implements MessengerService {
 
     @Override
     public void messengerNotify(Contact contact, OrderStatus orderStatus) {
-        switch (contact.getMessengerType()) {
-            case TELEGRAM:
-                telegramService.sendUpdate(orderStatus);
-            case VIBER:
-            case WHATSAPP:
+        if (contact.isMessengerNotify()) {
+            switch (contact.getMessengerType()) {
+                case TELEGRAM:
+                    telegramService.sendUpdate(orderStatus);
+                case VIBER:
+                case WHATSAPP:
+            }
         }
     }
 }
