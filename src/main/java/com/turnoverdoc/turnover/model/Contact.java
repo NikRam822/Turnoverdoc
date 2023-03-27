@@ -28,6 +28,7 @@ public class Contact {
     @OneToOne(mappedBy = "contact")
     private Order order;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "messenger_type")
     private MessengerType messengerType;
 

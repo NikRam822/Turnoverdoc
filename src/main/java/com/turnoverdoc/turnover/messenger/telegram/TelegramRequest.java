@@ -5,5 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Builder
 public class TelegramRequest {
-    public String status;
+    public String orderStatus;
+    public String username;
+    public String applicationId;
 }

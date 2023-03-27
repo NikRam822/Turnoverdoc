@@ -121,7 +121,7 @@ public class OrderServiceImpl implements OrderService {
         order.setStatus(status);
         Order updatedOrder = update(order);
         mailSenderService.sendChangeStatusEmail(order.getUser().getEmail(), status.getMailDescription());
-        messengerService.messengerNotify(order.getContact(), status);
+        messengerService.messengerNotify(order, status);
         return updatedOrder;
     }
 
