@@ -1,1 +1,11 @@
-<p>order-detail works!</p>
+<div class="form-group">
+  <label>CONTRACT: </label>
+  <input type="file"
+         id="Contract"
+         (change)="handleFileInput($event.target.files)">
+
+  <!--<label for="file">Choose File</label>
+  <input type="file"
+         id="Passport"
+         (change)="handleFileInput($event.target.files)">-->
+</div>

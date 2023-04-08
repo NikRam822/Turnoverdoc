@@ -11,8 +11,14 @@ export class OrderDetailComponent implements OnInit{
   constructor(private orderStore:OrderStore) {
   }
 
+  fileToUpload: File | null = null;
+
   ngOnInit(): void {
     console.log(this.orderStore.getValue().order?.id)
+  }
+
+  handleFileInput(files: FileList) {
+    this.fileToUpload = files.item(0);
   }
 
 

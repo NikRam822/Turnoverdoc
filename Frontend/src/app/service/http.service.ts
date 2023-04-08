@@ -37,24 +37,11 @@ export class RequestService {
     })
   }
 
-/*  deleteOrder() {
-    return this.http.get("http://localhost:8080/api/calls?sort=" + sortData[1] + "&order=" + sortData[0] + "&id=" + idFilter, {
-      observe: 'response',
-      withCredentials: true
-    })
-  }*/
-
-  postAddUser(id: Number | undefined, name: string, phone: string, archive: string, password: string, login: string, language: string) {
+  postUploadDocs(id: Number | undefined){
     const body = {
       id: id,
-      name: name,
-      phone: phone,
-      archive: archive,
-      password: password,
-      login: login,
-      language: language
     };
-    return this.http.post('http://localhost:8080/api/add/user', body, {
+    return this.http.post('http://localhost:8080/api/order/uploadDocs/', body, {
       observe: 'response',
       withCredentials: true
     });
