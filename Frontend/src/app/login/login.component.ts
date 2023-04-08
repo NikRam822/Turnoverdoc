@@ -20,7 +20,6 @@ export class LoginComponent {
     alert(form.value.login + " - " + form.value.password)
     this.httpService.postAuth(form.value.login,form.value.password).subscribe({
       next: () => {
-       // this.router.navigate(['/lox']);
         alert("cool")
       },
       error: () => alert("Incorrect query")
