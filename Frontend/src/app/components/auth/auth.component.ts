@@ -28,4 +28,8 @@ export class AuthComponent implements OnInit {
         this.router.navigate(['auth/create-order']);
   }
 
+  orderDetail() {
+    this.router.navigate(['auth/order-detail']);
+  }
+
 }

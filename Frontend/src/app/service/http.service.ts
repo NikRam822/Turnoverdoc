@@ -26,34 +26,23 @@ export class RequestService {
     })
   }
 
-/*  postCreateOrder(phone: String, messenger: String) {
+  postCreateOrder(phone: String, messenger: String) {
     const body = {
      phone: phone,
      messenger: messenger
     };
     return this.http.post("http://localhost:8080/api/order/createOrder?phone="+phone+"&messenger="+messenger,body,{
       observe: 'response',
-      withCredentials: true
-    })
-  }*/
-
-  postCreateOrder(phone: String, messenger: String) {
-    const body = {
-      phone: phone,
-      messenger: messenger
-    };
-    return this.http.post("http://localhost:8080/api/order/createOrder",body,{
-      observe: 'response',
-      withCredentials: true
+      withCredentials: true,
     })
   }
 
-  getCalls(sortData: string[], idFilter: string) {
+/*  deleteOrder() {
     return this.http.get("http://localhost:8080/api/calls?sort=" + sortData[1] + "&order=" + sortData[0] + "&id=" + idFilter, {
       observe: 'response',
       withCredentials: true
     })
-  }
+  }*/
 
   postAddUser(id: Number | undefined, name: string, phone: string, archive: string, password: string, login: string, language: string) {
     const body = {

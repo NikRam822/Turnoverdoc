@@ -15,11 +15,18 @@
     </thead>
 
     <tbody>
+
     <tr *ngFor="let order of orders">
-      <td>{{ order.id}}</td>
+      <router-outlet>
+        <button
+          class="btn btn-default" (click)="orderDetail()">
+      <td>Request #{{ order.id}}</td>
       <td>{{ order.status}}</td>
-      <td>{{ order.date| date: 'dd.MM.yyyy'}}</td>
+      <td>from:{{ order.date| date: 'dd.MM.yyyy'}}</td>
+        </button>
+      </router-outlet>
     </tr>
+
 
     <router-outlet>
       <button

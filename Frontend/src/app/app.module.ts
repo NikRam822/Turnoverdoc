@@ -10,11 +10,15 @@ import {AppRoutingModule} from "./app-routing.module";
 import { AuthComponent } from './components/auth/auth.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { CreateOrderComponent } from './components/create-order/create-order.component';
+import { OrderDetailComponent } from './components/order-detail/order-detail.component';
 
 const appRoutes: Routes = [
 
   {path: '', component: LoginComponent},
   {path: 'auth', component: AuthComponent},
+  {path: 'auth/create-order', component: CreateOrderComponent},
+  {path: 'auth/order-detail', component: OrderDetailComponent},
+
 ];
 
 @NgModule({
@@ -24,6 +28,7 @@ const appRoutes: Routes = [
     AuthComponent,
     RegistrationComponent,
     CreateOrderComponent,
+    OrderDetailComponent,
   ],
   imports: [
     BrowserModule,
