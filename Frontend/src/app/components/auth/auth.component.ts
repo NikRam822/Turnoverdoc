@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {RequestService} from "../../service/http.service";
 import {Order} from "../../models/orders";
 import {NgForm} from "@angular/forms";
+import {OrderStore} from "../../store/orderStore";
 
 @Component({
   selector: 'app-auth',
@@ -10,7 +11,7 @@ import {NgForm} from "@angular/forms";
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent implements OnInit {
-  constructor(private router: Router, private httpService: RequestService) {
+  constructor(private router: Router, private httpService: RequestService,private orderStore:OrderStore) {
   }
 
   orders:Order[] | null=[]
@@ -28,7 +29,8 @@ export class AuthComponent implements OnInit {
         this.router.navigate(['auth/create-order']);
   }
 
-  orderDetail() {
+  orderDetail(order: Order) {
+    this.orderStore._setState({order:order})
     this.router.navigate(['auth/order-detail']);
   }
 

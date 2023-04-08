@@ -19,7 +19,7 @@
     <tr *ngFor="let order of orders">
       <router-outlet>
         <button
-          class="btn btn-default" (click)="orderDetail()">
+          class="btn btn-default" (click)="orderDetail(order)">
       <td>Request #{{ order.id}}</td>
       <td>{{ order.status}}</td>
       <td>from:{{ order.date| date: 'dd.MM.yyyy'}}</td>
