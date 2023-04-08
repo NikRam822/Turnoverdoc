@@ -26,8 +26,8 @@ export class RequestService {
     })
   }
 
-  getUserDetails(idFilter: string) {
-    return this.http.get("http://localhost:8080/api/user/details?id=" + idFilter, {
+  postCreateOrder(idFilter: string) {
+    return this.http.post("http://localhost:8080/api/order/createOrder?phone=8800553535&messenger=%40ttttttt", {
       observe: 'response',
       withCredentials: true
     })

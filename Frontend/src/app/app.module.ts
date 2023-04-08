@@ -9,6 +9,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {AppRoutingModule} from "./app-routing.module";
 import { AuthComponent } from './components/auth/auth.component';
 import { RegistrationComponent } from './components/registration/registration.component';
+import { CreateOrderComponent } from './components/create-order/create-order.component';
 
 const appRoutes: Routes = [
 
@@ -22,6 +23,7 @@ const appRoutes: Routes = [
     LoginComponent,
     AuthComponent,
     RegistrationComponent,
+    CreateOrderComponent,
   ],
   imports: [
     BrowserModule,
