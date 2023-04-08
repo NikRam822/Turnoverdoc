@@ -30,6 +30,7 @@ import java.util.List;
 
 import static com.turnoverdoc.turnover.error.ErrorsContainer.*;
 
+@CrossOrigin
 @Slf4j
 @RestController
 @RequestMapping("/api/order")

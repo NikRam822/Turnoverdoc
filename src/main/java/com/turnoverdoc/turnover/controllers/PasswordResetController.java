@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import static com.turnoverdoc.turnover.error.ErrorsContainer.TURN2;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1/resetPassword")
 public class PasswordResetController {
