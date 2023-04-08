@@ -1,10 +1,10 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {LoginComponent} from "./login/login.component";
-import {AuthComponent} from "./auth/auth.component";
+import {LoginComponent} from "./components/login/login.component";
+import {AuthComponent} from "./components/auth/auth.component";
 import {LoginPageGuard} from "./guards/login-page.guard";
 import {AuthGuard} from "./guards/autn-page.guard";
-import { RegistrationComponent } from './registration/registration.component';
+import { RegistrationComponent } from './components/registration/registration.component';
 
 
 
