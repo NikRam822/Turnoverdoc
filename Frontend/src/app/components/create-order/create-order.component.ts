@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import {Router} from "@angular/router";
+import {RequestService} from "../../service/http.service";
+import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-create-order',
@@ -6,5 +9,20 @@ import { Component } from '@angular/core';
   styleUrls: ['./create-order.component.css']
 })
 export class CreateOrderComponent {
+  constructor(private router: Router,private httpService:RequestService) {
+  }
 
+  public messenger: string = "";
+  public phone: string = "";
+  public title = 'angular-proj';
+
+  submit(form: NgForm) {
+    this.httpService.postCreateOrder(form.value.phone,form.value.messenger).subscribe({
+      next: () => {
+        this.router.navigate(['/auth']);
+      },
+      error: () => alert("Incorrect query")
+    });
+
+  }
 }

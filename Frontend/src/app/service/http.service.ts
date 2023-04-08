@@ -26,8 +26,23 @@ export class RequestService {
     })
   }
 
-  postCreateOrder(idFilter: string) {
-    return this.http.post("http://localhost:8080/api/order/createOrder?phone=8800553535&messenger=%40ttttttt", {
+/*  postCreateOrder(phone: String, messenger: String) {
+    const body = {
+     phone: phone,
+     messenger: messenger
+    };
+    return this.http.post("http://localhost:8080/api/order/createOrder?phone="+phone+"&messenger="+messenger,body,{
+      observe: 'response',
+      withCredentials: true
+    })
+  }*/
+
+  postCreateOrder(phone: String, messenger: String) {
+    const body = {
+      phone: phone,
+      messenger: messenger
+    };
+    return this.http.post("http://localhost:8080/api/order/createOrder",body,{
       observe: 'response',
       withCredentials: true
     })
@@ -40,9 +55,9 @@ export class RequestService {
     })
   }
 
-  postAddUser(id:Number | undefined,name: string, phone: string, archive: string, password: string, login: string, language: string) {
+  postAddUser(id: Number | undefined, name: string, phone: string, archive: string, password: string, login: string, language: string) {
     const body = {
-      id:id,
+      id: id,
       name: name,
       phone: phone,
       archive: archive,
