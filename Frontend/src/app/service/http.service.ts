@@ -19,8 +19,8 @@ export class RequestService {
 
   }
 
-  getUsers(sortData: string[], loginFilter: string, phoneFilter: string, nameFilter: string, idFilter: string, languageFilter: string) {
-    return this.http.get("http://localhost:8080/api/users?sort=" + sortData[1] + "&order=" + sortData[0] + "&id=" + idFilter + "&name=" + nameFilter + "&phone=" + phoneFilter + "&login=" + loginFilter + "&language=" + languageFilter, {
+  getOrders() {
+    return this.http.get("http://localhost:8080/api/order/get/all", {
       observe: 'response',
       withCredentials: true
     })
