@@ -8,6 +8,7 @@ import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {AppRoutingModule} from "./app-routing.module";
 import { AuthComponent } from './auth/auth.component';
+import { RegistrationComponent } from './registration/registration.component';
 
 const appRoutes: Routes = [
 
@@ -20,6 +21,7 @@ const appRoutes: Routes = [
     AppComponent,
     LoginComponent,
     AuthComponent,
+    RegistrationComponent,
   ],
   imports: [
     BrowserModule,
