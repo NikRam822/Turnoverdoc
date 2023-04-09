@@ -11,6 +11,11 @@ import { RequestService } from 'src/app/service/http.service';
 export class RegistrationComponent {
   constructor(private router: Router,private httpService:RequestService) {
   }
+
+  signIn(){
+    this.router.navigate(['/']);
+  }
+
   step = 1;
 
   next(){

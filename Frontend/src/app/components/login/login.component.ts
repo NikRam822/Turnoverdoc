@@ -16,6 +16,9 @@ export class LoginComponent {
   public password: string = "";
   public title = 'angular-proj';
 
+  signUp(){
+    this.router.navigate(['/reg']);
+  }
   submit(form: NgForm) {
     this.httpService.postAuth(form.value.login,form.value.password).subscribe({
       next: () => {
