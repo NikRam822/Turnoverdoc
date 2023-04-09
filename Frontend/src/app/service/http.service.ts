@@ -19,6 +19,15 @@ export class RequestService {
 
   }
 
+  postReg( email: String, firstName: String, password: String, secondName: String, lastName: String, login: String) {
+    const body = {email: email, firstName: firstName, password: password, secondName: secondName, surname: lastName, username: login};
+    return this.http.post('http://localhost:8080/api/v1/auth/registration', body, {
+      observe: 'response',
+      withCredentials: true
+    });
+
+  }
+
   getOrders() {
     return this.http.get("http://localhost:8080/api/order/get/all", {
       observe: 'response',

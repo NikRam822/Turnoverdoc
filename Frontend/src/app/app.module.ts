@@ -11,6 +11,7 @@ import { AuthComponent } from './components/auth/auth.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { CreateOrderComponent } from './components/create-order/create-order.component';
 import { OrderDetailComponent } from './components/order-detail/order-detail.component';
+import { ReactiveFormsModule } from '@angular/forms'
 
 const appRoutes: Routes = [
 
@@ -35,7 +36,8 @@ const appRoutes: Routes = [
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    ReactiveFormsModule
   ],
   bootstrap: [AppComponent]
 })
