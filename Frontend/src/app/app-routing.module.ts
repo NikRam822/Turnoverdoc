@@ -7,6 +7,7 @@ import {AuthGuard} from "./guards/autn-page.guard";
 import {RegistrationComponent} from './components/registration/registration.component';
 import {CreateOrderComponent} from "./components/create-order/create-order.component";
 import {OrderDetailComponent} from "./components/order-detail/order-detail.component";
+import {OrderDetailPageGuard} from "./guards/order-detail-page-guard";
 
 
 const appRoutes: Routes = [
@@ -14,7 +15,7 @@ const appRoutes: Routes = [
   {path: 'auth', component: AuthComponent, canActivate: [AuthGuard]},
   {path: 'reg', component: RegistrationComponent,},
   {path: 'auth/create-order', component: CreateOrderComponent, canActivate: [AuthGuard]},
-  {path: 'auth/order-detail', component: OrderDetailComponent, canActivate: [AuthGuard]},
+  {path: 'auth/order-detail', component: OrderDetailComponent, canActivate: [AuthGuard,OrderDetailPageGuard]},
 ];
 
 @NgModule({

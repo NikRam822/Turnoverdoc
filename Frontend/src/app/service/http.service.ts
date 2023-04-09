@@ -51,6 +51,10 @@ export class RequestService {
 
     const formData: FormData = new FormData();
     formData.append('CONTRACT',filesMap.get('CONTRACT'));
+    formData.append('PASSPORT',filesMap.get('PASSPORT'));
+    formData.append('P_45',filesMap.get('P_45'));
+    formData.append('P_60',filesMap.get('P_60'));
+    formData.append('P_80',filesMap.get('P_80'));
     /*const body = {
     };*/
     return this.http.post('http://localhost:8080/api/order/uploadDocs/'+id, formData, {

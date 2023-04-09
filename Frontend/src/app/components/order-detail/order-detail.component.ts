@@ -8,7 +8,7 @@ import { RequestService } from 'src/app/service/http.service';
   templateUrl: './order-detail.component.html',
   styleUrls: ['./order-detail.component.css']
 })
-export class OrderDetailComponent implements OnInit {
+export class OrderDetailComponent {
 
   constructor(private orderStore: OrderStore, private httpService: RequestService, private router: Router) {
   }
@@ -17,14 +17,7 @@ export class OrderDetailComponent implements OnInit {
       this.router.navigate(['/auth']);
   }
   filesMap = new Map();
-  //files: File[]=[]
   declare selectedFiles: FileList;
-  declare contract: File;
-  declare passport: File;
-
-  ngOnInit(): void {
-    console.log(this.orderStore.getValue().order?.id)
-  }
 
   selectFile(fileName:String,{event}: { event: any }) {
     this.selectedFiles = event.target.files;
@@ -33,12 +26,17 @@ export class OrderDetailComponent implements OnInit {
   }
 
   upload() {
-    //this.contract = this.selectedFiles.item(0) as File;
     this.httpService.postUploadDocs(this.orderStore.getValue().order?.id,  this.filesMap).subscribe({
       next: (response) => {
-        console.log(response.body)
+        alert("Ok")
       },
-      error: () => alert("Incorrect query")
+      error: (error) => {
+        if (error.status === 200) {
+          alert("Ok")
+        } else {
+          console.error(error);
+        }
+      }
     });
 
   }
