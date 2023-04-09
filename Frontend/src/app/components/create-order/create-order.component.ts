@@ -11,7 +11,9 @@ import {NgForm} from "@angular/forms";
 export class CreateOrderComponent {
   constructor(private router: Router,private httpService:RequestService) {
   }
-
+  back(){
+    this.router.navigate(['/auth']);
+  }
   public messenger: string = "";
   public phone: string = "";
   public title = 'angular-proj';
