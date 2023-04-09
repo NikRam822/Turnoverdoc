@@ -14,7 +14,7 @@ export class OrderDetailComponent implements OnInit{
   fileToUpload: File | null = null;
 
   ngOnInit(): void {
-    console.log(this.orderStore.getValue().order?.id)
+    console.log(this.orderStore.getValue().order)
   }
 
   handleFileInput(files: FileList) {

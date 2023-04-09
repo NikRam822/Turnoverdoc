@@ -11,6 +11,6 @@ export interface OrderState extends EntityState<Order|undefined> {
 @StoreConfig({ name: 'order' })
 export class OrderStore extends EntityStore<OrderState> {
   constructor() {
-    super({ user: undefined} ) ;
+    super({ order: undefined} ) ;
   }
 }
