@@ -46,11 +46,14 @@ export class RequestService {
     })
   }
 
-  postUploadDocs(id: Number | undefined){
-    const body = {
-      id: id,
-    };
-    return this.http.post('http://localhost:8080/api/order/uploadDocs/', body, {
+  postUploadDocs(id:Number|undefined,filesMap: Map<String,File>){
+
+
+    const formData: FormData = new FormData();
+    formData.append('CONTRACT',filesMap.get('CONTRACT'));
+    /*const body = {
+    };*/
+    return this.http.post('http://localhost:8080/api/order/uploadDocs/'+id, formData, {
       observe: 'response',
       withCredentials: true
     });

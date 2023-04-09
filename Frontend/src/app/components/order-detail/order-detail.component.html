@@ -1,12 +1,17 @@
-<div class="form-group">
-  <button type="button" (click)="back()">Back to orders</button>
-  <label>CONTRACT: </label>
-  <!--<input type="file"
-         id="Contract"
-         (change)="handleFileInput($event.target.files)">-->
+<button type="button" (click)="back()">Back</button>
+<div style="text-align:center">
+  <label>
+    Contract
+    <input type="file" (change)="selectFile('CONTRACT',{event : $event})">
+  </label>
+  <br>
+  <label>
+    Passport
+    <input type="file" (change)="selectFile('PASSPORT',{event : $event})">
+  </label>
+  <br/>
 
-  <!--<label for="file">Choose File</label>
-  <input type="file"
-         id="Passport"
-         (change)="handleFileInput($event.target.files)">-->
+  <br>
+  <button [disabled]="!selectedFiles" (click)="upload()">Upload</button>
+  <br>
 </div>
