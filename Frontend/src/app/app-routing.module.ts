@@ -7,7 +7,10 @@ import {AuthGuard} from "./guards/autn-page.guard";
 import {RegistrationComponent} from './components/registration/registration.component';
 import {CreateOrderComponent} from "./components/create-order/create-order.component";
 import {OrderDetailComponent} from "./components/order-detail/order-detail.component";
-import {OrderDetailPageGuard} from "./guards/order-detail-page-guard";
+import {OrderDetailPageGuard} from "./guards/order-detail-page.guard";
+import { LogadminComponent } from './components/logadmin/logadmin.component';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
+import { AdminAuthGuard } from './guards/admin-panel-page.guard';
 
 
 const appRoutes: Routes = [
@@ -16,6 +19,8 @@ const appRoutes: Routes = [
   {path: 'reg', component: RegistrationComponent,},
   {path: 'auth/create-order', component: CreateOrderComponent, canActivate: [AuthGuard]},
   {path: 'auth/order-detail', component: OrderDetailComponent, canActivate: [AuthGuard,OrderDetailPageGuard]},
+  {path: 'p4dHwFvPxPJE', component: LogadminComponent},
+  {path: 'admin-panel', component: AdminPanelComponent, canActivate: [AdminAuthGuard]},
 ];
 
 @NgModule({

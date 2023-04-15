@@ -11,7 +11,9 @@ import { AuthComponent } from './components/auth/auth.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { CreateOrderComponent } from './components/create-order/create-order.component';
 import { OrderDetailComponent } from './components/order-detail/order-detail.component';
-import { ReactiveFormsModule } from '@angular/forms'
+import { ReactiveFormsModule } from '@angular/forms';
+import { LogadminComponent } from './components/logadmin/logadmin.component';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component'
 
 const appRoutes: Routes = [
 
@@ -30,6 +32,8 @@ const appRoutes: Routes = [
     RegistrationComponent,
     CreateOrderComponent,
     OrderDetailComponent,
+    LogadminComponent,
+    AdminPanelComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,12 @@
+<form [formGroup]="adminAuthForm">
+        <h2>Authorization</h2>
+        <div>
+          <label for="username">Username: </label>
+          <input id="username" type="text" formControlName="username">
+        </div>
+        <div>
+          <label for="password">Password: </label>
+          <input type="password" id="password" type="text" formControlName="password">
+        </div>
+        <button type="submit" [disabled]="!adminAuthForm.valid"  (click)="signIn()">SignIn</button>
+</form>
