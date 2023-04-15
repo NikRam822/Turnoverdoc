@@ -30,7 +30,7 @@ export class AuthComponent implements OnInit {
   }
 
   orderDetail(order: Order) {
-    this.orderStore._setState({order:order})
+    this.orderStore.update({order:order})
     this.router.navigate(['auth/order-detail']);
   }
 

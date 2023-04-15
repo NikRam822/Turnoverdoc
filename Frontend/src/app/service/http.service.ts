@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 
 
 @Injectable({
@@ -37,6 +37,36 @@ export class RequestService {
 
   }
 
+  postAdminFilterOrders(username: string, statusOfOrder: string) {
+    let usernamePath="";
+    let statusOfOrderPath="";
+
+    if(username && statusOfOrder){
+      statusOfOrderPath="?statusOfOrder=" + statusOfOrder
+      usernamePath="&username=" + username
+
+    }else{
+      if(statusOfOrder){
+        statusOfOrderPath="?statusOfOrder=" + statusOfOrder
+      } else{
+        if(username){
+          usernamePath="?username=" + username
+        }
+      }
+    }
+    let queryParams = new HttpParams();
+    queryParams.append("statusOfOrder",statusOfOrder);
+     queryParams.append("username",username);
+
+
+    return this.http.post('http://localhost:8080/api/v1/admin/order/get-filtered-orders' +  statusOfOrderPath + usernamePath,null, {
+      observe: 'response',
+      withCredentials: true,
+      params:queryParams
+    });
+
+  }
+
   getOrders() {
     return this.http.get("http://localhost:8080/api/order/get/all", {
       observe: 'response',
@@ -66,8 +96,7 @@ export class RequestService {
     formData.append('P_45',filesMap.get('P_45'));
     formData.append('P_60',filesMap.get('P_60'));
     formData.append('P_80',filesMap.get('P_80'));
-    /*const body = {
-    };*/
+
     return this.http.post('http://localhost:8080/api/order/uploadDocs/'+id, formData, {
       observe: 'response',
       withCredentials: true

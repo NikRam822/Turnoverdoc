@@ -1,9 +1,10 @@
 import { EntityState, EntityStore, StoreConfig } from '@datorama/akita';
 import {Injectable} from "@angular/core";
-import {Order} from "../models/orders";
+import {FullOrder, Order} from "../models/orders";
 
-export interface OrderState extends EntityState<Order|undefined> {
+export interface OrderState extends EntityState<Order|undefined, FullOrder|undefined> {
   order:Order|undefined
+  fullOrder: FullOrder|undefined
 }
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,6 @@ export interface OrderState extends EntityState<Order|undefined> {
 @StoreConfig({ name: 'order' })
 export class OrderStore extends EntityStore<OrderState> {
   constructor() {
-    super({ order: undefined} ) ;
+    super({ order: undefined, fullOrder:undefined} ) ;
   }
 }
