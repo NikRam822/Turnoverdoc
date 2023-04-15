@@ -23,7 +23,14 @@ export class CreateOrderComponent {
       next: () => {
         this.router.navigate(['/auth']);
       },
-      error: () => alert("Incorrect query")
+
+      error: (err) => {
+        if (err.status === 200) {
+          this.router.navigate(['/auth']);
+        } else {
+          console.error(err);
+        }
+      }
     });
 
   }

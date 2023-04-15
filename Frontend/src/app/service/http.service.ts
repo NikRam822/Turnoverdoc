@@ -40,9 +40,11 @@ export class RequestService {
      phone: phone,
      messenger: messenger
     };
-    return this.http.post("http://localhost:8080/api/order/createOrder?phone="+phone+"&messenger="+messenger,body,{
+
+    return this.http.post("http://localhost:8080/api/order/createOrder",body,{
       observe: 'response',
       withCredentials: true,
+
     })
   }
 
