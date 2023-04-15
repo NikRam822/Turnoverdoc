@@ -28,6 +28,15 @@ export class RequestService {
 
   }
 
+  postAdminAuth(login: String, password: String) {
+    const body = {username: login, password: password};
+    return this.http.post('http://localhost:8080/api/v1/auth/admin/login', body, {
+      observe: 'response',
+      withCredentials: true
+    });
+
+  }
+
   getOrders() {
     return this.http.get("http://localhost:8080/api/order/get/all", {
       observe: 'response',
