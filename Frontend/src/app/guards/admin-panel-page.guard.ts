@@ -16,9 +16,13 @@ export class AdminAuthGuard implements CanActivate {
     if (document.cookie != "") {
       const token = document.cookie.split('=')[1]
       const decoded = jwt_decode(token)
-      if (decoded['roles'][0] != "ROLE_SUPER_ADMIN" || decoded['roles'][0] != "ROLE_ADMIN")
-      console.log(decoded['roles'][0])
-      return true
+      if (decoded['roles'][0] === "ROLE_SUPER_ADMIN" || decoded['roles'][0] === "ROLE_ADMIN"){
+        return true
+      }else{
+        this.router.navigate(["/"]);
+        return false
+      }
+
     } else {
       this.router.navigate(["/"]);
       return false

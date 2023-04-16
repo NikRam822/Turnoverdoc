@@ -27,12 +27,8 @@ export class AdminPanelComponent {
     });
   }
 
-  submit() {
-    /*this.router.navigate(['auth/create-order']);*/
-  }
-//todo: дсделать страницу для смены статуса заявки
   orderDetail(order: FullOrder) {
     this.orderStore.update({fullOrder:order})
-    alert(this.orderStore.getValue().fullOrder.id)
+    this.router.navigate(['admin-panel/order-detail']);
   }
 }

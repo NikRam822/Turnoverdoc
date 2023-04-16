@@ -8,9 +8,11 @@ import {RegistrationComponent} from './components/registration/registration.comp
 import {CreateOrderComponent} from "./components/create-order/create-order.component";
 import {OrderDetailComponent} from "./components/order-detail/order-detail.component";
 import {OrderDetailPageGuard} from "./guards/order-detail-page.guard";
-import { LogadminComponent } from './components/logadmin/logadmin.component';
+import { LogadminComponent } from './components/admin-auth/logadmin.component';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { AdminAuthGuard } from './guards/admin-panel-page.guard';
+import {AdminPanelDetailComponent} from "./components/admin-panel-detail/admin-panel-detail.component";
+import {AdminFullOrderDetailPageGuards} from "./guards/admin-full-order-detail-page.guards";
 
 
 const appRoutes: Routes = [
@@ -21,6 +23,7 @@ const appRoutes: Routes = [
   {path: 'auth/order-detail', component: OrderDetailComponent, canActivate: [AuthGuard,OrderDetailPageGuard]},
   {path: 'p4dHwFvPxPJE', component: LogadminComponent},
   {path: 'admin-panel', component: AdminPanelComponent, canActivate: [AdminAuthGuard]},
+  {path: 'admin-panel/order-detail', component: AdminPanelDetailComponent, canActivate: [AdminAuthGuard,AdminFullOrderDetailPageGuards]},
 ];
 
 @NgModule({

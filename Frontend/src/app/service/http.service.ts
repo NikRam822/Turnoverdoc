@@ -67,6 +67,18 @@ export class RequestService {
 
   }
 
+  postAdminChangeStatus(orderId: string, status: string) {
+
+    let queryParams = new HttpParams();
+    queryParams.append("orderId",orderId);
+    queryParams.append("status",status);
+      return this.http.post("http://localhost:8080/api/v1/admin/changeStatus?orderId="+orderId+"&status="+status,null,{
+        observe: 'response',
+        withCredentials: true,
+        params:queryParams
+      })
+    }
+
   getOrders() {
     return this.http.get("http://localhost:8080/api/order/get/all", {
       observe: 'response',

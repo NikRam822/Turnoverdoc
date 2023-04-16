@@ -12,8 +12,9 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { CreateOrderComponent } from './components/create-order/create-order.component';
 import { OrderDetailComponent } from './components/order-detail/order-detail.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { LogadminComponent } from './components/logadmin/logadmin.component';
-import { AdminPanelComponent } from './components/admin-panel/admin-panel.component'
+import { LogadminComponent } from './components/admin-auth/logadmin.component';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
+import { AdminPanelDetailComponent } from './components/admin-panel-detail/admin-panel-detail.component'
 
 const appRoutes: Routes = [
 
@@ -34,6 +35,7 @@ const appRoutes: Routes = [
     OrderDetailComponent,
     LogadminComponent,
     AdminPanelComponent,
+    AdminPanelDetailComponent,
   ],
   imports: [
     BrowserModule,
