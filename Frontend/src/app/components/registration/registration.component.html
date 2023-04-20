@@ -1,0 +1,55 @@
+<button type="button" (click)="signIn()">SignIN</button>
+<form [formGroup]="multiStepForm">
+  <div [ngSwitch]="step">
+    <!-- first Step -->
+    <ng-template ngSwitchCase="1">
+      <div formGroupName="nameForm" class="form-el">
+        <h2>Name</h2>
+        <label for="firstName">FirstName: </label>
+        <input id="firstName" type="text" formControlName="firstName">
+        <label for="lastName">LastName: </label>
+        <input id="lastName" type="text" formControlName="lastName">
+        <label for="secondName">SecondName: </label>
+        <input id="secondName" type="text" formControlName="secondName">
+        <button type="button" (click)="next()">Next</button>
+      </div>
+    </ng-template>
+    <!-- end of first step -->
+
+    <!-- second step -->
+    <ng-template ngSwitchCase="2">
+    <div formGroupName="contactsForm" class="form-el">
+      <h2>Contacts</h2>
+      <label for="email">Email: </label>
+      <input id="email" type="text" formControlName="email">
+      <label for="phone">Phone: </label>
+      <input id="phone" type="text" formControlName="phone">
+      <label for="messanger">Messanger: </label>
+      <input id="messanger" type="text" formControlName="messanger">
+      <div class="buttons">
+        <button type="button" (click)="back()">Back</button>
+        <button type="button" (click)="next()">Next</button>
+      </div>
+    </div>
+    </ng-template>
+    <!-- end of second step -->
+
+    <!-- third step -->
+    <ng-template ngSwitchCase="3">
+    <div formGroupName="loginForm" class="form-el">
+      <h2>Login</h2>
+      <label for="login">Login: </label>
+      <input id="login" type="text" formControlName="login">
+      <label for="password">Password: </label>
+      <input id="password" type="text" formControlName="password">
+      <label for="repPassword">Repeat password: </label>
+      <input id="repPassword" type="text" formControlName="repPassword">
+      <div class="buttons">
+        <button type="button" (click)="back()">Back</button>
+        <button type="button" (click)="submit()">Submit</button>
+      </div>
+    </div>
+    </ng-template>
+  </div>
+<!-- endof third step -->
+</form>

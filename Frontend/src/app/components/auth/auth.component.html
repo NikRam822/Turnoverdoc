@@ -1,0 +1,38 @@
+<div class="container mt-5">
+  <table class="table table-striped">
+    <thead>
+
+    </thead>
+    <thead>
+    Order
+    <thead>
+    <tr>
+      <th></th>
+      <th>id</th>
+      <th>status</th>
+      <th>dateTime</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+    <tr *ngFor="let order of orders">
+      <router-outlet>
+        <button
+          class="btn btn-default" (click)="orderDetail(order)">
+      <td>Request #{{ order.id}}</td>
+      <td>{{ order.status}}</td>
+      <td>from:{{ order.date| date: 'dd.MM.yyyy'}}</td>
+        </button>
+      </router-outlet>
+    </tr>
+
+
+    <router-outlet>
+      <button
+        class="btn btn-default" (click)="submit()">{{ "Create order" }}
+      </button>
+    </router-outlet>
+    </tbody>
+  </table>
+</div>

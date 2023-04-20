@@ -1,0 +1,58 @@
+<div class="container mt-5">
+  <table class="table table-striped">
+    <thead>
+
+    </thead>
+    <thead>
+    Order
+    <thead>
+  <tr>
+    <th>
+      <div class="form-group">
+      <label>{{ "username" }}</label>
+      <input  [(ngModel)]="username" required (input)="ngOnInit()"/>
+    </div>
+    </th>
+    <th>
+      <select name="duration" [(ngModel)]="statusOfOrder" (click)="ngOnInit()">
+      <option value=""></option>
+      <option value="CONTACT_RECEIVED">CONTACT_RECEIVED</option>
+      <option value="REQUEST_FOR_DOCS">REQUEST_FOR_DOCS</option>
+        <option value="ALL_DOCS_RECEIVED">ALL_DOCS_RECEIVED</option>
+        <option value="TAX_RETURN_TO_HMRC">TAX_RETURN_TO_HMRC</option>
+        <option value="CHEQUE_RECEIVED">CHEQUE_RECEIVED</option>
+        <option value="CHEQUE_BANKED">CHEQUE_BANKED</option>
+        <option value="BANK_DETAILS_RECEIVED">BANK_DETAILS_RECEIVED</option>
+        <option value="TRANSFER_MADE">TRANSFER_MADE</option>
+    </select>
+    </th>
+  </tr>
+  </thead>
+<thead>
+    <tr>
+      <th></th>
+      <th>id</th>
+      <th>status</th>
+      <th>dateTime</th>
+      <th>username</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+    <tr *ngFor="let order of orders">
+      <router-outlet>
+        <button
+          class="btn btn-default" (click)="orderDetail(order)">
+          <td>Request #{{ order.id}}</td>
+          <td>{{ order.status}}</td>
+          <td>from:{{ order.date| date: 'dd.MM.yyyy'}}</td>
+          <td>username:{{order.username}}</td>
+        </button>
+      </router-outlet>
+    </tr>
+
+
+    </tbody>
+  </table>
+</div>

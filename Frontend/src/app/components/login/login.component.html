@@ -1,5 +1,5 @@
 <form #myForm="ngForm" novalidate>
-
+  <button type="button" (click)="signUp()">SignUp</button>
   <div class="form-group">
     <label>{{ "login" }}</label>
     <input class="form-control" name="login" [(ngModel)]="login" required/>
@@ -8,6 +8,7 @@
     <label>{{ "password" }}</label>
     <input type="password" class="form-control" name="password" [(ngModel)]="password" required/>
   </div>
+
   <div>
     <div class="form-group">
       <router-outlet>

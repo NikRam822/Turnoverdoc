@@ -1,0 +1,22 @@
+<button type="button" (click)="back()">Back to orders</button>
+<form #myForm="ngForm" novalidate>
+
+  <div class="form-group">
+    <label>{{ "phone" }}</label>
+    <input class="form-control" name="phone" [(ngModel)]="phone" required/>
+  </div>
+  <div class="form-group">
+    <label>{{ "messenger" }}</label>
+    <input class="form-control" name="messenger" [(ngModel)]="messenger" required/>
+  </div>
+  <div>
+    <div class="form-group">
+      <router-outlet>
+        <button [disabled]="myForm.invalid"
+
+                class="btn btn-default" (click)="submit(myForm)">{{ "Create" }}
+        </button>
+      </router-outlet>
+    </div>
+  </div>
+</form>

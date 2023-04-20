@@ -22,6 +22,7 @@ import java.util.UUID;
 
 import static com.turnoverdoc.turnover.error.ErrorsContainer.TURN2;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/user")
 public class UserController {

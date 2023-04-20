@@ -1,0 +1,40 @@
+<button type="button" (click)="back()">Back</button>
+<div style="text-align:center">
+  <br>
+  <label>
+    Contract
+    <input type="file" (change)="selectFile('CONTRACT',{event : $event})">
+  </label>
+<br/>
+  <br>
+  <label>
+    Passport
+    <input type="file" (change)="selectFile('PASSPORT',{event : $event})">
+  </label>
+  <br/>
+
+  <br>
+  <label>
+    P_45
+    <input type="file" (change)="selectFile('P_45',{event : $event})">
+  </label>
+  <br/>
+
+  <br>
+  <label>
+    P_60
+    <input type="file" (change)="selectFile('P_60',{event : $event})">
+  </label>
+  <br/>
+
+  <br>
+  <label>
+    P_80
+    <input type="file" (change)="selectFile('P_80',{event : $event})">
+  </label>
+  <br/>
+
+  <br>
+  <button [disabled]="!selectedFiles" (click)="upload()">Upload</button>
+  <br>
+</div>

@@ -31,6 +31,7 @@ import java.util.List;
 
 import static com.turnoverdoc.turnover.error.ErrorsContainer.*;
 
+@CrossOrigin
 @Slf4j
 @RestController
 @RequestMapping("/api/order")
@@ -125,7 +126,8 @@ public class OrderController {
     }
 
     @PostMapping("/createOrder")
-    public ResponseEntity<String> createOrderAndContacts(@ModelAttribute ContactDto contactDto, Principal principal) throws ErrorDto {
+    public ResponseEntity<String> createOrderAndContacts(@RequestBody ContactDto contactDto, Principal principal) throws ErrorDto {
+
         // first step, where user send his contacts
         User user = userService.findByUsername(principal.getName());
         if (user != null) {
@@ -151,9 +153,9 @@ public class OrderController {
         throw TURN2;
     }
 
-//TODO:When there is a frontend - rewrite to Post!!! (For ease of testing, I made a get)
+    //TODO:When there is a frontend - rewrite to Post!!! (For ease of testing, I made a get)
     @GetMapping("/download/{orderId}/{documentFile}")
-    public ResponseEntity<org.springframework.core.io.Resource> downloadFile(@PathVariable String orderId,  @PathVariable DocumentFiles documentFile) throws Exception {
+    public ResponseEntity<org.springframework.core.io.Resource> downloadFile(@PathVariable String orderId, @PathVariable DocumentFiles documentFile) throws Exception {
         File file = null;
         Order order = orderService.findById(Long.valueOf(orderId));
         if (order != null) {

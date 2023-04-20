@@ -19,6 +19,7 @@ import java.util.List;
 
 import static com.turnoverdoc.turnover.error.ErrorsContainer.TURN2;
 
+@CrossOrigin
 @RestController
 @Slf4j
 @RequestMapping(value = "/api/v1/admin")
