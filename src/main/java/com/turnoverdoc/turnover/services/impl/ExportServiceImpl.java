@@ -1,7 +1,7 @@
 package com.turnoverdoc.turnover.services.impl;
 
 import com.turnoverdoc.turnover.model.Order;
-import com.turnoverdoc.turnover.repositories.OrderRepository;
+import com.turnoverdoc.turnover.services.ExportService;
 import com.turnoverdoc.turnover.services.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVFormat;
@@ -16,13 +16,13 @@ import java.util.List;
 
 @Service
 @Slf4j
-public class ExportService implements com.turnoverdoc.turnover.services.ExportService {
+public class ExportServiceImpl implements ExportService {
 
     private final Logger LOGGER = log;
     private final OrderService orderService;
 
     @Autowired
-    public ExportService(OrderService orderService) {
+    public ExportServiceImpl(OrderService orderService) {
         this.orderService = orderService;
     }
 

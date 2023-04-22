@@ -29,7 +29,7 @@ public class MailSenderService {
     public void sendResetPassword(PasswordResetToken passwordResetToken) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setFrom(mailAddresFrom);
-        simpleMailMessage.setTo(passwordResetToken.getUser().getEmail());
+        simpleMailMessage.setTo(passwordResetToken.getUser().getContact().getEmail());
         simpleMailMessage.setSubject("Восстановление пароля");
         simpleMailMessage.setText(RESET_PASSWORD_URL + passwordResetToken.getToken());
         emailSender.send(simpleMailMessage);

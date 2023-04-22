@@ -4,6 +4,7 @@ import com.turnoverdoc.turnover.dto.PasswordResetDto;
 import com.turnoverdoc.turnover.error.ErrorDto;
 import com.turnoverdoc.turnover.model.PasswordResetToken;
 import com.turnoverdoc.turnover.model.User;
+import com.turnoverdoc.turnover.services.ContactService;
 import com.turnoverdoc.turnover.services.PasswordTokenService;
 import com.turnoverdoc.turnover.services.UserService;
 import com.turnoverdoc.turnover.services.impl.MailSenderService;
@@ -21,6 +22,12 @@ public class PasswordResetController {
     private PasswordTokenService passwordTokenService;
     private UserService userService;
     private MailSenderService mailSenderService;
+    private ContactService contactService;
+
+    @Autowired
+    public void setContactService(ContactService contactService) {
+        this.contactService = contactService;
+    }
 
     @Autowired
     private void setPasswordTokenService(PasswordTokenService passwordTokenService) {
@@ -39,7 +46,7 @@ public class PasswordResetController {
 
     @PostMapping("/requestToResetPassword")
     public ResponseEntity<String> requestToResetPassword(@RequestParam String email) {
-        User user = userService.findByEmail(email);
+        User user = contactService.findByEmail(email);
 
         if (user == null) {
             return new ResponseEntity<>("Can not find user with current email", HttpStatus.BAD_REQUEST);

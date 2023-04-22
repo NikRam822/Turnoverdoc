@@ -47,13 +47,11 @@ public class UserServiceImpl implements UserService {
 
         User user = new User();
         user.setUsername(registrationRequest.getUsername());
-        user.setPassword(registrationRequest.getPassword());
         user.setFirstName(registrationRequest.getFirstName());
         user.setSecondName(registrationRequest.getSecondName());
         user.setSurname(registrationRequest.getSurname());
-        user.setEmail(registrationRequest.getEmail());
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
         user.setRoles(userRoles);
         user.setUserStatus(UserStatus.ACTIVE);
 
@@ -77,11 +75,6 @@ public class UserServiceImpl implements UserService {
         } else {
             throw TURN3;
         }
-    }
-
-    @Override
-    public User findByEmail(String email) {
-        return userRepository.findByEmail(email);
     }
 
     @Override

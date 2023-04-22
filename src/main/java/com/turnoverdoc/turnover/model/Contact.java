@@ -34,6 +34,11 @@ public class Contact {
 
     private boolean messengerNotify;
 
+    private String email;
+
+    @OneToOne(mappedBy = "contact")
+    private User user;
+
     public Contact(String phone, String messenger, Order addedOrder, MessengerType messengerType, boolean messengerNotify) {
         this.phone = phone;
         this.messenger = messenger;

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.concurrent.TimeoutException;
+
 @Service
 public class TelegramServiceImpl implements TelegramService {
 
@@ -19,7 +21,10 @@ public class TelegramServiceImpl implements TelegramService {
 
     @Override
     public void sendUpdate(OrderStatus orderStatus, Order order) {
-        TelegramRequest telegramRequest = TelegramRequestConverter.getMessengerRequest(orderStatus, order);
-        TelegramResponse telegramResponse = restTemplate.postForObject(baseUrl, telegramRequest, TelegramResponse.class);
+
+            TelegramRequest telegramRequest = TelegramRequestConverter.getMessengerRequest(orderStatus, order);
+            TelegramResponse telegramResponse = restTemplate.postForObject(baseUrl, telegramRequest, TelegramResponse.class);
+
+
     }
 }

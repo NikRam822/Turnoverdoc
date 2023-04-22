@@ -6,8 +6,10 @@ import com.google.i18n.phonenumbers.Phonenumber;
 import com.turnoverdoc.turnover.dto.ContactDto;
 import com.turnoverdoc.turnover.error.ErrorDto;
 import com.turnoverdoc.turnover.model.Contact;
+import com.turnoverdoc.turnover.model.User;
 import com.turnoverdoc.turnover.repositories.ContactRepository;
 import com.turnoverdoc.turnover.services.ContactService;
+import com.turnoverdoc.turnover.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,14 @@ import static com.turnoverdoc.turnover.error.ErrorsContainer.TURN4;
 @Slf4j
 public class ContactServiceImpl implements ContactService {
     private final Logger LOGGER = log;
-    ContactRepository contactRepository;
+    private ContactRepository contactRepository;
+
+    private UserService userService;
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
     @Autowired
     public void setContactRepository(ContactRepository contactRepository) {
@@ -39,7 +48,7 @@ public class ContactServiceImpl implements ContactService {
                 addedContact = contactRepository.save(contact);
                 LOGGER.info("Added new contact: {}", addedContact);
             } catch (IllegalArgumentException e) {
-                LOGGER.error("Failed to save new contact: user is null");
+                LOGGER.error("Failed to save new contact: contact is null");
                 throw new IllegalArgumentException(e);
             }
         }
@@ -62,4 +71,8 @@ public class ContactServiceImpl implements ContactService {
         return phoneUtil.isValidNumber(userNumber) && contactDto.getMessenger() != null;
     }
 
+    @Override
+    public User findByEmail(String email) {
+        return userService.findById(contactRepository.findByEmail(email).getUser().getId());
+    }
 }
