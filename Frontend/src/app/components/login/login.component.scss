@@ -1,0 +1,26 @@
+.login-panel {
+  background: lightblue;
+  border-radius: 10px;
+  border: 7px solid lavender;
+}
+
+form {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 250px;
+  width: 400px;
+}
+
+.form-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.login-form {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
