@@ -1,0 +1,30 @@
+.multistep {
+  padding: 20px;
+  background: lightblue;
+  border-radius: 10px;
+  border: 7px solid lavender;
+}
+
+form {
+  height: 400px;
+  width: 500px;
+}
+
+.step-panel {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.step {
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.form-line {
+  display: flex;
+  justify-content: space-between;
+}
