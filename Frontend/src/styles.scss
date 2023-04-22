@@ -1,0 +1,30 @@
+/* You can add global styles to this file, and also import other style files */
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.application {
+  height: 100%;
+  width: 100%;
+}
+
+.stndbtn {
+  .active {
+    background: #000;
+  }
+  cursor: pointer;
+  background: white;
+  border-radius: 10px;
+  border: 1px;
+  font-size: 24px;
+  width: 120px;
+  height: 50px;
+  box-shadow: 0px 2px 5px -1px #000;
+}

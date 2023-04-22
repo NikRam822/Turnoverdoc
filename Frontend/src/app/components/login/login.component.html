@@ -1,22 +1,21 @@
-<form #myForm="ngForm" novalidate>
-  <button type="button" (click)="signUp()">SignUp</button>
-  <div class="form-group">
-    <label>{{ "login" }}</label>
-    <input class="form-control" name="login" [(ngModel)]="login" required/>
-  </div>
-  <div class="form-group">
-    <label>{{ "password" }}</label>
-    <input type="password" class="form-control" name="password" [(ngModel)]="password" required/>
-  </div>
-
-  <div>
+<div class="login-panel">
+  <form #myForm="ngForm" novalidate cal>
+    <div class="form-group">
+      <button class="stndbtn active" type="button">Sign In</button>
+      <button class="stndbtn unactive" type="button" (click)="signUp()">Sign Up</button>
+    </div>
+    <div class="form-group">
+      <input placeholder="Username" class="form-control" name="login" [(ngModel)]="login" required />
+    </div>
+    <div class="form-group">
+      <input placeholder="Password" type="password" class="form-control" name="password" [(ngModel)]="password"
+        required />
+    </div>
     <div class="form-group">
       <router-outlet>
-        <button [disabled]="myForm.invalid"
-
-                class="btn btn-default" (click)="submit(myForm)">{{ "entry" }}
+        <button [disabled]="myForm.invalid" class="btn btn-default" (click)="submit(myForm)">{{ "Submit" }}
         </button>
       </router-outlet>
     </div>
-  </div>
-</form>
+  </form>
+</div>

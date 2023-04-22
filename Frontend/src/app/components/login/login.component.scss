@@ -1,0 +1,20 @@
+.login-panel {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+form {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 250px;
+  width: 400px;
+}
+
+.form-group {
+  display: flex;
+  justify-content: space-between;
+}
