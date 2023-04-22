@@ -6,25 +6,25 @@ import { RequestService } from 'src/app/service/http.service';
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.css']
+  styleUrls: ['./registration.component.scss']
 })
 export class RegistrationComponent {
-  constructor(private router: Router,private httpService:RequestService) {
+  constructor(private router: Router, private httpService: RequestService) {
   }
 
-  signIn(){
+  signIn() {
     this.router.navigate(['/']);
   }
 
   step = 1;
 
-  next(){
+  next() {
     this.step++;
   }
-  back(){
+  back() {
     this.step--;
   }
-  submit(){
+  submit() {
     const contactForm = this.multiStepForm.value.contactsForm;
     const nameForm = this.multiStepForm.value.nameForm;
     const loginForm = this.multiStepForm.value.loginForm

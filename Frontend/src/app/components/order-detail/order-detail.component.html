@@ -1,5 +1,12 @@
 <button type="button" (click)="back()">Back</button>
-<div style="text-align:center">
+
+<h1>Request#{{this.orderStore.getValue().order?.id}}</h1>
+<h3>Status: {{this.orderStore.getValue().order?.status}}</h3>
+<h3>Date: {{this.orderStore.getValue().order?.date| date: 'dd.MM.yyyy'}}</h3>
+<div *ngIf="this.orderStore.getValue().order?.status!=='CONTACT_RECEIVED'" style="text-align:center">
+  <tr>
+    <th>
+
   <br>
   <label>
     Contract
@@ -35,6 +42,43 @@
   <br/>
 
   <br>
-  <button [disabled]="!selectedFiles" (click)="upload()">Upload</button>
+  <button [disabled]="disableUploadButton()" (click)="upload()">Upload</button>
   <br>
+    </th>
+
+    <th>
+
+      <br>
+      <label>
+        <button [disabled]="disableButton('CONTRACT')" (click)="download('CONTRACT')">download CONTRACT</button>
+      </label>
+      <br/>
+
+    <br>
+    <label>
+      <button [disabled]="disableButton('PASSPORT')" (click)="download('PASSPORT')">download PASSPORT</button>
+    </label>
+      <br/>
+      <br>
+      <label>
+        <button [disabled]="disableButton('P_45')" (click)="download('P_45')">download P_45</button>
+      </label>
+      <br/>
+      <br>
+      <label>
+        <button [disabled]="disableButton('P_60')" (click)="download('P_60')">download P_60</button>
+      </label>
+      <br/>
+      <br>
+      <label>
+        <button [disabled]="disableButton('P_80')" (click)="download('P_80')">download P_80</button>
+      </label>
+      <br/>
+
+      <br>
+      <button [disabled]="disableConfirmButton()" (click)="confirmDocs()">Confirm</button>
+      <br>
+    </th>
+
+  </tr>
 </div>

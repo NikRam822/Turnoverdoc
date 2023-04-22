@@ -1,55 +1,60 @@
-<button type="button" (click)="signIn()">SignIN</button>
-<form [formGroup]="multiStepForm">
-  <div [ngSwitch]="step">
-    <!-- first Step -->
-    <ng-template ngSwitchCase="1">
-      <div formGroupName="nameForm" class="form-el">
-        <h2>Name</h2>
-        <label for="firstName">FirstName: </label>
-        <input id="firstName" type="text" formControlName="firstName">
-        <label for="lastName">LastName: </label>
-        <input id="lastName" type="text" formControlName="lastName">
-        <label for="secondName">SecondName: </label>
-        <input id="secondName" type="text" formControlName="secondName">
-        <button type="button" (click)="next()">Next</button>
-      </div>
-    </ng-template>
-    <!-- end of first step -->
+<div class="step-panel">
+  <form [formGroup]="multiStepForm" class="multistep">
+    <div [ngSwitch]="step">
+      <!-- first Step -->
+      <ng-template class="step" ngSwitchCase="1">
+        <div formGroupName="nameForm" class="step">
+          <h2>Name</h2>
+          <div class="form-line"><input placeholder="First Name" class="stndinput" id="firstName" type="text"
+              formControlName="firstName"></div>
+          <div class="form-line"><input placeholder="Last Name:" class="stndinput" id="lastName" type="text"
+              formControlName="lastName"></div>
+          <div class="form-line"><input placeholder="Second Name" class="stndinput" id="secondName" type="text"
+              formControlName="secondName"></div>
+          <div class="form-line">
+            <button class="stndbtn active" type="button" (click)="signIn()">SignIN</button>
+            <button class="stndbtn" type="button" (click)="next()">Next</button>
+          </div>
+        </div>
+      </ng-template>
+      <!-- end of first step -->
 
-    <!-- second step -->
-    <ng-template ngSwitchCase="2">
-    <div formGroupName="contactsForm" class="form-el">
-      <h2>Contacts</h2>
-      <label for="email">Email: </label>
-      <input id="email" type="text" formControlName="email">
-      <label for="phone">Phone: </label>
-      <input id="phone" type="text" formControlName="phone">
-      <label for="messanger">Messanger: </label>
-      <input id="messanger" type="text" formControlName="messanger">
-      <div class="buttons">
-        <button type="button" (click)="back()">Back</button>
-        <button type="button" (click)="next()">Next</button>
-      </div>
-    </div>
-    </ng-template>
-    <!-- end of second step -->
+      <!-- second step -->
+      <ng-template class="step" ngSwitchCase="2">
+        <div formGroupName="contactsForm" class="step">
+          <h2>Contacts</h2>
 
-    <!-- third step -->
-    <ng-template ngSwitchCase="3">
-    <div formGroupName="loginForm" class="form-el">
-      <h2>Login</h2>
-      <label for="login">Login: </label>
-      <input id="login" type="text" formControlName="login">
-      <label for="password">Password: </label>
-      <input id="password" type="text" formControlName="password">
-      <label for="repPassword">Repeat password: </label>
-      <input id="repPassword" type="text" formControlName="repPassword">
-      <div class="buttons">
-        <button type="button" (click)="back()">Back</button>
-        <button type="button" (click)="submit()">Submit</button>
-      </div>
+          <input placeholder="Email" class="stndinput" id="email" type="text" formControlName="email">
+
+          <input placeholder="Phone" class="stndinput" id="phone" type="text" formControlName="phone">
+
+          <input placeholder="Messanger" class="stndinput" id="messanger" type="text" formControlName="messanger">
+          <div class="form-line">
+            <button class="stndbtn" type="button" (click)="back()">Back</button>
+            <button class="stndbtn" type="button" (click)="next()">Next</button>
+          </div>
+        </div>
+      </ng-template>
+      <!-- end of second step -->
+
+      <!-- third step -->
+      <ng-template class="step" ngSwitchCase="3">
+        <div formGroupName="loginForm" class="step">
+          <h2>Login</h2>
+
+          <input placeholder="Login" class="stndinput" id="login" type="text" formControlName="login">
+
+          <input placeholder="Password" class="stndinput" id="password" type="text" formControlName="password">
+
+          <input placeholder="Repeat password" class="stndinput" id="repPassword" type="text"
+            formControlName="repPassword">
+          <div class="form-line">
+            <button class="stndbtn" type="button" (click)="back()">Back</button>
+            <button class="stndbtn" type="buton" (click)="submit()">Submit</button>
+          </div>
+        </div>
+      </ng-template>
     </div>
-    </ng-template>
-  </div>
-<!-- endof third step -->
-</form>
+    <!-- endof third step -->
+  </form>
+</div>
