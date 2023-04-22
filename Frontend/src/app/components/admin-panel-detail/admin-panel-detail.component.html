@@ -1,6 +1,11 @@
+<button type="button" (click)="back()">Back</button>
+
+<h1>Request#{{this.orderStore.getValue().fullOrder?.id}}</h1>
+<h3>Status: {{this.orderStore.getValue().fullOrder?.status}}</h3>
+<h3>Date: {{this.orderStore.getValue().fullOrder?.date| date: 'dd.MM.yyyy'}}</h3>
 <thead>
 <tr>
-  <th>Order Id: #{{orderId}}</th>
+  <th>Status: </th>
   <th>
     <select name="duration" [(ngModel)]="status" >
       <option value="CONTACT_RECEIVED">CONTACT_RECEIVED</option>

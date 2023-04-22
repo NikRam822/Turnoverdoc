@@ -9,7 +9,7 @@ import {OrderStore} from "../../store/orderStore";
   styleUrls: ['./admin-panel-detail.component.css']
 })
 export class AdminPanelDetailComponent {
-  constructor(private router: Router, private httpService: RequestService, private orderStore: OrderStore) {
+  constructor(private router: Router, private httpService: RequestService, public orderStore: OrderStore) {
   }
 
   status: String = ""
@@ -18,6 +18,10 @@ export class AdminPanelDetailComponent {
   ngOnInit(): void {
     this.status = this.orderStore.getValue().fullOrder.status
     this.orderId = String(this.orderStore.getValue().fullOrder.id)
+  }
+
+  back() {
+    this.router.navigate(['/admin-panel']);
   }
 
   submit() {
