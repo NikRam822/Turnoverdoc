@@ -32,12 +32,16 @@ public class Contact {
     @Column(name = "messenger_type")
     private MessengerType messengerType;
 
+    @Column(columnDefinition = "boolean default false")
     private boolean messengerNotify;
 
     private String email;
 
     @OneToOne(mappedBy = "contact")
     private User user;
+
+    @Column(columnDefinition = "boolean default false")
+    private boolean isPersonal;
 
     public Contact(String phone, String messenger, Order addedOrder, MessengerType messengerType, boolean messengerNotify) {
         this.phone = phone;

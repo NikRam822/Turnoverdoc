@@ -1,6 +1,7 @@
 package com.turnoverdoc.turnover.controllers;
 
 import com.turnoverdoc.turnover.dto.PasswordResetDto;
+import com.turnoverdoc.turnover.dto.UserDto;
 import com.turnoverdoc.turnover.error.ErrorDto;
 import com.turnoverdoc.turnover.model.PasswordResetToken;
 import com.turnoverdoc.turnover.model.User;
@@ -46,7 +47,7 @@ public class PasswordResetController {
 
     @PostMapping("/requestToResetPassword")
     public ResponseEntity<String> requestToResetPassword(@RequestParam String email) {
-        User user = contactService.findByEmail(email);
+        User user = userService.findByEmail(email);
 
         if (user == null) {
             return new ResponseEntity<>("Can not find user with current email", HttpStatus.BAD_REQUEST);
@@ -69,5 +70,13 @@ public class PasswordResetController {
             return new ResponseEntity<>("Token has expired, please request a new password reset", HttpStatus.BAD_REQUEST);
         }
         throw TURN2;
+    }
+
+    @GetMapping("/requestToResetPasswordI")
+    public ResponseEntity<UserDto> requestToResetPasswordI(@RequestParam String email) {
+        User user = userService.findByEmail(email);
+
+
+        return new ResponseEntity<>(UserDto.toUserDto(user), HttpStatus.OK);
     }
 }

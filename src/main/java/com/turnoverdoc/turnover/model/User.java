@@ -43,7 +43,7 @@ public class User {
     private Collection<Order> order;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "contact_id", referencedColumnName = "id")
     private Contact contact;
 
     @Enumerated(EnumType.STRING)

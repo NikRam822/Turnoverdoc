@@ -8,12 +8,14 @@ import org.springframework.web.multipart.MultipartFile;
 public class ContactDto {
     private String phone;
     private String messenger;
+    private String email;
 
     public static ContactDto toContactDto(Contact contact) {
         if (contact != null) {
             ContactDto contactDto = new ContactDto();
             contactDto.setMessenger(contact.getMessenger());
             contactDto.setPhone(contact.getPhone());
+            contactDto.setEmail(contact.getEmail());
 
             return contactDto;
         }
@@ -25,6 +27,7 @@ public class ContactDto {
             Contact contact = new Contact();
             contact.setMessenger(contactDto.getMessenger());
             contact.setPhone(contactDto.getPhone());
+            contact.setEmail(contactDto.getEmail());
             return contact;
         }
         return null;

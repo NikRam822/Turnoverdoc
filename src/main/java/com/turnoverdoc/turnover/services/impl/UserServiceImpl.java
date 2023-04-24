@@ -7,6 +7,7 @@ import com.turnoverdoc.turnover.model.*;
 import com.turnoverdoc.turnover.repositories.PasswordTokenRepository;
 import com.turnoverdoc.turnover.repositories.RoleRepository;
 import com.turnoverdoc.turnover.repositories.UserRepository;
+import com.turnoverdoc.turnover.services.ContactService;
 import com.turnoverdoc.turnover.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -28,6 +29,13 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
     private PasswordTokenRepository passwordTokenRepository;
     private PasswordEncoder passwordEncoder;
+
+    private ContactService contactService;
+
+    @Autowired
+    public void setContactService(ContactService contactService) {
+        this.contactService = contactService;
+    }
 
     private final Logger LOGGER = log;
 
@@ -54,6 +62,11 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
         user.setRoles(userRoles);
         user.setUserStatus(UserStatus.ACTIVE);
+
+        Contact contact = new Contact();
+        contact.setEmail(registrationRequest.getEmail());
+
+        user.setContact(contactService.save(contact));
 
         User registeredUser = null;
 
@@ -117,5 +130,8 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
 }

@@ -15,4 +15,5 @@ public interface UserService {
     void delete(Long id);
     void changePassword(PasswordDto passwordDto, User user) throws ErrorDto;
     void resetPassword(String newPassword, User user);
+    User findByEmail(String email);
 }

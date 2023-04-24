@@ -23,13 +23,6 @@ public class ContactServiceImpl implements ContactService {
     private final Logger LOGGER = log;
     private ContactRepository contactRepository;
 
-    private UserService userService;
-
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
     @Autowired
     public void setContactRepository(ContactRepository contactRepository) {
         this.contactRepository = contactRepository;
@@ -72,7 +65,7 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public User findByEmail(String email) {
-        return userService.findById(contactRepository.findByEmail(email).getUser().getId());
+    public Contact save(Contact contact) {
+        return contactRepository.save(contact);
     }
 }
