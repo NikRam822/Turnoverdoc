@@ -1,7 +1,11 @@
 <div class="login-form">
   <div class="login-panel">
     <form #myForm="ngForm" novalidate cal>
-
+      <div class="title">
+        <h2>
+          Welcome to Turnoverdoc
+        </h2>
+      </div>
       <div class="form-group">
         <input class="stndinput" placeholder="Username" name="login" [(ngModel)]="login" required />
       </div>
@@ -16,6 +20,11 @@
           </button>
         </router-outlet>
         <button class="stndbtn unactive" type="button" (click)="signUp()">Sign Up</button>
+      </div>
+      <div class="title">
+        <a href="">
+          Forgot your password?
+        </a>
       </div>
     </form>
   </div>

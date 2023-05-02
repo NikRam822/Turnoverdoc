@@ -1,0 +1,21 @@
+.admin-order-detail-panel {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.status-panel {
+  display: flex;
+  height: 200px;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: lightblue;
+  border-radius: 10px;
+  border: 7px solid lavender;
+}
+h2 {
+  margin: 0;
+}
