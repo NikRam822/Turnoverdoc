@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
-import {Router} from "@angular/router";
-import {RequestService} from "../../service/http.service";
-import {NgForm} from "@angular/forms";
+import { Router } from "@angular/router";
+import { RequestService } from "../../service/http.service";
+import { NgForm } from "@angular/forms";
 
 @Component({
   selector: 'app-create-order',
   templateUrl: './create-order.component.html',
-  styleUrls: ['./create-order.component.css']
+  styleUrls: ['./create-order.component.scss']
 })
 export class CreateOrderComponent {
-  constructor(private router: Router,private httpService:RequestService) {
+  constructor(private router: Router, private httpService: RequestService) {
   }
-  back(){
+  back() {
     this.router.navigate(['/auth']);
   }
   public messenger: string = "";
@@ -19,7 +19,7 @@ export class CreateOrderComponent {
   public title = 'angular-proj';
 
   submit(form: NgForm) {
-    this.httpService.postCreateOrder(form.value.phone,form.value.messenger).subscribe({
+    this.httpService.postCreateOrder(form.value.phone, form.value.messenger).subscribe({
       next: () => {
         this.router.navigate(['/auth']);
       },

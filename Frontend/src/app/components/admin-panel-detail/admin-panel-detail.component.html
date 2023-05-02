@@ -1,11 +1,6 @@
-<button type="button" (click)="back()">Back</button>
-
-<h1>Request#{{this.orderStore.getValue().fullOrder?.id}}</h1>
-<h3>Status: {{this.orderStore.getValue().fullOrder?.status}}</h3>
-<h3>Date: {{this.orderStore.getValue().fullOrder?.date| date: 'dd.MM.yyyy'}}</h3>
 <thead>
 <tr>
-  <th>Status: </th>
+  <th>Order Id: #{{orderId}}</th>
   <th>
     <select name="duration" [(ngModel)]="status" >
       <option value="CONTACT_RECEIVED">CONTACT_RECEIVED</option>
@@ -27,80 +22,3 @@
 <br/>
 
 </thead>
-
-<div *ngIf="this.orderStore.getValue().order?.status!=='CONTACT_RECEIVED'" style="text-align:center">
-  <tr>
-    <th>
-
-      <br>
-      <label>
-        Contract
-        <input type="file" (change)="selectFile('CONTRACT',{event : $event})">
-      </label>
-      <br/>
-      <br>
-      <label>
-        Passport
-        <input type="file" (change)="selectFile('PASSPORT',{event : $event})">
-      </label>
-      <br/>
-
-      <br>
-      <label>
-        P_45
-        <input type="file" (change)="selectFile('P_45',{event : $event})">
-      </label>
-      <br/>
-
-      <br>
-      <label>
-        P_60
-        <input type="file" (change)="selectFile('P_60',{event : $event})">
-      </label>
-      <br/>
-
-      <br>
-      <label>
-        P_80
-        <input type="file" (change)="selectFile('P_80',{event : $event})">
-      </label>
-      <br/>
-
-      <br>
-      <button [disabled]="disableUploadButton()" (click)="upload()">Upload</button>
-      <br>
-    </th>
-
-    <th>
-
-      <br>
-      <label>
-        <button [disabled]="disableButton('CONTRACT')" (click)="download('CONTRACT')">download CONTRACT</button>
-      </label>
-      <br/>
-
-      <br>
-      <label>
-        <button [disabled]="disableButton('PASSPORT')" (click)="download('PASSPORT')">download PASSPORT</button>
-      </label>
-      <br/>
-      <br>
-      <label>
-        <button [disabled]="disableButton('P_45')" (click)="download('P_45')">download P_45</button>
-      </label>
-      <br/>
-      <br>
-      <label>
-        <button [disabled]="disableButton('P_60')" (click)="download('P_60')">download P_60</button>
-      </label>
-      <br/>
-      <br>
-      <label>
-        <button [disabled]="disableButton('P_80')" (click)="download('P_80')">download P_80</button>
-      </label>
-      <br/>
-
-    </th>
-
-  </tr>
-</div>
