@@ -44,19 +44,19 @@ export class RegistrationComponent {
 
   multiStepForm = new FormGroup({
     nameForm: new FormGroup({
-      firstName: new FormControl(''),
-      lastName: new FormControl(''),
+      firstName: new FormControl('', Validators.required),
+      lastName: new FormControl('', Validators.required),
       secondName: new FormControl(''),
     }),
     contactsForm: new FormGroup({
-      email: new FormControl(''),
-      phone: new FormControl(''),
+      email: new FormControl('', Validators.required),
+      phone: new FormControl('', Validators.required),
       messanger: new FormControl(''),
     }),
     loginForm: new FormGroup({
-      login: new FormControl(''),
-      password: new FormControl(''),
-      repPassword: new FormControl(''),
+      login: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required),
+      repPassword: new FormControl('', Validators.required),
     }),
   });
 }

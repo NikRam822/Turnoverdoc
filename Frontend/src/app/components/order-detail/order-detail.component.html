@@ -1,40 +1,60 @@
-<button type="button" (click)="back()">Back</button>
-<div style="text-align:center">
-  <br>
-  <label>
-    Contract
-    <input type="file" (change)="selectFile('CONTRACT',{event : $event})">
-  </label>
-<br/>
-  <br>
-  <label>
-    Passport
-    <input type="file" (change)="selectFile('PASSPORT',{event : $event})">
-  </label>
-  <br/>
+<div class="order-panel">
+  <div class="uploading">
+    <div class="form-group"><button class="stndbtn" type="button" (click)="back()">Back</button></div>
 
-  <br>
-  <label>
-    P_45
-    <input type="file" (change)="selectFile('P_45',{event : $event})">
-  </label>
-  <br/>
+    <div class="form-group">
+      <label class="file-button">
+        Contract
+        <input class="file-input" type="file" (change)="selectFile('CONTRACT',{event : $event})">
+      </label>
+      <div *ngIf="filesMap.has('CONTRACT') && filesMap.get('CONTRACT') !== null">
+        {{filesMap.get('CONTRACT').name}}
+      </div>
+    </div>
 
-  <br>
-  <label>
-    P_60
-    <input type="file" (change)="selectFile('P_60',{event : $event})">
-  </label>
-  <br/>
+    <div class="form-group">
+      <label class="file-button">
+        Passport
+        <input class="file-input" type="file" (change)="selectFile('PASSPORT',{event : $event})">
+      </label>
+      <div *ngIf="filesMap.has('PASSPORT') && filesMap.get('PASSPORT') !== null">
+        {{filesMap.get('PASSPORT').name}}
+      </div>
+    </div>
 
-  <br>
-  <label>
-    P_80
-    <input type="file" (change)="selectFile('P_80',{event : $event})">
-  </label>
-  <br/>
+    <div class="form-group">
+      <label class="file-button">
+        P_45
+        <input class="file-input" type="file" (change)="selectFile('P_45',{event : $event})">
+      </label>
+      <div *ngIf="filesMap.has('P_45') && filesMap.get('P_45') !== null">
+        {{filesMap.get('P_45').name}}
+      </div>
+    </div>
 
-  <br>
-  <button [disabled]="!selectedFiles" (click)="upload()">Upload</button>
-  <br>
+    <div class="form-group">
+      <label class="file-button">
+        P_60
+        <input class="file-input" type="file" (change)="selectFile('P_60',{event : $event})">
+      </label>
+      <div *ngIf="filesMap.has('P_60') && filesMap.get('P_60') !== null">
+        {{filesMap.get('P_60').name}}
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="file-button">
+        P_80
+        <input class="file-input" type="file" (change)="selectFile('P_80',{event : $event})">
+      </label>
+      <div *ngIf="filesMap.has('P_80') && filesMap.get('P_80') !== null">
+        {{filesMap.get('P_80').name}}
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div><button class="stndbtn" [disabled]="!selectedFiles" (click)="upload()">Upload</button></div>
+    </div>
+
+  </div>
 </div>

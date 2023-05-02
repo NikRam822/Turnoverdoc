@@ -1,12 +1,21 @@
-<form [formGroup]="adminAuthForm">
+<div class="admin-login-form">
+  <div class="admin-login-panel">
+    <form [formGroup]="adminAuthForm">
+      <div class="title">
         <h2>Authorization</h2>
-        <div>
-          <label for="username">Username: </label>
-          <input id="username" type="text" formControlName="username">
+      </div>
+      <div>
+        <div class="form-group"><input placeholder="Username" class="stndinput" id="username" type="text"
+            formControlName="username">
         </div>
-        <div>
-          <label for="password">Password: </label>
-          <input type="password" id="password" type="text" formControlName="password">
-        </div>
-        <button type="submit" [disabled]="!adminAuthForm.valid"  (click)="signIn()">SignIn</button>
-</form>
+      </div>
+      <div>
+        <div class="form-group"><input placeholder="Password" class="stndinput" type="password" id="password"
+            type="text" formControlName="password"></div>
+      </div>
+      <div class="form-group"><button class="stndbtn" type="submit" [disabled]="!adminAuthForm.valid"
+          (click)="signIn()">SignIn</button>
+      </div>
+    </form>
+  </div>
+</div>

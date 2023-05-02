@@ -1,24 +1,28 @@
-<thead>
-<tr>
-  <th>Order Id: #{{orderId}}</th>
-  <th>
-    <select name="duration" [(ngModel)]="status" >
-      <option value="CONTACT_RECEIVED">CONTACT_RECEIVED</option>
-      <option value="REQUEST_FOR_DOCS">REQUEST_FOR_DOCS</option>
-      <option value="ALL_DOCS_RECEIVED">ALL_DOCS_RECEIVED</option>
-      <option value="TAX_RETURN_TO_HMRC">TAX_RETURN_TO_HMRC</option>
-      <option value="CHEQUE_RECEIVED">CHEQUE_RECEIVED</option>
-      <option value="CHEQUE_BANKED" selected>CHEQUE_BANKED</option>
-      <option value="BANK_DETAILS_RECEIVED">BANK_DETAILS_RECEIVED</option>
-      <option value="TRANSFER_MADE">TRANSFER_MADE</option>
-    </select>
-  </th>
-  <th>  <router-outlet>
-    <button  (click)="submit()">Submit</button>
-  </router-outlet>
-  </th>
-</tr>
+<div class="admin-order-detail-panel">
+  <thead>
+    <tr>
+      <div class="status-panel">
+        <h2>Order Id: #{{orderId}}</h2>
 
-<br/>
+        <select class="stndselect" name="duration" [(ngModel)]="status">
+          <option value="CONTACT_RECEIVED">CONTACT_RECEIVED</option>
+          <option value="REQUEST_FOR_DOCS">REQUEST_FOR_DOCS</option>
+          <option value="ALL_DOCS_RECEIVED">ALL_DOCS_RECEIVED</option>
+          <option value="TAX_RETURN_TO_HMRC">TAX_RETURN_TO_HMRC</option>
+          <option value="CHEQUE_RECEIVED">CHEQUE_RECEIVED</option>
+          <option value="CHEQUE_BANKED" selected>CHEQUE_BANKED</option>
+          <option value="BANK_DETAILS_RECEIVED">BANK_DETAILS_RECEIVED</option>
+          <option value="TRANSFER_MADE">TRANSFER_MADE</option>
+        </select>
 
-</thead>
+        <router-outlet>
+          <button class="stndbtn" (click)="submit()">Submit</button>
+        </router-outlet>
+
+      </div>
+    </tr>
+
+    <br />
+
+  </thead>
+</div>
