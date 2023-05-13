@@ -4,28 +4,12 @@
   border: 7px solid lavender;
 }
 
-.title {
-  text-align: center;
-}
-
-a {
-  text-decoration: none;
-  color: black;
-}
-a:hover {
-  text-decoration: underline;
-}
-
-h2 {
-  margin: 0;
-}
-
 form {
   padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  height: 400px;
+  height: 250px;
   width: 400px;
 }
 

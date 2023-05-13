@@ -1,35 +1,38 @@
-<div class="orders-panel">
-  <div class="container mt-5">
-    <table class="table table-striped">
+<div class="container mt-5">
+  <table class="table table-striped">
+    <thead>
 
-      <div class="header">
-        <div class="topic">
-          <h1>This is your Orders</h1>
-        </div>
-        <div class="column-names">
-          <h3>ID of request</h3>
-          <h3>Status of request</h3>
-          <h3>Date of creation</h3>
-        </div>
-      </div>
-      <tbody>
+    </thead>
+    <thead>
+    Order
+    <thead>
+    <tr>
+      <th></th>
+      <th>id</th>
+      <th>status</th>
+      <th>dateTime</th>
+    </tr>
+    </thead>
 
-        <tr *ngFor="let order of orders">
-          <router-outlet>
-            <button class="stndbtn" (click)="orderDetail(order)">
-              <td>Request #{{ order.id}}</td>
-              <td>{{ order.status}}</td>
-              <td>from:{{ order.date| date: 'dd.MM.yyyy'}}</td>
-            </button>
-          </router-outlet>
-        </tr>
+    <tbody>
+
+    <tr *ngFor="let order of orders">
+      <router-outlet>
+        <button
+          class="btn btn-default" (click)="orderDetail(order)">
+      <td>Request #{{ order.id}}</td>
+      <td>{{ order.status}}</td>
+      <td>from:{{ order.date| date: 'dd.MM.yyyy'}}</td>
+        </button>
+      </router-outlet>
+    </tr>
 
 
-        <router-outlet>
-          <button class="stndbtn" (click)="submit()">{{ "Create order" }}
-          </button>
-        </router-outlet>
-      </tbody>
-    </table>
-  </div>
+    <router-outlet>
+      <button
+        class="btn btn-default" (click)="submit()">{{ "Create order" }}
+      </button>
+    </router-outlet>
+    </tbody>
+  </table>
 </div>

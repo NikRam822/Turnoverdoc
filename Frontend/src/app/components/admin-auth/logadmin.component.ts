@@ -6,13 +6,13 @@ import { RequestService } from 'src/app/service/http.service';
 @Component({
   selector: 'app-logadmin',
   templateUrl: './logadmin.component.html',
-  styleUrls: ['./logadmin.component.scss']
+  styleUrls: ['./logadmin.component.css']
 })
 export class LogadminComponent {
-  constructor(private router: Router, private httpService: RequestService) {
+  constructor(private router: Router,private httpService:RequestService) {
   }
 
-  signIn() {
+  signIn(){
     const adminForm = this.adminAuthForm.value;
     this.httpService.postAdminAuth(adminForm.username, adminForm.password).subscribe({
       next: () => {
