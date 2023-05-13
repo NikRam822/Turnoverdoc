@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {OrderStore} from "../../store/orderStore";
-import { Router } from '@angular/router';
-import { RequestService } from 'src/app/service/http.service';
+import {Router} from '@angular/router';
+import {RequestService} from 'src/app/service/http.service';
 
 @Component({
   selector: 'app-order-detail',
   templateUrl: './order-detail.component.html',
-  styleUrls: ['./order-detail.component.scss']
+  styleUrls: ['./order-detail.component.css']
 })
 export class OrderDetailComponent implements OnInit {
 
@@ -17,20 +17,36 @@ export class OrderDetailComponent implements OnInit {
     console.log(this.orderStore.getValue().order)
   }
 
-  back(){
-      this.router.navigate(['/auth']);
+  back() {
+    this.router.navigate(['/auth']);
   }
+
   filesMap = new Map();
   declare selectedFiles: FileList;
 
-  selectFile(fileName:String,{event}: { event: any }) {
+  selectFile(fileName: String, {event}: { event: any }) {
     this.selectedFiles = event.target.files;
-    this.filesMap.set(fileName,this.selectedFiles.item(0))
-    console.log( this.filesMap)
+    this.filesMap.set(fileName, this.selectedFiles.item(0))
   }
 
   upload() {
-    this.httpService.postUploadDocs(this.orderStore.getValue().order?.id,  this.filesMap).subscribe({
+    this.httpService.postUploadDocs(this.orderStore.getValue().order?.id, this.filesMap).subscribe({
+      next: (response) => {
+        this.router.navigate(['/auth'])
+      },
+      error: (error) => {
+        if (error.status === 200) {
+          this.router.navigate(['/auth'])
+        } else {
+          console.error(error);
+        }
+      }
+    });
+
+  }
+
+  download(fileName: String) {
+    this.httpService.getDownloadDocs(this.orderStore.getValue().order?.id, fileName).subscribe({
       next: (response) => {
         alert("Ok")
       },
@@ -93,8 +109,5 @@ return !(this.filesMap.get('CONTRACT') && this.filesMap.get('PASSPORT'))
         }
       }
     });
-
   }
-
-
 }
