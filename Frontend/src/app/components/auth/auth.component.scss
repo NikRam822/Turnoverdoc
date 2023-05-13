@@ -1,0 +1,48 @@
+.stndbtn {
+  margin: 20px;
+  background-color: lightblue;
+}
+
+h1 {
+  text-decoration: none;
+  margin: 0;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+}
+
+.topic {
+  padding: 20px;
+}
+
+.column-names {
+  display: flex;
+  justify-content: space-around;
+}
+
+thead {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+
+td {
+  padding: 0 20px 0 20px;
+}
+th {
+  padding: 0 40px 0 40px;
+}
+// th:first-child {
+//   padding: 0 0 0 40px;
+// }
+
+.orders-panel {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

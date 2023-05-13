@@ -1,0 +1,24 @@
+.create-order-panel {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.create-order {
+  padding: 20px;
+  background: lightblue;
+  border-radius: 10px;
+  border: 7px solid lavender;
+  width: 400px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.form-line {
+  display: flex;
+  justify-content: space-between;
+}

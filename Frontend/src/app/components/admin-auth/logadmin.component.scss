@@ -1,0 +1,42 @@
+.admin-login-panel {
+  background: lightblue;
+  border-radius: 10px;
+  border: 7px solid lavender;
+}
+
+.title {
+  text-align: center;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+h2 {
+  margin: 0;
+}
+
+form {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 400px;
+  width: 400px;
+}
+
+.form-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.admin-login-form {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
