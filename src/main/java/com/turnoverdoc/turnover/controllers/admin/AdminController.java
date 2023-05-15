@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-import static com.turnoverdoc.turnover.error.ErrorsContainer.TURN2;
+import static com.turnoverdoc.turnover.error.ErrorsContainer.TURN_02;
 
 @CrossOrigin
 @RestController
@@ -53,7 +53,7 @@ public class AdminController {
             orderService.changeStatus(order, changeStatusDto.getStatus());
             return new ResponseEntity<>("Order successful saved", HttpStatus.OK);
         }
-        throw TURN2;
+        throw TURN_02;
     }
 
     @PostMapping("order/get-filtered-orders")

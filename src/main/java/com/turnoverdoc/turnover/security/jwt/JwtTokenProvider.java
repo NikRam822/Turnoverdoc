@@ -2,6 +2,7 @@ package com.turnoverdoc.turnover.security.jwt;
 
 import com.turnoverdoc.turnover.model.Role;
 import com.turnoverdoc.turnover.security.JwtUserDetailsService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +21,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
+import static com.turnoverdoc.turnover.error.ErrorsContainer.AUTH_04;
+
+@Slf4j
 @Component
 public class JwtTokenProvider {
 
@@ -78,15 +82,13 @@ public class JwtTokenProvider {
             return true;
         } catch (JwtException | IllegalArgumentException e) {
             e.printStackTrace();
+            log.error("{}: Not valid jwt token", AUTH_04.getName());
         }
         return false;
     }
 
     public String resolveToken(HttpServletRequest req) {
-        try {
-            return Arrays.stream(req.getCookies()).filter(cookie -> cookie.getName().equals("token")).findFirst().get().getValue();
-        } catch (Exception e){return null;}
-
+        return Arrays.stream(req.getCookies()).filter(cookie -> cookie.getName().equals("token")).findFirst().get().getValue();
     }
 
     private List<String> getRoleNames(List<Role> roles) {

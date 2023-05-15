@@ -24,6 +24,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.turnoverdoc.turnover.error.ErrorsContainer.*;
+
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/api/v1/auth")
@@ -49,21 +51,19 @@ public class AuthenticationRestController {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));
             User user = userService.findByUsername(username);
 
-            if (user == null) {
-                LOGGER.warn("User {} not found", username);
-                throw new UsernameNotFoundException("User with username: " + username + " not found");
-            }
-
             String token = jwtTokenProvider.createToken(username, user.getRoles());
 
             Map<Object, Object> response = new HashMap<>();
             response.put("username", username);
             response.put("token", token);
+
             LOGGER.info("Successful login user with username {}", username);
+
             jwtTokenProvider.setCookieJwt(token,responseHttp);
             return ResponseEntity.ok(response);
         } catch (AuthenticationException e) {
-            throw new BadCredentialsException("Invalid username or password");
+            LOGGER.error("{}: Invalid password for user: {}", AUTH_01.getName(), requestDto.getUsername());
+            throw AUTH_01;
         }
     }
 
@@ -72,8 +72,8 @@ public class AuthenticationRestController {
         User user = userService.findByUsername(requestDto.getUsername());
 
         if (user != null) {
-            LOGGER.warn("User with username {} is already exist", user.getUsername());
-            return new ResponseEntity<>("User with this username is already exist", HttpStatus.CONFLICT);
+            LOGGER.error("{}: User with username {} is already exist", AUTH_02.getName(), user.getUsername());
+            throw AUTH_02;
         }
 
         User createdUser = userService.register(requestDto);

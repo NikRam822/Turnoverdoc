@@ -14,7 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.turnoverdoc.turnover.error.ErrorsContainer.TURN2;
+import static com.turnoverdoc.turnover.error.ErrorsContainer.TURN_02;
 
 @CrossOrigin
 @RestController
@@ -69,14 +69,13 @@ public class PasswordResetController {
             }
             return new ResponseEntity<>("Token has expired, please request a new password reset", HttpStatus.BAD_REQUEST);
         }
-        throw TURN2;
+        throw TURN_02;
     }
 
     @GetMapping("/requestToResetPasswordI")
     public ResponseEntity<UserDto> requestToResetPasswordI(@RequestParam String email) {
         User user = userService.findByEmail(email);
-
-
+        
         return new ResponseEntity<>(UserDto.toUserDto(user), HttpStatus.OK);
     }
 }

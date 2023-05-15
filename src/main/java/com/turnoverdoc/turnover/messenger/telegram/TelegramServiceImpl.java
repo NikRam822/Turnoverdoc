@@ -5,10 +5,8 @@ import com.turnoverdoc.turnover.error.types.TimeoutException;
 import com.turnoverdoc.turnover.model.Order;
 import com.turnoverdoc.turnover.model.OrderStatus;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -32,18 +30,16 @@ public class TelegramServiceImpl implements TelegramService {
 
 
             // All exceptions must be non blocking!
-
-            if (telegramResponse!= null && !telegramResponse.getStatusCode().equals("0")) {
-                log.error("An error occurred: " + TLG_3.getName());
+            if (telegramResponse != null && !telegramResponse.getStatusCode().equals("0")) {
+                log.error("An error occurred: " + TLG_03.getName());
             }
 
         } catch (TimeoutException e) {
-            log.error("An error occurred: " + TLG_1.getName() + "\n" + e.getMessage());
+            log.error("An error occurred: " + TLG_01.getName() + "\n" + e.getMessage());
         } catch (NotFoundException e) {
-            log.error("An error occurred: " + TLG_2.getName() + "\n" + e.getMessage());
+            log.error("An error occurred: " + TLG_02.getName() + "\n" + e.getMessage());
         } catch (Exception e) {
-            //TODO: replace to exception for other cases
-            log.error("An error occurred: " + TLG_3.getName() + "\n" + e.getMessage());
+            log.error("An error occurred: " + TLG_04.getName() + "\n" + e.getMessage());
         }
     }
 }

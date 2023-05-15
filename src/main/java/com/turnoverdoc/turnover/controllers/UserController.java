@@ -1,26 +1,17 @@
 package com.turnoverdoc.turnover.controllers;
 
 import com.turnoverdoc.turnover.dto.PasswordDto;
-import com.turnoverdoc.turnover.dto.PasswordResetDto;
-import com.turnoverdoc.turnover.dto.UserDto;
 import com.turnoverdoc.turnover.error.ErrorDto;
 import com.turnoverdoc.turnover.model.User;
-import com.turnoverdoc.turnover.services.PasswordTokenService;
 import com.turnoverdoc.turnover.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
-import static com.turnoverdoc.turnover.error.ErrorsContainer.TURN2;
+import static com.turnoverdoc.turnover.error.ErrorsContainer.TURN_02;
 
 @CrossOrigin
 @RestController
@@ -47,6 +38,6 @@ public class UserController {
 
         }
 
-        throw TURN2;
+        throw TURN_02;
     }
 }

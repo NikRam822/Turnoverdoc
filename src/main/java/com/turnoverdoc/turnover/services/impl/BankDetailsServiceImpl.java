@@ -6,12 +6,12 @@ import com.turnoverdoc.turnover.model.Order;
 import com.turnoverdoc.turnover.model.OrderStatus;
 import com.turnoverdoc.turnover.services.BankDetailsService;
 import com.turnoverdoc.turnover.services.OrderService;
-import org.aspectj.weaver.ast.Or;
 import org.iban4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static com.turnoverdoc.turnover.error.ErrorsContainer.TURN4;
+import static com.turnoverdoc.turnover.error.ErrorsContainer.TURN_04;
+import static com.turnoverdoc.turnover.error.ErrorsContainer.VAL_01;
 
 @Service
 public class BankDetailsServiceImpl implements BankDetailsService {
@@ -46,7 +46,7 @@ public class BankDetailsServiceImpl implements BankDetailsService {
                 InvalidCheckDigitException |
                 UnsupportedCountryException | BicFormatException e) {
             // if the input data is null or in the wrong format
-            throw TURN4;
+            throw VAL_01;
         }
 
         return true;

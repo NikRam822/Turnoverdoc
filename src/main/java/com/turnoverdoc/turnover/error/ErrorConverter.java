@@ -26,10 +26,9 @@ public class ErrorConverter {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        System.out.println();
     }
 
-    public static ErrorDto convertToErrorDto(String errorName) {
+    public static ErrorDto getError(String errorName) {
         return errors.stream().filter(error -> error.getName().equals(errorName)).findFirst().orElse(null);
     }
 }

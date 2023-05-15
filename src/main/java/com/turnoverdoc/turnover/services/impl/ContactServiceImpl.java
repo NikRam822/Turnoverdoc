@@ -6,16 +6,15 @@ import com.google.i18n.phonenumbers.Phonenumber;
 import com.turnoverdoc.turnover.dto.ContactDto;
 import com.turnoverdoc.turnover.error.ErrorDto;
 import com.turnoverdoc.turnover.model.Contact;
-import com.turnoverdoc.turnover.model.User;
 import com.turnoverdoc.turnover.repositories.ContactRepository;
 import com.turnoverdoc.turnover.services.ContactService;
-import com.turnoverdoc.turnover.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static com.turnoverdoc.turnover.error.ErrorsContainer.TURN4;
+import static com.turnoverdoc.turnover.error.ErrorsContainer.TURN_04;
+import static com.turnoverdoc.turnover.error.ErrorsContainer.VAL_02;
 
 @Service
 @Slf4j
@@ -42,7 +41,7 @@ public class ContactServiceImpl implements ContactService {
                 LOGGER.info("Added new contact: {}", addedContact);
             } catch (IllegalArgumentException e) {
                 LOGGER.error("Failed to save new contact: contact is null");
-                throw new IllegalArgumentException(e);
+                throw VAL_02;
             }
         }
 
@@ -58,7 +57,7 @@ public class ContactServiceImpl implements ContactService {
             userNumber = phoneUtil.parse(contactDto.getPhone(), "GB");
         } catch (NumberParseException e) {
             LOGGER.error("Failed to parse phone number: " + e.getMessage());
-            throw TURN4;
+            throw VAL_02;
         }
 
         return phoneUtil.isValidNumber(userNumber) && contactDto.getMessenger() != null;

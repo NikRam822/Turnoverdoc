@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.turnoverdoc.turnover.error.ErrorsContainer.TURN3;
+import static com.turnoverdoc.turnover.error.ErrorsContainer.TURN_03;
 
 @Service
 @Slf4j
@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService {
             user.setPassword(passwordEncoder.encode(passwordDto.getNewPassword()));
             userRepository.save(user);
         } else {
-            throw TURN3;
+            throw TURN_03;
         }
     }
 
