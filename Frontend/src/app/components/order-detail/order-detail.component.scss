@@ -1,32 +1,28 @@
 h1,
 h2,
-h3 {
-  margin: 0;
+h3,
+h4,
+h5,
+h6 {
+  margin: 10px;
+  font-size: 20px;
+  font-weight: 400;
+  text-decoration: none;
+  // color: darkslategray;
 }
 
-.title {
-  display: flex;
-  justify-content: space-between;
+.panel {
+  min-width: 500px;
 }
 
-.order-panel {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.uploading {
-  width: 600px;
-  min-height: 500px;
-  display: flex;
-  flex-direction: column;
+.form-group-stnd {
   justify-content: space-around;
-  padding: 20px;
-  background: lightblue;
-  border-radius: 10px;
-  border: 7px solid lavender;
+  margin: 20px;
+  width: auto;
+}
+
+.form-group-center {
+  flex-direction: column;
 }
 
 .file-input {
@@ -37,13 +33,26 @@ h3 {
   left: 0;
   opacity: 0;
   font-size: 0;
+  cursor: pointer;
 }
 
 .file-button {
+  &__download {
+    display: inline-flex;
+    min-height: 40px;
+    border-radius: 10px;
+    border: 2px dashed darkslategrey;
+    justify-content: center;
+    align-items: center;
+    background-color: aliceblue;
+    padding: 0 20px;
+    margin: 0 20px;
+    cursor: pointer;
+  }
   display: inline-flex;
   min-height: 40px;
   border-radius: 10px;
-  border: 2px solid deepskyblue;
+  border: 2px solid darkslategrey;
   justify-content: center;
   align-items: center;
   background-color: aliceblue;
@@ -52,23 +61,6 @@ h3 {
   cursor: pointer;
 }
 
-.form-group {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  display: flex;
+.form-group-stnd {
   position: relative;
-  align-items: center;
-}
-
-.file-col {
-  min-height: 300px;
-  display: flex;
-  justify-content: space-around;
-}
-
-.column-file {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }

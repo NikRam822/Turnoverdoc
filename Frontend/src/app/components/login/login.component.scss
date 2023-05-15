@@ -1,26 +1,13 @@
-.login-panel {
-  background: lightblue;
-  border-radius: 10px;
-  border: 7px solid lavender;
+h2 {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.panel {
+  padding: 30px;
 }
 
 form {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  height: 250px;
+  height: 350px;
   width: 400px;
-}
-
-.form-group {
-  display: flex;
-  justify-content: space-between;
-}
-
-.login-form {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }

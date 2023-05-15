@@ -1,18 +1,18 @@
-<div class="admin-order-detail-panel">
-  <div class="uploading">
-    <div class="form-group"><button class="stndbtn" type="button" (click)="back()">Back</button></div>
-    <div class="title">
-      <h1>Request#{{this.orderStore.getValue().fullOrder?.id}}</h1>
-      <div>
-        <h3>Status: {{this.orderStore.getValue().fullOrder?.status}}</h3>
+<div class="wrapper-center">
+  <div class="panel">
+    <div class="form-group-stnd"><button class="stndbtn" type="button" (click)="back()">Back to all orders</button>
+    </div>
+    <div class="form-group-stnd">
+      <div class="form-group-center">
+        <h1>Request#{{this.orderStore.getValue().fullOrder?.id}}</h1>
+        <h3>Status: {{this.orderStore.getValue().fullOrder?.status.split("_").join(" ")}}</h3>
         <h3>Date: {{this.orderStore.getValue().fullOrder?.date| date: 'dd.MM.yyyy'}}</h3>
       </div>
     </div>
-
-
-    <h2>Status: </h2>
-
-    <div class="form-group">
+    <div class="form-group-stnd">
+      <h2> Change status: </h2>
+    </div>
+    <div class="form-group-stnd">
       <select class="stndselect" name="duration" [(ngModel)]="status">
         <option value="CONTACT_RECEIVED">CONTACT_RECEIVED</option>
         <option value="REQUEST_FOR_DOCS">REQUEST_FOR_DOCS</option>
@@ -29,93 +29,94 @@
     </div>
 
 
-    <div *ngIf="this.orderStore.getValue().order?.status!=='CONTACT_RECEIVED'" style="text-align:center">
-      <div class="file-col">
-        <div class="column-file">
-          <div class="form-group">
-            <label class="file-button">
-              Contract
-              <input class="file-input" type="file" (change)="selectFile('CONTRACT',{event : $event})">
-            </label>
-            <div *ngIf="filesMap.has('CONTRACT') && filesMap.get('CONTRACT') !== null">
-              {{filesMap.get('CONTRACT').name.substring(0, 10)}}
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="file-button">
-              Passport
-              <input class="file-input" type="file" (change)="selectFile('PASSPORT',{event : $event})">
-            </label>
-            <div *ngIf="filesMap.has('PASSPORT') && filesMap.get('PASSPORT') !== null">
-              {{filesMap.get('PASSPORT').name.substring(0, 10)}}
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="file-button">
-              P_45
-              <input class="file-input" type="file" (change)="selectFile('P_45',{event : $event})">
-            </label>
-            <div *ngIf="filesMap.has('P_45') && filesMap.get('P_45') !== null">
-              {{filesMap.get('P_45').name.substring(0, 10)}}
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="file-button">
-              P_60
-              <input class="file-input" type="file" (change)="selectFile('P_60',{event : $event})">
-            </label>
-            <div *ngIf="filesMap.has('P_60') && filesMap.get('P_60') !== null">
-              {{filesMap.get('P_60').name.substring(0, 10)}}
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="file-button">
-              P_80
-              <input class="file-input" type="file" (change)="selectFile('P_80',{event : $event})">
-            </label>
-            <div *ngIf="filesMap.has('P_80') && filesMap.get('P_80') !== null">
-              {{filesMap.get('P_80').name.substring(0, 10)}}
-            </div>
-          </div>
-          <div class="form-group">
-            <div><button class="file-button" [disabled]="!selectedFiles" (click)="upload()">Upload</button></div>
-          </div>
-        </div>
-        <div class="column-file">
-          <div class="form-group">
-            <label>
-              <button class="file-button" [disabled]="disableButton('CONTRACT')" (click)="download('CONTRACT')">Download
-              </button>
-            </label>
-          </div>
-          <div class="form-group">
-            <label>
-              <button class="file-button" [disabled]="disableButton('PASSPORT')"
-                (click)="download('PASSPORT')">Download</button>
-            </label>
-          </div>
-          <div class="form-group">
-            <label>
-              <button class="file-button" [disabled]="disableButton('P_45')"
-                (click)="download('P_45')">Download</button>
-            </label>
-          </div>
-          <div class="form-group">
-            <label>
-              <button class="file-button" [disabled]="disableButton('P_60')"
-                (click)="download('P_60')">Download</button>
-            </label>
-          </div>
-          <div class="form-group">
-            <label>
-              <button class="file-button" [disabled]="disableButton('P_80')"
-                (click)="download('P_80')">Download</button>
-            </label>
-          </div>
-          <!-- <div class="form-group"><button class="file-button" [disabled]="disableConfirmButton()"
-              (click)="confirmDocs()">Confirm</button></div> -->
-        </div>
+    <div class="form-group-stnd" *ngIf="this.orderStore.getValue().order?.status!=='CONTACT_RECEIVED'"
+      style="text-align:center">
 
+      <div class="form-group-center">
+        <div class="form-group-stnd">
+          <label class="file-button">
+            Contract
+            <input class="file-input" type="file" (change)="selectFile('CONTRACT',{event : $event})">
+          </label>
+          <div *ngIf="filesMap.has('CONTRACT') && filesMap.get('CONTRACT') !== null">
+            {{filesMap.get('CONTRACT').name.substring(0, 10)}}
+          </div>
+        </div>
+        <div class="form-group-stnd">
+          <label class="file-button">
+            Passport
+            <input class="file-input" type="file" (change)="selectFile('PASSPORT',{event : $event})">
+          </label>
+          <div *ngIf="filesMap.has('PASSPORT') && filesMap.get('PASSPORT') !== null">
+            {{filesMap.get('PASSPORT').name.substring(0, 10)}}
+          </div>
+        </div>
+        <div class="form-group-stnd">
+          <label class="file-button">
+            P_45
+            <input class="file-input" type="file" (change)="selectFile('P_45',{event : $event})">
+          </label>
+          <div *ngIf="filesMap.has('P_45') && filesMap.get('P_45') !== null">
+            {{filesMap.get('P_45').name.substring(0, 10)}}
+          </div>
+        </div>
+        <div class="form-group-stnd">
+          <label class="file-button">
+            P_60
+            <input class="file-input" type="file" (change)="selectFile('P_60',{event : $event})">
+          </label>
+          <div *ngIf="filesMap.has('P_60') && filesMap.get('P_60') !== null">
+            {{filesMap.get('P_60').name.substring(0, 10)}}
+          </div>
+        </div>
+        <div class="form-group-stnd">
+          <label class="file-button">
+            P_80
+            <input class="file-input" type="file" (change)="selectFile('P_80',{event : $event})">
+          </label>
+          <div *ngIf="filesMap.has('P_80') && filesMap.get('P_80') !== null">
+            {{filesMap.get('P_80').name.substring(0, 10)}}
+          </div>
+        </div>
+        <div class="form-group-stnd">
+          <div><button class="file-button" [disabled]="!selectedFiles" (click)="upload()">Upload</button></div>
+        </div>
+      </div>
+      <div class="form-group-center">
+        <div class="form-group-stnd">
+          <label>
+            <button class="file-button" [disabled]="disableButton('CONTRACT')" (click)="download('CONTRACT')">Download
+            </button>
+          </label>
+        </div>
+        <div class="form-group-stnd">
+          <label>
+            <button class="file-button" [disabled]="disableButton('PASSPORT')"
+              (click)="download('PASSPORT')">Download</button>
+          </label>
+        </div>
+        <div class="form-group-stnd">
+          <label>
+            <button class="file-button" [disabled]="disableButton('P_45')" (click)="download('P_45')">Download</button>
+          </label>
+        </div>
+        <div class="form-group-stnd">
+          <label>
+            <button class="file-button" [disabled]="disableButton('P_60')" (click)="download('P_60')">Download</button>
+          </label>
+        </div>
+        <div class="form-group-stnd">
+          <label>
+            <button class="file-button" [disabled]="disableButton('P_80')" (click)="download('P_80')">Download</button>
+          </label>
+        </div>
+        <div class="form-group-stnd-op0">
+          <label>
+            <button class="file-button"></button>
+          </label>
+        </div>
+        <!-- <div class="form-group"><button class="file-button" [disabled]="disableConfirmButton()"
+              (click)="confirmDocs()">Confirm</button></div> -->
       </div>
     </div>
   </div>

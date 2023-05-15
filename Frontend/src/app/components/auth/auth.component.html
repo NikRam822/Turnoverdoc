@@ -1,35 +1,42 @@
-<div class="orders-panel">
-  <div class="container mt-5">
-    <table class="table table-striped">
+<div class="wrapper-scroll">
+  <div class="panel">
 
-      <div class="header">
-        <div class="topic">
-          <h1>This is your Orders</h1>
-        </div>
-        <div class="column-names">
-          <h3>ID of request</h3>
-          <h3>Status of request</h3>
-          <h3>Date of creation</h3>
-        </div>
+    <div class="form-group-center">
+      <div class="form-group-stnd">
+        <button class="stndbtn__active" style="width: 100%; background-color: azure; text-align: start;">
+          <h1>This is your orders</h1>
+        </button>
       </div>
-      <tbody>
+      <div class="form-group-stnd">
+        <h3>ID of request</h3>
+        <h3>Status of request</h3>
+        <h3>Date of creation</h3>
+      </div>
+    </div>
 
-        <tr *ngFor="let order of orders">
-          <router-outlet>
-            <button class="stndbtn" (click)="orderDetail(order)">
-              <td>Request #{{ order.id}}</td>
-              <td>{{ order.status}}</td>
-              <td>from:{{ order.date| date: 'dd.MM.yyyy'}}</td>
-            </button>
-          </router-outlet>
-        </tr>
+    <div *ngFor="let order of orders" class="form-group-center">
+      <router-outlet>
+        <button class="stndbtn" (click)="orderDetail(order)">
+          <div class="form-group-stnd">
+            <div>
+              <p>Request #{{ order.id}}</p>
+            </div>
+            <div>
+              <p>{{ order.status.split("_").join(" ")}}</p>
+            </div>
+            <div>
+              <p>{{ order.date| date: 'dd.MM.yyyy'}}</p>
+            </div>
+          </div>
+        </button>
+      </router-outlet>
+    </div>
 
-
-        <router-outlet>
-          <button class="stndbtn" (click)="submit()">{{ "Create order" }}
-          </button>
-        </router-outlet>
-      </tbody>
-    </table>
+    <div class="form-group-stnd">
+      <router-outlet>
+        <button class="stndbtn__active" (click)="submit()">{{ "Create order" }}
+        </button>
+      </router-outlet>
+    </div>
   </div>
 </div>
