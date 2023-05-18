@@ -17,10 +17,9 @@ export class OrderDetailComponent implements OnInit {
     console.log(this.orderStore.getValue().order)
   }
 
-  limitStr(str, n, symb) {
-    if (!n && !symb) return str;
-    symb = symb || '...';
-    return str.substr(0, n - symb.length) + symb;
+  limitStr(str) {
+    if (this.filesMap.get(str).name.length <= 30) return this.filesMap.get(str).name.substring(0, 30);
+    else return this.filesMap.get(str).name.split(".")[0].substring(0, 30) + "***." + this.filesMap.get(str).name.split(".")[1].substring(0, 10)
   }
 
 

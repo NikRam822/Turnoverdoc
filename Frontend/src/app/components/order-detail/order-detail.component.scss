@@ -23,6 +23,7 @@ h6 {
 
 .form-group-center {
   flex-direction: column;
+  justify-content: flex-start;
 }
 
 .file-input {
@@ -48,6 +49,17 @@ h6 {
     padding: 0 20px;
     margin: 0 20px;
     cursor: pointer;
+  }
+  &__name {
+    display: inline-flex;
+    min-height: 40px;
+    border-radius: 10px;
+    border: 2px solid darkslategrey;
+    justify-content: center;
+    align-items: center;
+    background-color: aliceblue;
+    padding: 0 20px;
+    margin: 0 20px;
   }
   display: inline-flex;
   min-height: 40px;
