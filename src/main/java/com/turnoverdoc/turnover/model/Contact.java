@@ -22,7 +22,7 @@ public class Contact {
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "messanger")
+    @Column(name = "messenger")
     private String messenger;
 
     @OneToOne(mappedBy = "contact")
@@ -40,6 +40,7 @@ public class Contact {
     @OneToOne(mappedBy = "contact")
     private User user;
 
+    // If contact linked to user profile
     @Column(columnDefinition = "boolean default false")
     private boolean isPersonal;
 

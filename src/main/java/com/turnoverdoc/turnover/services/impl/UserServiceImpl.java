@@ -65,6 +65,7 @@ public class UserServiceImpl implements UserService {
 
         Contact contact = new Contact();
         contact.setEmail(registrationRequest.getEmail());
+        contact.setPersonal(true);
 
         user.setContact(contactService.save(contact));
 
@@ -133,5 +134,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public User save(User user) {
+        return userRepository.save(user);
     }
 }

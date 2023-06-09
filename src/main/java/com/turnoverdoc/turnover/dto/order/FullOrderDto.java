@@ -25,7 +25,7 @@ public class FullOrderDto {
 
     public static FullOrderDto toFullOrderDto(Order order) {
         FullOrderDto fullOrderDto = new FullOrderDto();
-        if(order.getUser()!=null) {
+        if (order.getUser() != null) {
             fullOrderDto.setUserID(order.getUser().getId());
             fullOrderDto.setUsername(order.getUser().getUsername());
         }

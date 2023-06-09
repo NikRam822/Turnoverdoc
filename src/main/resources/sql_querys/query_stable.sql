@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS public.contacts
     id bigint NOT NULL,
     phone text COLLATE pg_catalog."default" NOT NULL,
     email text COLLATE pg_catalog."default" NOT NULL,
-    messanger text COLLATE pg_catalog."default",
+    messenger text COLLATE pg_catalog."default",
     id_order bigint NOT NULL,
     CONSTRAINT contacts_pkey PRIMARY KEY (id_order)
     );

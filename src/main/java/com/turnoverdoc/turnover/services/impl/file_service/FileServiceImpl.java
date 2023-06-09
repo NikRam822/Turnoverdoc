@@ -107,11 +107,15 @@ public class FileServiceImpl implements FileService {
     public File getFileDoc(String dirPath, String fileName) {
         String pathToDir = uploadPath + "\\" + dirPath;
         File[] folderEntries = new File(pathToDir).listFiles();
-        for (File entry : folderEntries) {
-            if (entry.toPath().toString().contains(pathToDir + "\\" + fileName)) {
-                return entry;
+
+        if (folderEntries != null) {
+            for (File entry : folderEntries) {
+                if (entry.toPath().toString().contains(pathToDir + "\\" + fileName)) {
+                    return entry;
+                }
             }
         }
+        // TODO: Make exception for non-exist directory
         LOGGER.error("File is not exists: " + pathToDir + "\\" + fileName);
         return null;
     }

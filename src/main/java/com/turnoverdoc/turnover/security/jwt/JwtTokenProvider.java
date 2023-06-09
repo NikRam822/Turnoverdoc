@@ -88,7 +88,11 @@ public class JwtTokenProvider {
     }
 
     public String resolveToken(HttpServletRequest req) {
-        return Arrays.stream(req.getCookies()).filter(cookie -> cookie.getName().equals("token")).findFirst().get().getValue();
+        try {
+            return Arrays.stream(req.getCookies()).filter(cookie -> cookie.getName().equals("token")).findFirst().get().getValue();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     private List<String> getRoleNames(List<Role> roles) {

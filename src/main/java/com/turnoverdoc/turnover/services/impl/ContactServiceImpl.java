@@ -31,9 +31,23 @@ public class ContactServiceImpl implements ContactService {
     public Contact addContact(ContactDto contactDto) throws ErrorDto {
         Contact contact = new Contact();
         contact.setPhone(contactDto.getPhone());
-        contact.setMessenger(contactDto.getMessenger());
+        contact.setMessenger(contactDto.getMessenger().replace("@", ""));
+        contact.setPersonal(contactDto.isPersonal());
+        contact.setMessengerNotify(contactDto.isNotify());
+        contact.setMessengerType(contactDto.getMessengerType());
+        //TODO: Create email validation
+        contact.setEmail(contactDto.getEmail());
 
         Contact addedContact = null;
+
+        // Check if there is a contact in the database with the current username that is linked to the profile
+        if (contactDto.isPersonal() && contactDto.getMessenger() != null) {
+            Contact contactFromDb = contactRepository.findByMessenger(contactDto.getMessenger());
+            if (contactFromDb != null && contactFromDb.isPersonal()) {
+                // TODO: Replace to new validation error
+                throw VAL_02;
+            }
+        }
 
         if (isValid(contactDto)) {
             try {
@@ -41,6 +55,7 @@ public class ContactServiceImpl implements ContactService {
                 LOGGER.info("Added new contact: {}", addedContact);
             } catch (IllegalArgumentException e) {
                 LOGGER.error("Failed to save new contact: contact is null");
+                // TODO: Replace to DB error
                 throw VAL_02;
             }
         }
@@ -65,6 +80,30 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public Contact save(Contact contact) {
+        return contactRepository.save(contact);
+    }
+
+    @Override
+    public Contact findByEmail(String email) {
+        return contactRepository.findByEmail(email);
+    }
+
+    @Override
+    public Contact linkContact(Contact contact, ContactDto contactDto) {
+        // Check if there is a contact in the database with the current username that is linked to the profile
+        if (contactDto.isPersonal() && contactDto.getMessenger() != null) {
+            Contact contactFromDb = contactRepository.findByMessenger(contactDto.getMessenger());
+            if (contactFromDb != null && contactFromDb.isPersonal()) {
+                // TODO: Replace to new validation error
+                throw VAL_02;
+            }
+        }
+
+        contact.setEmail(contactDto.getEmail());
+        contact.setPhone(contactDto.getPhone());
+        contact.setMessenger(contactDto.getMessenger());
+        contact.setMessengerType(contactDto.getMessengerType());
+
         return contactRepository.save(contact);
     }
 }

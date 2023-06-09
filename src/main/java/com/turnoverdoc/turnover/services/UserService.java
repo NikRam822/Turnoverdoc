@@ -16,4 +16,5 @@ public interface UserService {
     void changePassword(PasswordDto passwordDto, User user) throws ErrorDto;
     void resetPassword(String newPassword, User user);
     User findByEmail(String email);
+    User save(User user);
 }
