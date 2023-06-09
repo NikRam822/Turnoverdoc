@@ -1,0 +1,32 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 20px;
+  font-weight: 400;
+  text-decoration: none;
+  margin: 10px;
+  // color: darkslategray;
+}
+
+.stndbtn {
+  min-width: 800px;
+  margin: 20px;
+  background-color: rgba(248, 255, 204, 0.8);
+}
+
+.panel {
+  margin: 30px;
+}
+
+.form-group-stnd {
+  justify-content: space-around;
+  margin: 20px;
+  width: auto;
+}
+
+.form-group-center {
+  flex-direction: column;
+}

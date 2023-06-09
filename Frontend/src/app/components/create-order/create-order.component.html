@@ -1,22 +1,23 @@
-<button type="button" (click)="back()">Back to orders</button>
-<form #myForm="ngForm" novalidate>
+<div class="wrapper-center">
 
-  <div class="form-group">
-    <label>{{ "phone" }}</label>
-    <input class="form-control" name="phone" [(ngModel)]="phone" required/>
-  </div>
-  <div class="form-group">
-    <label>{{ "messenger" }}</label>
-    <input class="form-control" name="messenger" [(ngModel)]="messenger" required/>
-  </div>
-  <div>
-    <div class="form-group">
-      <router-outlet>
-        <button [disabled]="myForm.invalid"
-
-                class="btn btn-default" (click)="submit(myForm)">{{ "Create" }}
-        </button>
-      </router-outlet>
+  <form #myForm="ngForm" class="panel" novalidate>
+    <div class="form-group-stnd"><button class="stndbtn" type="button" (click)="back()">Back to orders</button></div>
+    <div class="form-group-stnd">
+      <!-- <label>{{ "phone" }}</label> -->
+      <input placeholder="Phone" class="stndinput " name="phone" [(ngModel)]="phone" required />
     </div>
-  </div>
-</form>
+    <div class="form-group-stnd">
+      <!-- <label>{{ "messenger" }}</label> -->
+      <input placeholder="Messanger" class="stndinput " name="massenger" [(ngModel)]="messenger" required />
+    </div>
+    <div>
+      <div class="form-group-center">
+        <router-outlet>
+          <button [disabled]="myForm.invalid" class="stndbtn" (click)="submit(myForm)">{{
+            "Create" }}
+          </button>
+        </router-outlet>
+      </div>
+    </div>
+  </form>
+</div>

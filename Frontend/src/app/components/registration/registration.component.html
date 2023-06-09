@@ -1,60 +1,109 @@
-<div class="step-panel">
-  <form [formGroup]="multiStepForm" class="multistep">
+<div class="wrapper-center">
+  <div [formGroup]="multiStepForm" class="panel">
     <div [ngSwitch]="step">
       <!-- first Step -->
       <ng-template class="step" ngSwitchCase="1">
-        <div formGroupName="nameForm" class="step">
-          <h2>Name</h2>
-          <div class="form-line"><input placeholder="First Name" class="stndinput" id="firstName" type="text"
-              formControlName="firstName"></div>
-          <div class="form-line"><input placeholder="Last Name:" class="stndinput" id="lastName" type="text"
-              formControlName="lastName"></div>
-          <div class="form-line"><input placeholder="Second Name" class="stndinput" id="secondName" type="text"
-              formControlName="secondName"></div>
-          <div class="form-line">
-            <button class="stndbtn active" type="button" (click)="signIn()">SignIN</button>
+        <form formGroupName="nameForm">
+          <h2>Registration on Turnoverdoc</h2>
+          <h2> Provide your Name</h2>
+          <div class="form-group-stnd">
+            <button class="stndbtn" type="button" (click)="signIn()">Sign In</button>
+            <button class="stndbtn__active" type="button">Sign Up</button>
+          </div>
+          <div class="form-group-stnd"><input placeholder="First Name" class="stndinput" id="firstName" type="text"
+              formControlName="firstName">
+          </div>
+          <div
+            *ngIf="!multiStepForm.controls.nameForm.controls.firstName.valid && multiStepForm.controls.nameForm.controls.firstName.touched">
+            First Name requaired
+          </div>
+          <div class="form-group-stnd">
+            <input placeholder="Last Name:" class="stndinput" id="lastName" type="text" formControlName="lastName">
+          </div>
+          <div
+            *ngIf="!multiStepForm.controls.nameForm.controls.lastName.valid && multiStepForm.controls.nameForm.controls.lastName.touched">
+            Last Name requaired
+          </div>
+          <div class="form-group-stnd">
+            <input placeholder="Second Name" class="stndinput" id="secondName" type="text" formControlName="secondName">
+          </div>
+          <div class="form-group-uniqe">
+            <!-- <button class="stndbtn active" type="button" (click)="signIn()">SignIN</button> -->
             <button class="stndbtn" type="button" (click)="next()">Next</button>
           </div>
-        </div>
+        </form>
       </ng-template>
       <!-- end of first step -->
-
       <!-- second step -->
       <ng-template class="step" ngSwitchCase="2">
-        <div formGroupName="contactsForm" class="step">
-          <h2>Contacts</h2>
-
-          <input placeholder="Email" class="stndinput" id="email" type="text" formControlName="email">
-
-          <input placeholder="Phone" class="stndinput" id="phone" type="text" formControlName="phone">
-
-          <input placeholder="Messanger" class="stndinput" id="messanger" type="text" formControlName="messanger">
-          <div class="form-line">
+        <form formGroupName="contactsForm">
+          <h2>Registration on Turnoverdoc</h2>
+          <h2>Provide your Contacts</h2>
+          <div class="form-group-stnd">
+            <button disabled class="stndbtn" type="button" (click)="signIn()">Sign In</button>
+            <button class="stndbtn__active" type="button">Sign Up</button>
+          </div>
+          <div class="form-group-stnd">
+            <input placeholder="Email" class="stndinput" id="email" type="text" formControlName="email">
+          </div>
+          <div
+            *ngIf="!multiStepForm.controls.contactsForm.controls.email.valid && multiStepForm.controls.contactsForm.controls.email.touched">
+            Email is not correct
+          </div>
+          <div class="form-group-stnd">
+            <input placeholder="Phone" class="stndinput" id="phone" type="phone" formControlName="phone">
+          </div>
+          <div
+            *ngIf="!multiStepForm.controls.contactsForm.controls.phone.valid && multiStepForm.controls.contactsForm.controls.phone.touched">
+            Phone is not correct
+          </div>
+          <div class="form-group-stnd">
+            <input placeholder="Messanger" class="stndinput" id="messanger" type="text" formControlName="messanger">
+          </div>
+          <div class="form-group-stnd">
             <button class="stndbtn" type="button" (click)="back()">Back</button>
             <button class="stndbtn" type="button" (click)="next()">Next</button>
           </div>
-        </div>
+        </form>
       </ng-template>
       <!-- end of second step -->
-
       <!-- third step -->
       <ng-template class="step" ngSwitchCase="3">
-        <div formGroupName="loginForm" class="step">
-          <h2>Login</h2>
-
-          <input placeholder="Login" class="stndinput" id="login" type="text" formControlName="login">
-
-          <input placeholder="Password" class="stndinput" id="password" type="text" formControlName="password">
-
-          <input placeholder="Repeat password" class="stndinput" id="repPassword" type="text"
-            formControlName="repPassword">
-          <div class="form-line">
-            <button class="stndbtn" type="button" (click)="back()">Back</button>
-            <button class="stndbtn" type="buton" (click)="submit()">Submit</button>
+        <form formGroupName="loginForm">
+          <h2>Registration on Turnoverdoc</h2>
+          <h2>Create an Account</h2>
+          <div class="form-group-stnd">
+            <button disabled class="stndbtn" type="button" (click)="signIn()">Sign In</button>
+            <button class="stndbtn__active" type="button">Sign Up</button>
           </div>
-        </div>
+          <div class="form-group-stnd"><input placeholder="Login" class="stndinput" id="login" type="text"
+              formControlName="login"></div>
+          <div
+            *ngIf="!multiStepForm.controls.loginForm.controls.login.valid && multiStepForm.controls.loginForm. controls.login.touched">
+            This login does not work
+          </div>
+          <div class="form-group-stnd"><input placeholder="Password" class="stndinput" id="password" type="password"
+              formControlName="password">
+          </div>
+          <div
+            *ngIf="!multiStepForm.controls.loginForm.controls.password.valid && multiStepForm.controls.loginForm.controls.password.touched">
+            Password does not work
+          </div>
+          <div class="form-group-stnd">
+            <input placeholder="Repeat password" class="stndinput" id="repPassword" type="password"
+              formControlName="repPassword">
+          </div>
+          <div
+            *ngIf="!multiStepForm.controls.loginForm.controls.repPassword.valid && multiStepForm.controls.loginForm.controls.repPassword.touched">
+            The passwords do not match
+          </div>
+          <div class="form-group-stnd">
+            <button class="stndbtn" type="button" (click)="back()">Back</button>
+            <button [disabled]="!multiStepForm.valid" class="stndbtn" type="buton" (click)="submit()">Submit</button>
+          </div>
+        </form>
       </ng-template>
     </div>
     <!-- endof third step -->
-  </form>
+  </div>
 </div>
