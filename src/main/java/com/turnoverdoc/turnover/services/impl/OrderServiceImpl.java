@@ -120,7 +120,7 @@ public class OrderServiceImpl implements OrderService {
     public Order changeStatus(Order order, OrderStatus status) {
         order.setStatus(status);
         Order updatedOrder = update(order);
-//        mailSenderService.sendChangeStatusEmail(order.getUser().getEmail(), status.getMailDescription());
+        mailSenderService.sendChangeStatusEmail(order.getContact().getEmail(), status.getMailDescription());
         messengerService.messengerNotify(order, status);
         return updatedOrder;
     }
