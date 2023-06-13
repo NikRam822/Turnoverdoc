@@ -93,10 +93,14 @@ export class RequestService {
     })
   }
 
-  postCreateOrder(phone: String, messenger: String) {
+  postCreateOrder(phone: String, messenger: String, email: String,isNotify: boolean, messengerType: String, isPersonal: boolean) {
     const body = {
       phone: phone,
-      messenger: messenger
+      messenger: messenger,
+      email: email,
+      isNotify: isNotify,
+      messengerType: messengerType,
+      isPersonal: isPersonal
     };
 
     return this.http.post("http://localhost:8080/api/order/createOrder", body, {

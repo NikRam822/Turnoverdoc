@@ -14,12 +14,13 @@ export class CreateOrderComponent {
   back() {
     this.router.navigate(['/auth']);
   }
+  public email: string = "";
   public messenger: string = "";
   public phone: string = "";
   public title = 'angular-proj';
 
   submit(form: NgForm) {
-    this.httpService.postCreateOrder(form.value.phone, form.value.messenger).subscribe({
+    this.httpService.postCreateOrder(form.value.phone, form.value.messenger, form.value.email,true,"TELEGRAM",true).subscribe({
       next: () => {
         this.router.navigate(['/auth']);
       },
